@@ -1,0 +1,103 @@
+PYTHON ?= .venv/bin/python
+PIP    ?= .venv/bin/pip
+
+# Default: build the venv and install in editable mode.
+.PHONY: install
+install:
+	python3.12 -m venv .venv 2>/dev/null || python3 -m venv .venv
+	$(PIP) install --upgrade pip
+	$(PIP) install -e ".[dev]"
+
+# Pull CDC ICD-10-CM FY27 (public domain) into data/catalogs/.
+.PHONY: data
+data:
+	mkdir -p data/catalogs
+	@if [ ! -f data/catalogs/icd10cm_codes_2026.txt ]; then \
+		echo "downloading ICD-10-CM FY2027 (public domain)…"; \
+		curl -skL -o /tmp/icd10cm.zip 'https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10CM/2027/icd10cm-code-descriptions-2027.zip'; \
+		unzip -j -o /tmp/icd10cm.zip 'icd10cm-code-descriptions-2027/icd10cm-codes-2027.txt' -d data/catalogs/; \
+		mv data/catalogs/icd10cm-codes-2027.txt data/catalogs/icd10cm_codes_2026.txt; \
+		rm /tmp/icd10cm.zip; \
+		echo "done."; \
+	else \
+		echo "ICD-10 catalog already present."; \
+	fi
+
+# Build FAISS + BM25 indexes for both code systems (cached on disk).
+.PHONY: build-index
+build-index: data
+	$(PYTHON) -m scripts.build_index
+
+# Run the pipeline on the first synthetic note (smoke test, requires LLM key).
+.PHONY: run
+run: build-index
+	$(PYTHON) -m medcoder.cli run data/notes/note_01_outpatient_diabetes.txt --no-json-logs
+
+# Run the full pipeline against the real ICD-10 index but with mocked LLM responses
+# (no API key needed) — handy for reviewers who want to see the JSON payload.
+.PHONY: smoke
+smoke: build-index
+	$(PYTHON) -m scripts.smoke_with_mocks
+
+# Full pytest suite.
+.PHONY: test
+test:
+	$(PYTHON) -m pytest tests/ -v
+
+# Fast tests only (skip the slow embedding tests).
+.PHONY: test-fast
+test-fast:
+	$(PYTHON) -m pytest tests/ -v -m "not slow"
+
+# Gold-set evaluation: micro/macro/EMR/hierarchical/recall@k.
+.PHONY: eval
+eval: build-index
+	$(PYTHON) -m scripts.evaluate
+
+# Style.
+.PHONY: lint
+lint:
+	$(PYTHON) -m ruff check src tests scripts
+
+# Generate the 1–2 page design PDF from DESIGN.md (requires pandoc + a LaTeX engine).
+.PHONY: pdf
+pdf:
+	@command -v pandoc >/dev/null || { echo "pandoc not found — install pandoc and a LaTeX engine first"; exit 1; }
+	pandoc docs/DESIGN.md \
+	  -o docs/DESIGN.pdf \
+	  --pdf-engine=xelatex \
+	  -V geometry:margin=0.7in \
+	  -V fontsize=10pt \
+	  -V linkcolor=blue \
+	  --toc=false
+
+# Docker build + smoke-run inside the container.
+.PHONY: docker
+docker:
+	docker build -t medcoder:dev .
+
+.PHONY: docker-run
+docker-run: docker
+	docker run --rm -e OPENAI_API_KEY -v "$(PWD)/data:/app/data" medcoder:dev \
+	  medcoder run /app/data/notes/note_01_outpatient_diabetes.txt --no-json-logs
+
+# Wipe build artefacts (keeps data + venv).
+.PHONY: clean
+clean:
+	rm -rf data/index .cache build dist *.egg-info
+	find . -name __pycache__ -type d -exec rm -rf {} +
+
+.PHONY: help
+help:
+	@echo "make install      — create .venv and install package + dev deps"
+	@echo "make data         — download public-domain ICD-10-CM into data/catalogs/"
+	@echo "make build-index  — build FAISS + BM25 indexes for ICD-10 and CPT"
+	@echo "make run          — pipeline smoke run on a sample note"
+	@echo "make test         — full pytest suite"
+	@echo "make test-fast    — quick tests only (skip slow embedding tests)"
+	@echo "make eval         — gold-set evaluation"
+	@echo "make lint         — ruff"
+	@echo "make pdf          — DESIGN.md → docs/DESIGN.pdf (needs pandoc + xelatex)"
+	@echo "make docker       — build the Docker image"
+	@echo "make docker-run   — run the pipeline inside the container"
+	@echo "make clean        — remove build artefacts (keeps venv + data)"
