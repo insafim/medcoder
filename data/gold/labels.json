@@ -1,0 +1,53 @@
+{
+  "_schema": {
+    "description": "Gold labels for the authored synthetic notes. Used by scripts/evaluate.py.",
+    "notes": "ICD-10 codes are real, FY2027 CDC-released. CPT codes are synthetic (see data/catalogs/procedures_synthetic.csv).",
+    "scoring": "Exact match by code string. Hierarchical scoring re-rolls ICD-10 to the 3-char category."
+  },
+  "notes": {
+    "note_01_outpatient_diabetes": {
+      "encounter_type": "outpatient",
+      "diagnoses": {
+        "must_include": ["E11.42", "I10", "E11.21", "E66.9"],
+        "may_include":  ["Z68.31"]
+      },
+      "procedures": {
+        "must_include": ["9E0002", "9T0012"],
+        "may_include":  []
+      }
+    },
+    "note_02_ed_chest_pain": {
+      "encounter_type": "outpatient",
+      "diagnoses": {
+        "must_include": ["I21.09", "I10"],
+        "may_include":  ["E78.5"]
+      },
+      "procedures": {
+        "must_include": ["9C0010", "9R0011"],
+        "may_include":  ["9V0010", "9E0021"]
+      }
+    },
+    "note_03_inpatient_pneumonia_ambiguity": {
+      "encounter_type": "inpatient",
+      "diagnoses": {
+        "must_include": ["J18.1", "J44.1", "J96.01"],
+        "may_include":  ["Z99.81", "Z87.891", "I10"]
+      },
+      "procedures": {
+        "must_include": ["9R0011", "9P0020"],
+        "may_include":  ["9E0011", "9P0012"]
+      }
+    },
+    "note_04_multipage_postop": {
+      "encounter_type": "inpatient",
+      "diagnoses": {
+        "must_include": ["K80.00", "E11.9", "E66.9"],
+        "may_include":  ["Z68.33"]
+      },
+      "procedures": {
+        "must_include": ["9S0010", "9R0070"],
+        "may_include":  ["9E0012", "9L0012"]
+      }
+    }
+  }
+}

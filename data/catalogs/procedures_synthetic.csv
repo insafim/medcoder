@@ -1,0 +1,89 @@
+code,description
+9E0001,[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity
+9E0002,[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - moderate complexity
+9E0003,[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - high complexity
+9E0004,[SYNTHETIC] Office or other outpatient visit for the evaluation and management of a new patient - low complexity
+9E0005,[SYNTHETIC] Office or other outpatient visit for the evaluation and management of a new patient - moderate complexity
+9E0006,[SYNTHETIC] Office or other outpatient visit for the evaluation and management of a new patient - high complexity
+9E0010,[SYNTHETIC] Hospital inpatient or observation care - initial - moderate complexity
+9E0011,[SYNTHETIC] Hospital inpatient or observation care - initial - high complexity
+9E0012,[SYNTHETIC] Hospital inpatient or observation care - subsequent - moderate complexity
+9E0020,[SYNTHETIC] Emergency department visit for evaluation and management - moderate complexity
+9E0021,[SYNTHETIC] Emergency department visit for evaluation and management - high complexity
+9E0030,[SYNTHETIC] Critical care evaluation and management - first 30-74 minutes
+9E0040,[SYNTHETIC] Office consultation - new or established patient - moderate complexity
+9C0010,[SYNTHETIC] Electrocardiogram routine 12-lead with interpretation and report
+9C0011,[SYNTHETIC] Electrocardiogram rhythm strip with interpretation and report
+9C0020,[SYNTHETIC] Transthoracic echocardiography complete with Doppler color flow
+9C0021,[SYNTHETIC] Transthoracic echocardiography limited follow-up study
+9C0030,[SYNTHETIC] Cardiovascular stress test using maximal or submaximal treadmill or bicycle
+9C0040,[SYNTHETIC] Coronary artery catheterization diagnostic
+9C0041,[SYNTHETIC] Percutaneous coronary intervention single vessel with stent placement
+9C0042,[SYNTHETIC] Percutaneous coronary intervention multi-vessel with stent placement
+9C0050,[SYNTHETIC] Insertion of permanent pacemaker dual-chamber
+9C0060,[SYNTHETIC] Holter monitoring 24-hour continuous recording with interpretation
+9C0070,[SYNTHETIC] Cardioversion elective external
+9R0010,[SYNTHETIC] Radiologic examination chest single view frontal
+9R0011,[SYNTHETIC] Radiologic examination chest two views frontal and lateral
+9R0020,[SYNTHETIC] Computed tomography head or brain without contrast material
+9R0021,[SYNTHETIC] Computed tomography head or brain with contrast material
+9R0030,[SYNTHETIC] Computed tomography chest without contrast material
+9R0031,[SYNTHETIC] Computed tomography chest with contrast material
+9R0032,[SYNTHETIC] Computed tomography angiography chest with contrast material
+9R0040,[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material
+9R0050,[SYNTHETIC] Magnetic resonance imaging brain without contrast material
+9R0051,[SYNTHETIC] Magnetic resonance imaging brain with and without contrast material
+9R0060,[SYNTHETIC] Magnetic resonance imaging lumbar spine without contrast material
+9R0070,[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation
+9R0071,[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete
+9R0080,[SYNTHETIC] Mammography screening bilateral
+9R0090,[SYNTHETIC] Radiologic examination ankle three views
+9R0091,[SYNTHETIC] Radiologic examination knee three views
+9L0010,[SYNTHETIC] Complete blood count with automated differential white blood cell count
+9L0011,[SYNTHETIC] Basic metabolic panel
+9L0012,[SYNTHETIC] Comprehensive metabolic panel
+9L0013,[SYNTHETIC] Lipid panel
+9L0014,[SYNTHETIC] Hemoglobin A1c glycosylated
+9L0015,[SYNTHETIC] Thyroid stimulating hormone
+9L0016,[SYNTHETIC] Urinalysis automated with microscopy
+9L0017,[SYNTHETIC] Blood culture aerobic and anaerobic
+9L0018,[SYNTHETIC] Troponin I or T quantitative
+9L0019,[SYNTHETIC] B-type natriuretic peptide quantitative
+9L0020,[SYNTHETIC] Influenza virus A and B with SARS-CoV-2 detection
+9L0021,[SYNTHETIC] Prothrombin time with INR
+9G0010,[SYNTHETIC] Esophagogastroduodenoscopy diagnostic with or without specimen collection
+9G0011,[SYNTHETIC] Esophagogastroduodenoscopy with biopsy single or multiple
+9G0020,[SYNTHETIC] Colonoscopy diagnostic with or without specimen collection
+9G0021,[SYNTHETIC] Colonoscopy with biopsy single or multiple
+9G0022,[SYNTHETIC] Colonoscopy with removal of polyp by snare technique
+9G0030,[SYNTHETIC] Endoscopic retrograde cholangiopancreatography diagnostic
+9S0010,[SYNTHETIC] Laparoscopic cholecystectomy without exploration
+9S0011,[SYNTHETIC] Laparoscopic appendectomy
+9S0012,[SYNTHETIC] Open inguinal hernia repair initial unilateral
+9S0013,[SYNTHETIC] Laparoscopic inguinal hernia repair initial unilateral
+9S0020,[SYNTHETIC] Excision benign lesion of skin trunk arms or legs lesion diameter 1.1 to 2.0 cm
+9S0030,[SYNTHETIC] Wound repair simple scalp neck axillae external genitalia trunk or extremities 2.6 to 7.5 cm
+9P0010,[SYNTHETIC] Spirometry including graphic record total and timed vital capacity expiratory flow rate measurements
+9P0011,[SYNTHETIC] Bronchoscopy rigid or flexible diagnostic with or without cell washing
+9P0012,[SYNTHETIC] Pulse oximetry single determination
+9P0020,[SYNTHETIC] Nebulizer treatment for the administration of an inhalation solution
+9O0010,[SYNTHETIC] Arthrocentesis aspiration and or injection major joint or bursa
+9O0011,[SYNTHETIC] Application of short leg cast walking or ambulatory
+9O0012,[SYNTHETIC] Closed treatment of distal radial fracture without manipulation
+9N0010,[SYNTHETIC] Electroencephalogram routine awake and drowsy
+9N0011,[SYNTHETIC] Lumbar puncture diagnostic
+9I0010,[SYNTHETIC] Immunization administration through 18 years of age with counseling - first vaccine
+9I0011,[SYNTHETIC] Influenza vaccine quadrivalent split virus preservative-free for intramuscular use
+9I0020,[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour
+9I0021,[SYNTHETIC] Subcutaneous or intramuscular injection of medication
+9V0010,[SYNTHETIC] Venipuncture for collection of specimen routine
+9V0020,[SYNTHETIC] Arterial puncture withdrawal of blood for diagnosis
+9H0010,[SYNTHETIC] Psychiatric diagnostic evaluation
+9H0011,[SYNTHETIC] Psychotherapy 30 minutes with patient
+9H0012,[SYNTHETIC] Psychotherapy 45 minutes with patient
+9H0013,[SYNTHETIC] Psychotherapy 60 minutes with patient
+9T0010,[SYNTHETIC] Diabetes self-management training individual face-to-face per 30 minutes
+9T0011,[SYNTHETIC] Smoking and tobacco use cessation counseling visit intermediate greater than 3 minutes up to 10 minutes
+9T0012,[SYNTHETIC] Comprehensive diabetic foot examination
+9U0010,[SYNTHETIC] Insertion of urinary catheter Foley two-way
+9U0020,[SYNTHETIC] Insertion of central venous catheter non-tunneled

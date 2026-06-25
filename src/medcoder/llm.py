@@ -1,0 +1,293 @@
+"""LiteLLM gateway with structured output, validate→repair, caching, and cost capture.
+
+One entry point: :func:`call_structured` — given a Pydantic schema, returns a
+validated instance. Backed by LiteLLM so we get OpenAI / Anthropic / Gemini /
+Bedrock / local in one call, plus built-in `mock_response` for tests.
+
+Design notes (Plan.md §13):
+- *reason-then-format*: prompts instruct the model to think first then emit JSON.
+  Strict JSON-only output is enforced via LiteLLM's response_format=PydanticModel.
+- *validate→repair-retry*: on schema failure we re-ask the model with the
+  validation error appended (one retry by default).
+- *cache*: deterministic input → on-disk cached response (~free reproducibility).
+- *cost*: `litellm.completion_cost` invoked on every response; accumulated into
+  the run's `RunMetrics`.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import logging
+import os
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, TypeVar
+
+import litellm
+from litellm import completion, completion_cost
+from pydantic import BaseModel, ValidationError
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
+
+from .config import get_settings
+from .logging_setup import get_logger
+
+log = get_logger(__name__)
+
+# Silence LiteLLM's chatty debug output; keep warnings/errors.
+litellm.suppress_debug_info = True
+
+T = TypeVar("T", bound=BaseModel)
+
+
+class LLMError(RuntimeError):
+    """Raised when an LLM call fails after retries or its output can't be validated."""
+
+
+@dataclass
+class CallStats:
+    """Per-call accounting; the pipeline aggregates these into RunMetrics."""
+
+    model: str
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    cost_usd: float = 0.0
+    retries: int = 0
+    cached: bool = False
+
+
+@dataclass
+class CallAggregator:
+    """Cheap collector — pipeline owns one of these per run."""
+
+    by_agent: dict[str, dict[str, int]] = field(default_factory=dict)
+    cost_usd: float = 0.0
+    retries: int = 0
+
+    def add(self, agent: str, stats: CallStats) -> None:
+        b = self.by_agent.setdefault(
+            agent, {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "calls": 0}
+        )
+        b["prompt_tokens"] += stats.prompt_tokens
+        b["completion_tokens"] += stats.completion_tokens
+        b["total_tokens"] += stats.total_tokens
+        b["calls"] += 1
+        self.cost_usd += stats.cost_usd
+        self.retries += stats.retries
+
+    def token_totals(self) -> dict[str, int]:
+        out: dict[str, int] = {}
+        for agent, b in self.by_agent.items():
+            for k, v in b.items():
+                out[f"{agent}.{k}"] = v
+        return out
+
+
+# ----- cache --------------------------------------------------------------
+
+
+def _cache_key(model: str, messages: list[dict[str, Any]], schema_name: str) -> str:
+    blob = json.dumps(
+        {"model": model, "messages": messages, "schema": schema_name},
+        sort_keys=True,
+        default=str,
+    ).encode()
+    return hashlib.sha256(blob).hexdigest()
+
+
+def _cache_get(cache_dir: Path, key: str) -> dict[str, Any] | None:
+    p = cache_dir / f"{key}.json"
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text())
+    except json.JSONDecodeError:
+        return None
+
+
+def _cache_put(cache_dir: Path, key: str, payload: dict[str, Any]) -> None:
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    (cache_dir / f"{key}.json").write_text(json.dumps(payload))
+
+
+# ----- core call ----------------------------------------------------------
+
+
+def _build_messages(system: str, user: str, schema: type[BaseModel]) -> list[dict[str, str]]:
+    schema_hint = (
+        "Return ONLY a JSON object matching this Pydantic schema "
+        f"(name={schema.__name__}). Reason internally first, then emit the JSON. "
+        "Do not include markdown fences or commentary outside the JSON."
+    )
+    return [
+        {"role": "system", "content": f"{system}\n\n{schema_hint}"},
+        {"role": "user", "content": user},
+    ]
+
+
+# Retry on any Exception because LiteLLM surfaces transient provider errors
+# (rate limits, timeouts, 5xx, network blips) as plain `Exception` subclasses
+# rather than a stable typed hierarchy. Back-off params are tenacity's standard
+# capped-exponential pattern. Source: https://github.com/BerriAI/litellm/issues
+# (provider-error normalisation is intentionally lossy upstream).
+@retry(
+    reraise=True,
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=8),
+    retry=retry_if_exception_type(Exception),
+)
+def _raw_completion(
+    *,
+    model: str,
+    messages: list[dict[str, Any]],
+    response_format: type[BaseModel] | dict[str, Any],
+    temperature: float,
+    max_tokens: int,
+    mock_response: str | None,
+) -> Any:
+    kwargs: dict[str, Any] = {
+        "model": model,
+        "messages": messages,
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+        "response_format": response_format,
+    }
+    if mock_response is not None:
+        kwargs["mock_response"] = mock_response
+    return completion(**kwargs)
+
+
+def call_structured(
+    *,
+    agent: str,
+    system_prompt: str,
+    user_prompt: str,
+    schema: type[T],
+    model: str | None = None,
+    aggregator: CallAggregator | None = None,
+    mock_response: str | None = None,
+    use_cache: bool = True,
+) -> T:
+    """Call an LLM and return a validated `schema` instance.
+
+    `mock_response` is a JSON string the LLM returns verbatim — used by tests so
+    no API key is required. When set, no caching is performed.
+    """
+    settings = get_settings()
+    model = model or settings.llm_model
+    stats = CallStats(model=model)
+
+    messages = _build_messages(system_prompt, user_prompt, schema)
+    cache_key = _cache_key(model, messages, schema.__name__)
+
+    if mock_response is None and use_cache:
+        cached = _cache_get(settings.cache_dir, cache_key)
+        if cached is not None:
+            try:
+                obj = schema.model_validate(cached["payload"])
+                stats.cached = True
+                stats.prompt_tokens = cached.get("prompt_tokens", 0)
+                stats.completion_tokens = cached.get("completion_tokens", 0)
+                stats.total_tokens = cached.get("total_tokens", 0)
+                if aggregator is not None:
+                    aggregator.add(agent, stats)
+                log.info("llm_cache_hit", extra={"agent": agent, "model": model})
+                return obj
+            except ValidationError:
+                # Stale cache shape — fall through to re-call.
+                pass
+
+    last_err: Exception | None = None
+    raw_text = ""
+    for attempt in range(2):  # initial + 1 repair retry
+        try:
+            resp = _raw_completion(
+                model=model,
+                messages=messages,
+                response_format=schema,
+                temperature=settings.temperature,
+                max_tokens=settings.max_tokens,
+                mock_response=mock_response,
+            )
+        except Exception as e:
+            stats.retries += 1
+            last_err = e
+            log.warning("llm_call_failed", extra={"agent": agent, "model": model, "error": str(e)})
+            raise LLMError(f"{agent} call failed: {e}") from e
+
+        choice = resp.choices[0].message
+        raw_text = (choice.content or "").strip()
+        try:
+            obj = schema.model_validate_json(raw_text)
+            usage = getattr(resp, "usage", None)
+            if usage is not None:
+                stats.prompt_tokens = getattr(usage, "prompt_tokens", 0) or 0
+                stats.completion_tokens = getattr(usage, "completion_tokens", 0) or 0
+                stats.total_tokens = getattr(usage, "total_tokens", 0) or 0
+            try:
+                stats.cost_usd = float(completion_cost(completion_response=resp) or 0.0)
+            except Exception:  # noqa: BLE001  cost lookup is best-effort
+                stats.cost_usd = 0.0
+
+            if mock_response is None and use_cache:
+                _cache_put(
+                    settings.cache_dir,
+                    cache_key,
+                    {
+                        "payload": json.loads(raw_text),
+                        "prompt_tokens": stats.prompt_tokens,
+                        "completion_tokens": stats.completion_tokens,
+                        "total_tokens": stats.total_tokens,
+                    },
+                )
+            if aggregator is not None:
+                aggregator.add(agent, stats)
+            return obj
+        except (ValidationError, json.JSONDecodeError) as e:
+            last_err = e
+            stats.retries += 1
+            log.warning(
+                "llm_validation_failed",
+                extra={"agent": agent, "attempt": attempt, "error": str(e)[:300]},
+            )
+            messages = messages + [
+                {"role": "assistant", "content": raw_text},
+                {
+                    "role": "user",
+                    "content": (
+                        "Your previous response failed schema validation with this error:\n"
+                        f"{e}\n\n"
+                        "Please return ONLY valid JSON matching the schema. No fences, no prose."
+                    ),
+                },
+            ]
+
+    raise LLMError(f"{agent} produced unparseable output after retries: {last_err}")
+
+
+# ----- env helpers --------------------------------------------------------
+
+
+def have_api_key_for(model: str) -> bool:
+    """Quick local check — does the env have a key for this model's provider?
+
+    Conservative: returns True only when we recognise the provider prefix.
+    Used by the CLI to suggest `--mock` instead of crashing on a 401.
+    """
+    m = model.lower()
+    if m.startswith(("openai/", "gpt", "chatgpt")):
+        return bool(os.environ.get("OPENAI_API_KEY"))
+    if m.startswith(("anthropic/", "claude")):
+        return bool(os.environ.get("ANTHROPIC_API_KEY"))
+    if m.startswith(("gemini/", "google/", "gemini")):
+        return bool(os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"))
+    if m.startswith(("bedrock/", "anthropic.")):
+        return bool(os.environ.get("AWS_ACCESS_KEY_ID"))
+    # Unknown provider — assume user knows what they're doing.
+    return True
+
+
+def downgrade_logger_for_tests() -> None:
+    """Silence litellm during pytest runs."""
+    logging.getLogger("LiteLLM").setLevel(logging.ERROR)

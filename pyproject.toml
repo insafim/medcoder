@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medcoder"
+version = "0.1.0"
+description = "Auditable medical coding pipeline — ICD-10 + CPT suggestions from clinical notes"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "AppliedAI Exercise" }]
+dependencies = [
+    "litellm>=1.52.0",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.4",
+    "typer>=0.12",
+    "sentence-transformers>=3.0",
+    "faiss-cpu>=1.8",
+    "rank-bm25>=0.2.2",
+    "numpy>=1.26",
+    "scikit-learn>=1.4",
+    "tenacity>=8.5",
+    "python-json-logger>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+]
+
+[project.scripts]
+medcoder = "medcoder.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+medcoder = ["prompts/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "live: marks tests requiring real LLM/network",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+# E501: line length is enforced by formatter not linter
+# UP042: (str, Enum) pattern is fine and widely supported by pydantic; StrEnum is 3.11+ only
+# B008:  Typer Option/Argument calls in defaults are the idiomatic Typer pattern
+# SIM103: explicit if/return short-circuit is more readable than condition inlining for guards
+ignore = ["E501", "UP042", "B008", "SIM103"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]  # assert False is fine in tests

@@ -1,0 +1,54 @@
+PATIENT: Samuel Okello (DOB 02/22/1949)            DATE: 06/19/2026
+ENCOUNTER: Inpatient admission, day 1
+PROVIDER: Dr. L. Bianchi, MD
+
+History and Physical / Admission Note:
+
+Chief Complaint: Productive cough, fever, dyspnea.
+
+History of Present Illness:
+77-year-old man with COPD on home oxygen 2 L/min, admitted via the emergency
+department with 4 days of productive cough, subjective fevers to 38.7 C, and
+progressive dyspnea. He completed a 5-day course of azithromycin from urgent
+care 3 days ago without improvement. He denies hemoptysis, chest pain, or recent
+sick contacts. He lives alone and has had one fall in the past month.
+
+Past Medical History:
+- Chronic obstructive pulmonary disease (Gold stage III), on home oxygen.
+- Essential hypertension.
+- History of smoking, 50 pack-years, quit 4 years ago.
+- Right hip osteoarthritis.
+
+Physical Exam:
+Temp 38.4 C, BP 132/78, HR 104, RR 24, SpO2 89% on 2 L (baseline 92%).
+General: appears tired and tachypneic. Lungs: diminished breath sounds at the
+right base with focal crackles; expiratory wheeze throughout. Cardiac: regular,
+no murmurs. Extremities: no edema.
+
+Imaging:
+Chest X-ray two views: dense right lower lobe consolidation. No effusion.
+No pneumothorax.
+
+Laboratory:
+WBC 16.2 K/uL with 88% neutrophils. Procalcitonin 1.8 ng/mL. BMP normal.
+
+Assessment:
+1. Community-acquired pneumonia, right lower lobe, probably bacterial — failed
+   outpatient macrolide therapy. Atypical pathogen versus resistant typical.
+2. Acute exacerbation of COPD, contributing to hypoxia.
+3. Acute hypoxic respiratory failure.
+
+The differential for the cough and fever included influenza and COVID-19; both
+ruled out by negative combined rapid testing performed in the ED. Heart failure
+considered but BNP within normal limits and no peripheral edema.
+
+Plan:
+- Admit to medical floor with telemetry.
+- Empiric ceftriaxone plus doxycycline.
+- Continue home oxygen, titrate to SpO2 ≥ 92%.
+- Nebulizer treatment with albuterol/ipratropium every 4 hours.
+- Pulse oximetry continuous.
+- Repeat chest X-ray in 48 hours.
+
+Signed,
+L. Bianchi, MD
