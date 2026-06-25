@@ -1,0 +1,102 @@
+"""Runtime configuration — environment-driven via pydantic-settings.
+
+Everything reproducibility-relevant (model snapshots, temperature, thresholds,
+embedder, catalog paths) is captured here so a single config_hash fingerprints a
+run end-to-end.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+PIPELINE_VERSION = "0.1.0"
+PROMPT_VERSION = "p1"
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_prefix="MEDCODER_",
+        extra="ignore",
+    )
+
+    # --- Models (pinned, dated snapshots for reproducibility) ------------
+    # LiteLLM model strings: use provider-prefixed form so the gateway doesn't have to
+    # guess the provider (recent LiteLLM versions stopped inferring it from "claude-…").
+    llm_model: str = Field("openai/gpt-4o-2024-08-06", description="Primary model (extract + code)")
+    verifier_model: str = Field(
+        "anthropic/claude-3-5-sonnet-20241022",
+        description="Independent auditor — defaults to a different family",
+    )
+    temperature: float = 0.0
+    max_tokens: int = 1500
+
+    # --- Retrieval -------------------------------------------------------
+    embedder: str = "sentence-transformers/all-MiniLM-L6-v2"
+    retrieval_top_k: int = 15
+    retrieval_dense_n: int = 50
+    retrieval_lexical_n: int = 50
+    rrf_k: int = 60  # standard RRF dampener
+
+    # --- Pipeline toggles ------------------------------------------------
+    no_verify: bool = Field(False, description="--no-verify: skip auditor pass entirely")
+    audit_low_conf_threshold: float = Field(
+        0.75, description="Coder confidence at or below which the auditor is invoked"
+    )
+    audit_always_for_procedures: bool = True
+
+    # --- Confidence tier thresholds (gold-tuned, see §9.7) ---------------
+    tier_high_threshold: float = 0.78
+    tier_low_threshold: float = 0.45
+
+    # --- Paths -----------------------------------------------------------
+    icd10_catalog: Path = Field(
+        default_factory=lambda: REPO_ROOT / "data" / "catalogs" / "icd10cm_codes_2026.txt"
+    )
+    cpt_catalog: Path = Field(
+        default_factory=lambda: REPO_ROOT / "data" / "catalogs" / "procedures_synthetic.csv"
+    )
+    index_dir: Path = Field(default_factory=lambda: REPO_ROOT / "data" / "index")
+    cache_dir: Path = Field(default_factory=lambda: REPO_ROOT / ".cache" / "llm")
+
+    # --- Observability ---------------------------------------------------
+    log_level: str = "INFO"
+    log_json: bool = True
+
+    def config_hash(self) -> str:
+        """Stable hash over reproducibility-relevant settings."""
+        relevant = {
+            "llm_model": self.llm_model,
+            "verifier_model": self.verifier_model,
+            "temperature": self.temperature,
+            "embedder": self.embedder,
+            "retrieval_top_k": self.retrieval_top_k,
+            "rrf_k": self.rrf_k,
+            "no_verify": self.no_verify,
+            "audit_low_conf_threshold": self.audit_low_conf_threshold,
+            "tier_high_threshold": self.tier_high_threshold,
+            "tier_low_threshold": self.tier_low_threshold,
+            "pipeline_version": PIPELINE_VERSION,
+            "prompt_version": PROMPT_VERSION,
+        }
+        blob = json.dumps(relevant, sort_keys=True).encode()
+        return hashlib.sha256(blob).hexdigest()[:16]
+
+
+_settings: Settings | None = None
+
+
+def get_settings(refresh: bool = False) -> Settings:
+    """Process-wide singleton; pass refresh=True after env mutation in tests."""
+    global _settings
+    if _settings is None or refresh:
+        _settings = Settings()
+    return _settings
