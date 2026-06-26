@@ -20,6 +20,22 @@ PROMPT_VERSION = "p1"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
+def load_env_file(path: Path | str = REPO_ROOT / ".env") -> None:
+    """Load provider keys from a dotenv file into ``os.environ``.
+
+    pydantic-settings reads the ``MEDCODER_*`` settings from the file directly, but
+    the *non-prefixed* provider keys (``OPENAI_API_KEY``, ``ANTHROPIC_API_KEY``, …)
+    that LiteLLM reads from the environment are NOT picked up by it. This bridges
+    that gap so a key placed in the dotenv file "just works". ``override=False``
+    keeps any explicit shell export authoritative over the file.
+    """
+    try:
+        from dotenv import load_dotenv
+    except ImportError:  # optional at runtime — keys can still be exported manually
+        return
+    load_dotenv(path, override=False)
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -58,7 +74,11 @@ class Settings(BaseSettings):
     reasoning_effort: str = Field(
         "low", description="OpenAI GPT-5 reasoning effort (none|low|medium|high); bounds cost"
     )
-    max_tokens: int = 1500
+    # Reasoning models (GPT-5) spend completion tokens on internal reasoning BEFORE
+    # the visible JSON, so the cap must cover reasoning + output or the JSON truncates
+    # and fails schema validation. Generous headroom is free — billing is per actual
+    # token generated, not the cap. (gpt-4o, the prior default, needed no headroom.)
+    max_tokens: int = 8000
 
     # --- Retrieval -------------------------------------------------------
     embedder: str = "sentence-transformers/all-MiniLM-L6-v2"
