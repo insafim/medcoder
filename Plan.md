@@ -594,8 +594,9 @@ flowchart LR
     NOTE["caveat: provider-side model updates can shift outputs<br/>→ exactly why we pin + log"] -.-> RUN
 ```
 
-Reproducibility comes from **temp=0 + pinned dated snapshots (e.g.
-`gpt-4o-2024-08-06`) + versioned prompts + full logging** — *not* from the test
+Reproducibility comes from **bounded sampling (temp=0 where honoured, else low
+reasoning_effort) + pinned model IDs (e.g. `openai/gpt-5.4-mini`) + versioned
+prompts + full logging** — *not* from the test
 mock. The mock only makes the *test suite* deterministic and keyless. We are
 honest that bit-for-bit determinism isn't guaranteed across provider model
 updates, which is the reason we pin and log everything.
