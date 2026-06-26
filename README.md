@@ -87,10 +87,13 @@ make eval                                 # gold-set metrics — needs an LLM ke
 
 ```bash
 make docker-run                           # builds image, runs the sample note
-# or:
-docker build -t medcoder .
-docker run --rm -e OPENAI_API_KEY medcoder \
+# or, manually:
+docker build -t medcoder:dev .
+docker run --rm -e OPENAI_API_KEY -e ANTHROPIC_API_KEY medcoder:dev \
   run /app/data/notes/note_01_outpatient_diabetes.txt
+# Only have an OpenAI key? Route the auditor to OpenAI too (single-provider):
+#   docker run --rm -e OPENAI_API_KEY -e MEDCODER_VERIFIER_MODEL=openai/gpt-5.4-mini \
+#     medcoder:dev run /app/data/notes/note_01_outpatient_diabetes.txt
 ```
 
 The Dockerfile pre-builds the retrieval indexes inside the image, so the first
