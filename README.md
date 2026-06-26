@@ -56,10 +56,11 @@ make install                              # creates .venv, installs in editable 
 # 2. Get the real ICD-10-CM catalog (US public domain) + build indexes
 make build-index
 
-# 3. (Optional) Set LLM provider keys. The default config is cross-family:
+# 3. (Optional) Set LLM provider keys. The default config is cross-family.
+#    Either export them, or put them in .env (auto-loaded at startup):
 export OPENAI_API_KEY=sk-...              # coder + extraction (gpt-5.4-mini)
 export ANTHROPIC_API_KEY=sk-ant-...       # independent auditor (claude-haiku-4-5)
-#   single-provider? point every model at one provider via MEDCODER_*_MODEL (.env)
+#   single-provider? point every model at one provider via MEDCODER_*_MODEL
 
 # 4. Run the pipeline on a sample note (live LLMs)
 make run                                  # uses note_01_outpatient_diabetes.txt

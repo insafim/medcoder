@@ -16,6 +16,7 @@ dependencies = [
     "litellm>=1.76.0,!=1.82.7,!=1.82.8",
     "pydantic>=2.7",
     "pydantic-settings>=2.4",
+    "python-dotenv>=1.0",  # auto-load provider keys from a local dotenv file
     "typer>=0.12",
     "sentence-transformers>=3.0",
     "faiss-cpu>=1.8",

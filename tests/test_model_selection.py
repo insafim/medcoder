@@ -161,3 +161,34 @@ def test_call_structured_sends_temperature_for_claude_haiku(monkeypatch):
     kw = _captured_kwargs(monkeypatch, "anthropic/claude-haiku-4-5-20251001")
     assert kw.get("temperature") == get_settings().temperature
     assert "reasoning_effort" not in kw
+
+
+# ----- load_env_file (provider keys -> os.environ) ------------------------
+
+
+def test_load_env_file_populates_environ(tmp_path):
+    import os
+
+    from medcoder.config import load_env_file
+
+    os.environ.pop("MEDCODER_FAKE_KEY", None)
+    env = tmp_path / "envfile"
+    env.write_text("MEDCODER_FAKE_KEY=secret123\n")
+    try:
+        load_env_file(env)
+        assert os.environ.get("MEDCODER_FAKE_KEY") == "secret123"
+    finally:
+        os.environ.pop("MEDCODER_FAKE_KEY", None)
+
+
+def test_load_env_file_does_not_override_existing(tmp_path, monkeypatch):
+    import os
+
+    from medcoder.config import load_env_file
+
+    # An explicit shell export must win over the file value (override=False).
+    monkeypatch.setenv("MEDCODER_FAKE_KEY", "from_shell")
+    env = tmp_path / "envfile"
+    env.write_text("MEDCODER_FAKE_KEY=from_file\n")
+    load_env_file(env)
+    assert os.environ.get("MEDCODER_FAKE_KEY") == "from_shell"

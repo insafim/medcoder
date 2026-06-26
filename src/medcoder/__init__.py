@@ -7,3 +7,9 @@ warnings.
 
 See ``docs/DESIGN.md`` for the full architecture and ``README.md`` for quickstart.
 """
+
+from .config import load_env_file
+
+# Load provider keys from a local dotenv file into the environment at import time,
+# before any LiteLLM call reads them. No-ops if the file or python-dotenv is absent.
+load_env_file()
