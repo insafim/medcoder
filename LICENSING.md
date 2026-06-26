@@ -4,8 +4,9 @@ This repository contains code (MIT) and three data artifacts with distinct licen
 
 ## ICD-10-CM (real)
 
-- **Source:** CDC / NCHS, ICD-10-CM FY2026 code descriptions file
-  (`icd10cm-codes-2026.txt`).
+- **Source:** CDC / NCHS, ICD-10-CM FY2027 code descriptions file
+  (downloaded as `icd10cm-code-descriptions-2027.zip`; ~74,879 codes). The
+  Makefile stores it locally under the stable name `icd10cm_codes_2026.txt`.
 - **License:** US Government public domain. No restriction on redistribution.
 - **Bundled?** The file is downloaded by `make build-index` (or
   `scripts/build_index.py --download`). It is git-ignored so a fresh clone

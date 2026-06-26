@@ -87,9 +87,9 @@ var:
 
 | Agent       | Human analog    | Model (default)             | Constraint                          |
 | ----------- | --------------- | --------------------------- | ----------------------------------- |
-| Extraction  | clinical scribe | `gpt-4o-2024-08-06`         | reason-then-format; assertion regex |
-| Coder       | medical coder   | `gpt-4o-2024-08-06`         | may only choose from whitelist      |
-| **Auditor** | QA auditor      | `claude-3-5-sonnet-20241022`| **different model family** by default |
+| Extraction  | clinical scribe | `openai/gpt-4o-2024-08-06`         | reason-then-format; assertion regex |
+| Coder       | medical coder   | `openai/gpt-4o-2024-08-06`         | may only choose from whitelist      |
+| **Auditor** | QA auditor      | `anthropic/claude-3-5-sonnet-20241022`| **different model family** by default |
 
 The **auditor defaulting to a different model family** is deliberate — research
 shows heterogeneous verifiers cut correlated errors and self-preference bias
@@ -108,7 +108,7 @@ keep the cost discipline reasonable.
 - *Versioned prompt files* (`prompts/extraction_p1.txt`, etc.). Prompt versions
   are part of the `config_hash` so a prompt change is visible in the audit log.
 - *temperature=0 + pinned dated model snapshots* (e.g.
-  `gpt-4o-2024-08-06`) — reproducibility-first, traded off against the marginal
+  `openai/gpt-4o-2024-08-06`) — reproducibility-first, traded off against the marginal
   accuracy of self-consistency sampling. Self-consistency is available as an
   optional confidence signal but off by default.
 
@@ -124,7 +124,7 @@ demo gold supports.)
 
 | Decision                                            | Why                                                 | Trade-off accepted                     |
 | --------------------------------------------------- | --------------------------------------------------- | -------------------------------------- |
-| **Retrieve-then-constrain** (whitelist, not free generation) | Eliminates hallucinated codes; turns a 75k-way generation problem into a k-way selection (6% → ~100% on a comparable task — arXiv 2407.12849) | Bounded by **retriever recall@k** — reported as a first-class metric |
+| **Retrieve-then-constrain** (whitelist, not free generation) | Eliminates hallucinated codes; turns a 75k-way generation problem into a k-way selection (6% → ~100% on a comparable task — arXiv 2407.12849) | Bounded by **retriever recall@k** — the upstream recall ceiling on retrievable codes (not computed in the eval) |
 | **Coder + independent Auditor** (multi-LLM)         | Best precision/recall on MIMIC-IV (MDPI Informatics 2026); heterogeneous verifiers cut correlated errors (A-HMAD 2025) | Extra LLM calls — mitigated by selective+batched verification |
 | **Hybrid retrieval + RRF**                          | Exact terms *and* paraphrases; no score-scale tuning | Two indexes to build; ~1 minute on 75k codes |
 | **Bounded 3-agent decomposition (no swarm)**        | MAST (NeurIPS 2025) shows speculative swarms add latency and "silent gray errors" without reliable accuracy gains | Foregoes ensemble-style accuracy gains for predictability |
@@ -152,8 +152,8 @@ set. *Reproducibility* is engineered (temp=0, pinned dated snapshots, versioned
 prompts, full audit log) but not bit-for-bit guaranteed across provider model
 updates — exactly why we pin and log everything. *Evaluation* is illustrative
 on a small authored gold set; the metric methodology (`scripts/evaluate.py`:
-micro/macro P/R/F1, exact-match ratio, ICD-10-hierarchical micro-F1, retriever
-recall@k) is correct; only the sample size is small.
+micro P/R/F1 for ICD and CPT, exact-match ratio, ICD-10-hierarchical micro-F1)
+is correct; only the sample size is small.
 
 **Extensions (designed for, not built).** Postgres hybrid retrieval
 (`pgvector` + `tsvector` + `pg_trgm`); biomedical embeddings + SNOMED→ICD

@@ -29,6 +29,22 @@ against the cited evidence.
 
 ---
 
+## What to look at first
+
+If you have ten minutes, read these — they carry the whole design thesis:
+
+1. **`src/medcoder/pipeline.py`** — the 7-stage orchestration with per-stage
+   timing and graceful degradation; the spine everything hangs off.
+2. **`src/medcoder/code_assign.py`** + **`src/medcoder/verify.py`** — the
+   whitelist-constrained coder and the *independent* auditor agent (the
+   multi-LLM check that flags codes the cited evidence doesn't support).
+3. **`src/medcoder/rules.py`** — the deterministic post-constraint engine
+   (Excludes1, specificity, dx↔px linkage) that no LLM can override.
+4. **`src/medcoder/schemas.py`** — the Pydantic `CodingResult` contract: the
+   reviewer-ready payload every stage builds toward.
+
+---
+
 ## 1 · Quickstart
 
 ### Local (Python 3.11+)
@@ -51,12 +67,18 @@ make run                                  # uses note_01_outpatient_diabetes.txt
 make smoke                                # same JSON shape, canned LLM responses
 
 # 5. Tests (mocked LLM — no API key required)
-make test                                 # full suite (~70s; embedding-warm)
+make test                                 # full suite (~30–60s; embedding-warm)
 make test-fast                            # fast unit tests only (~0.2s)
 
 # 6. Gold-set evaluation
-make eval                                 # micro/macro/EMR/hierarchical metrics
+make eval                                 # gold-set metrics — needs an LLM key (live calls)
 ```
+
+> **First run.** `make build-index` does a one-time download of the
+> `all-MiniLM-L6-v2` embedder from the HuggingFace Hub. The
+> `unauthenticated requests to the HF Hub` line it prints is a benign rate-limit
+> notice, **not an error**. Embedding ~75k ICD-10 codes takes ~60–90 s on CPU
+> (cached to `data/index/` afterwards, so later runs are instant).
 
 ### Container
 
@@ -65,7 +87,7 @@ make docker-run                           # builds image, runs the sample note
 # or:
 docker build -t medcoder .
 docker run --rm -e OPENAI_API_KEY medcoder \
-  medcoder run /app/data/notes/note_01_outpatient_diabetes.txt
+  run /app/data/notes/note_01_outpatient_diabetes.txt
 ```
 
 The Dockerfile pre-builds the retrieval indexes inside the image, so the first
@@ -103,9 +125,9 @@ in-container `run` is fast.
   ],
   "metadata": {
     "trace_id": "9f3e1c…", "config_hash": "1a2b…",
-    "model_ids": { "extraction": "gpt-4o-2024-08-06",
-                   "coder":      "gpt-4o-2024-08-06",
-                   "auditor":    "claude-3-5-sonnet-20241022" },
+    "model_ids": { "extraction": "openai/gpt-4o-2024-08-06",
+                   "coder":      "openai/gpt-4o-2024-08-06",
+                   "auditor":    "anthropic/claude-3-5-sonnet-20241022" },
     "pipeline_version": "0.1.0", "temperature": 0.0,
     "timestamp": "2026-06-26T00:00:00Z", "encounter_type": "outpatient",
     "metrics": {
@@ -176,11 +198,11 @@ Full design in `docs/DESIGN.md`; this section is the elevator pitch.
 
 ## 5 · Configuration
 
-All env-driven via pydantic-settings; the full set lives in `.env.example`:
+All env-driven via pydantic-settings; the common settings live in `.env.example`:
 
 ```bash
-MEDCODER_LLM_MODEL=gpt-4o-2024-08-06          # pinned dated snapshot
-MEDCODER_VERIFIER_MODEL=claude-3-5-sonnet-20241022   # *different* family by default
+MEDCODER_LLM_MODEL=openai/gpt-4o-2024-08-06          # provider-prefixed; pinned dated snapshot
+MEDCODER_VERIFIER_MODEL=anthropic/claude-3-5-sonnet-20241022   # *different* family by default
 MEDCODER_RETRIEVAL_TOP_K=15                   # whitelist size per fact
 MEDCODER_TEMPERATURE=0.0                      # reproducibility-first
 MEDCODER_EMBEDDER=sentence-transformers/all-MiniLM-L6-v2
@@ -200,6 +222,8 @@ The full reproducibility envelope is captured in `RunMetadata`.
 .
 ├── README.md                # ← this file
 ├── LICENSING.md             # data / code licensing notes
+├── Problem.md               # the take-home brief
+├── Plan.md                  # full working plan (in-code "§9.x" pointers refer here)
 ├── pyproject.toml
 ├── Makefile                 # install / data / build-index / run / test / eval / pdf / docker
 ├── Dockerfile               # py3.11-slim; pre-builds indexes
@@ -214,7 +238,9 @@ The full reproducibility envelope is captured in `RunMetadata`.
 │   └── DESIGN.pdf           # built by `make pdf`
 ├── scripts/
 │   ├── build_index.py
-│   └── evaluate.py
+│   ├── evaluate.py
+│   ├── smoke_with_mocks.py  # keyless mocked pipeline run (make smoke)
+│   └── build_pdf.sh         # DESIGN.md → PDF without LaTeX (pandoc → headless Chrome)
 ├── src/medcoder/
 │   ├── cli.py               # `medcoder` entry point
 │   ├── config.py            # pydantic-settings + config_hash
@@ -241,6 +267,7 @@ The full reproducibility envelope is captured in `RunMetadata`.
     ├── test_retrieval.py
     ├── test_extraction.py
     ├── test_rules.py
+    ├── test_confidence.py
     ├── test_pipeline_mock.py
     └── test_consistency.py  # reproducibility — same input + mocks → same output
 ```
@@ -249,7 +276,7 @@ The full reproducibility envelope is captured in `RunMetadata`.
 
 ## 7 · Limitations & extensions
 
-The design doc (`docs/DESIGN.md` §17) is the authoritative list. The key
+The design doc (`docs/DESIGN.md` §5) is the authoritative list. The key
 limitations to set reviewer expectations:
 
 - **Assistive, not autonomous.** SOTA full-vocabulary ICD-10 coding tops out
