@@ -236,9 +236,9 @@ def run(
             # tid is guaranteed non-None inside the `with trace_context(...)` block.
             trace_id=tid,
             model_ids={
-                "extraction": settings.llm_model,
-                "coder": settings.llm_model,
-                "auditor": settings.verifier_model if not settings.no_verify else "",
+                "extraction": settings.model_for("extraction"),
+                "coder": settings.model_for("coder"),
+                "auditor": settings.model_for("auditor") if not settings.no_verify else "",
             },
             pipeline_version=PIPELINE_VERSION,
             temperature=settings.temperature,

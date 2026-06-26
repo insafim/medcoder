@@ -82,14 +82,14 @@ semantic + full-text + fuzzy in one operational footprint.
 # 3 · LLM usage & prompting approach
 
 Three role-specialized agents (mirroring the real-world coder → QA-auditor
-workflow), all behind a single **LiteLLM** gateway so providers swap by env
-var:
+workflow), all behind one **LiteLLM** Chat Completions gateway so providers (and
+per-agent models) swap by env var:
 
 | Agent       | Human analog    | Model (default)             | Constraint                          |
 | ----------- | --------------- | --------------------------- | ----------------------------------- |
-| Extraction  | clinical scribe | `openai/gpt-4o-2024-08-06`         | reason-then-format; assertion regex |
-| Coder       | medical coder   | `openai/gpt-4o-2024-08-06`         | may only choose from whitelist      |
-| **Auditor** | QA auditor      | `anthropic/claude-3-5-sonnet-20241022`| **different model family** by default |
+| Extraction  | clinical scribe | `openai/gpt-5.4-mini`       | reason-then-format; assertion regex |
+| Coder       | medical coder   | `openai/gpt-5.4-mini`       | may only choose from whitelist      |
+| **Auditor** | QA auditor      | `anthropic/claude-haiku-4-5-20251001` | **different model family** by default |
 
 The **auditor defaulting to a different model family** is deliberate — research
 shows heterogeneous verifiers cut correlated errors and self-preference bias
@@ -107,10 +107,9 @@ keep the cost discipline reasonable.
   conversation — almost always sufficient.
 - *Versioned prompt files* (`prompts/extraction_p1.txt`, etc.). Prompt versions
   are part of the `config_hash` so a prompt change is visible in the audit log.
-- *temperature=0 + pinned dated model snapshots* (e.g.
-  `openai/gpt-4o-2024-08-06`) — reproducibility-first, traded off against the marginal
-  accuracy of self-consistency sampling. Self-consistency is available as an
-  optional confidence signal but off by default.
+- *Pinned model IDs + bounded sampling* (e.g. `openai/gpt-5.4-mini`): `temp=0`
+  where honoured (Claude); GPT-5 reasoning models reject it, so determinism rests
+  on Structured Outputs + low `reasoning_effort` (hashed; self-consistency off).
 
 **Confidence we surface ≠ raw LLM confidence.** Verbalised LLM confidence is
 systematically overconfident (Xiong et al. 2023). We blend three signals —

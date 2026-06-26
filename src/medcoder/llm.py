@@ -20,6 +20,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, TypeVar
@@ -38,6 +39,70 @@ log = get_logger(__name__)
 litellm.suppress_debug_info = True
 
 T = TypeVar("T", bound=BaseModel)
+
+
+# ----- model pricing + capability predicates ------------------------------
+
+# Published list prices (USD per 1M tokens) as of 2026-06-26. Registered with
+# LiteLLM so `completion_cost` stays accurate for model IDs newer than LiteLLM's
+# bundled cost map (the newest Claude/GPT-5.4 IDs may not be in it yet).
+# Sources: https://developers.openai.com/api/docs/pricing
+#          https://platform.claude.com/docs/en/about-claude/pricing
+_PRICES_PER_1M: dict[str, tuple[float, float]] = {
+    "gpt-5.4-mini": (0.75, 4.50),
+    "gpt-5.4-nano": (0.20, 1.25),
+    "claude-haiku-4-5-20251001": (1.00, 5.00),
+    "claude-sonnet-4-6": (3.00, 15.00),
+}
+
+
+def _register_model_prices() -> None:
+    """Best-effort registration of current prices into LiteLLM's cost map.
+
+    We register both the bare ID and the provider-prefixed form so a lookup keyed
+    by either resolves. Failure is non-fatal — cost capture is already wrapped in
+    a try/except at the call site and degrades to 0.0.
+    """
+    cost_map: dict[str, dict[str, Any]] = {}
+    for name, (inp, outp) in _PRICES_PER_1M.items():
+        provider = "openai" if name.startswith("gpt") else "anthropic"
+        entry = {
+            "input_cost_per_token": inp / 1_000_000,
+            "output_cost_per_token": outp / 1_000_000,
+            "litellm_provider": provider,
+            "mode": "chat",
+        }
+        cost_map[name] = entry
+        cost_map[f"{provider}/{name}"] = entry
+    try:
+        litellm.register_model(cost_map)
+    except Exception:  # noqa: BLE001  cost registration is best-effort
+        log.debug("model_price_registration_failed")
+
+
+_register_model_prices()
+
+
+def _is_openai_gpt5(model: str) -> bool:
+    """True for the OpenAI GPT-5 family (gpt-5, gpt-5.4-mini, gpt-5.5, …)."""
+    m = model.lower()
+    return m.startswith(("openai/gpt-5", "gpt-5"))
+
+
+def _rejects_custom_temperature(model: str) -> bool:
+    """Models that return a 400 on a non-default ``temperature``.
+
+    - OpenAI GPT-5 family (reasoning models) accept only the default temperature
+      and expose ``reasoning_effort`` instead.
+      Source: https://developers.openai.com/api/docs/guides/reasoning
+    - Anthropic Claude Opus 4.7+ rejects non-default temperature/top_p/top_k.
+      Source: https://platform.claude.com/docs/en/about-claude/model-deprecations
+    """
+    m = model.lower()
+    if _is_openai_gpt5(m):
+        return True
+    opus = re.search(r"claude-opus-4-(\d+)", m)
+    return bool(opus and int(opus.group(1)) >= 7)
 
 
 class LLMError(RuntimeError):
@@ -142,17 +207,31 @@ def _raw_completion(
     model: str,
     messages: list[dict[str, Any]],
     response_format: type[BaseModel] | dict[str, Any],
-    temperature: float,
+    temperature: float | None,
+    reasoning_effort: str | None,
     max_tokens: int,
     mock_response: str | None,
 ) -> Any:
+    """Single call into ``litellm.completion`` (the only provider call site).
+
+    Param convention: ``temperature`` and ``reasoning_effort`` are ``None`` to mean
+    "omit this field entirely" — required because reasoning models (GPT-5,
+    Claude Opus 4.7+) 400 on a non-default temperature, and ``reasoning_effort`` is
+    only meaningful for OpenAI GPT-5. The caller (`call_structured`) decides which to
+    send via `_rejects_custom_temperature` / `_is_openai_gpt5`.
+    """
     kwargs: dict[str, Any] = {
         "model": model,
         "messages": messages,
-        "temperature": temperature,
         "max_tokens": max_tokens,
         "response_format": response_format,
     }
+    # `temperature` is omitted for models that reject a non-default value
+    # (GPT-5 family, Claude Opus 4.7+); `reasoning_effort` is sent only to GPT-5.
+    if temperature is not None:
+        kwargs["temperature"] = temperature
+    if reasoning_effort is not None:
+        kwargs["reasoning_effort"] = reasoning_effort
     if mock_response is not None:
         kwargs["mock_response"] = mock_response
     return completion(**kwargs)
@@ -175,6 +254,9 @@ def call_structured(
     no API key is required. When set, no caching is performed.
     """
     settings = get_settings()
+    # Callers resolve their per-agent model via Settings.model_for(...) and pass it
+    # explicitly. This fallback is a safety net only: an omitted model uses the shared
+    # `llm_model` and therefore does NOT pick up extraction_model/coder_model overrides.
     model = model or settings.llm_model
     stats = CallStats(model=model)
 
@@ -198,6 +280,15 @@ def call_structured(
                 # Stale cache shape — fall through to re-call.
                 pass
 
+    # Provider-aware sampling params: reasoning models (GPT-5, Claude Opus 4.7+)
+    # reject a custom temperature; GPT-5 takes reasoning_effort instead.
+    if _rejects_custom_temperature(model):
+        call_temperature: float | None = None
+        call_reasoning_effort = settings.reasoning_effort if _is_openai_gpt5(model) else None
+    else:
+        call_temperature = settings.temperature
+        call_reasoning_effort = None
+
     last_err: Exception | None = None
     raw_text = ""
     for attempt in range(2):  # initial + 1 repair retry
@@ -206,7 +297,8 @@ def call_structured(
                 model=model,
                 messages=messages,
                 response_format=schema,
-                temperature=settings.temperature,
+                temperature=call_temperature,
+                reasoning_effort=call_reasoning_effort,
                 max_tokens=settings.max_tokens,
                 mock_response=mock_response,
             )

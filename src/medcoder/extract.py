@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 
+from .config import get_settings
 from .ingest import IngestedNote
 from .llm import CallAggregator, call_structured
 from .logging_setup import get_logger
@@ -117,6 +118,7 @@ def extract_facts(
     mock_response: str | None = None,
 ) -> list[ExtractedFact]:
     """Run the extraction agent over every window and merge results."""
+    model = get_settings().model_for("extraction")
     all_facts: list[ExtractedFact] = []
     for window in note.windows:
         resp = call_structured(
@@ -124,6 +126,7 @@ def extract_facts(
             system_prompt=EXTRACTION_SYSTEM,
             user_prompt=_build_user_prompt(window.text, window.start),
             schema=ExtractionResponse,
+            model=model,
             aggregator=aggregator,
             mock_response=mock_response,
         )

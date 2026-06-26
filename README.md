@@ -56,8 +56,10 @@ make install                              # creates .venv, installs in editable 
 # 2. Get the real ICD-10-CM catalog (US public domain) + build indexes
 make build-index
 
-# 3. (Optional) Set an LLM provider key
-export OPENAI_API_KEY=sk-...              # or ANTHROPIC_API_KEY, GEMINI_API_KEY
+# 3. (Optional) Set LLM provider keys. The default config is cross-family:
+export OPENAI_API_KEY=sk-...              # coder + extraction (gpt-5.4-mini)
+export ANTHROPIC_API_KEY=sk-ant-...       # independent auditor (claude-haiku-4-5)
+#   single-provider? point every model at one provider via MEDCODER_*_MODEL (.env)
 
 # 4. Run the pipeline on a sample note (live LLMs)
 make run                                  # uses note_01_outpatient_diabetes.txt
@@ -125,9 +127,9 @@ in-container `run` is fast.
   ],
   "metadata": {
     "trace_id": "9f3e1c…", "config_hash": "1a2b…",
-    "model_ids": { "extraction": "openai/gpt-4o-2024-08-06",
-                   "coder":      "openai/gpt-4o-2024-08-06",
-                   "auditor":    "anthropic/claude-3-5-sonnet-20241022" },
+    "model_ids": { "extraction": "openai/gpt-5.4-mini",
+                   "coder":      "openai/gpt-5.4-mini",
+                   "auditor":    "anthropic/claude-haiku-4-5-20251001" },
     "pipeline_version": "0.1.0", "temperature": 0.0,
     "timestamp": "2026-06-26T00:00:00Z", "encounter_type": "outpatient",
     "metrics": {
@@ -201,18 +203,27 @@ Full design in `docs/DESIGN.md`; this section is the elevator pitch.
 All env-driven via pydantic-settings; the common settings live in `.env.example`:
 
 ```bash
-MEDCODER_LLM_MODEL=openai/gpt-4o-2024-08-06          # provider-prefixed; pinned dated snapshot
-MEDCODER_VERIFIER_MODEL=anthropic/claude-3-5-sonnet-20241022   # *different* family by default
+MEDCODER_LLM_MODEL=openai/gpt-5.4-mini        # extraction + coder (shared default)
+MEDCODER_VERIFIER_MODEL=anthropic/claude-haiku-4-5-20251001  # auditor — *different* family
+MEDCODER_EXTRACTION_MODEL=                     # optional per-agent override (falls back to LLM_MODEL)
+MEDCODER_CODER_MODEL=                          # optional per-agent override
+MEDCODER_REASONING_EFFORT=low                  # OpenAI GPT-5 reasoning effort; bounds cost
 MEDCODER_RETRIEVAL_TOP_K=15                   # whitelist size per fact
-MEDCODER_TEMPERATURE=0.0                      # reproducibility-first
+MEDCODER_TEMPERATURE=0.0                      # honoured by Claude; GPT-5 rejects non-default
 MEDCODER_EMBEDDER=sentence-transformers/all-MiniLM-L6-v2
 MEDCODER_NO_VERIFY=0                          # 1 → skip the auditor pass
 MEDCODER_AUDIT_LOW_CONF_THRESHOLD=0.75        # ≤ this triggers the auditor
 ```
 
-Pinning a *dated* snapshot for both models is what gives reproducibility; the
-pipeline also pins `temperature=0` and versioned prompts (`prompts/*_p1.txt`).
-The full reproducibility envelope is captured in `RunMetadata`.
+Each agent's model is overridable independently (extraction / coder fall back to
+`MEDCODER_LLM_MODEL`; the auditor uses `MEDCODER_VERIFIER_MODEL`), so cost can be
+tuned per role — e.g. drop extraction to `openai/gpt-5.4-nano`. The defaults pin
+*specific* model IDs for reproducibility. Note the GPT-5 family are reasoning
+models that reject a non-default `temperature`, so `temperature=0` applies to
+providers that honour it (Claude) while GPT-5 determinism rests on Structured
+Outputs + low reasoning effort. The full reproducibility envelope (resolved
+per-agent model IDs, `reasoning_effort`, temperature) is captured in the
+`config_hash` and `RunMetadata`.
 
 ---
 
