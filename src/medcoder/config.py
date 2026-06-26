@@ -53,11 +53,13 @@ class Settings(BaseSettings):
     )
     audit_always_for_procedures: bool = True
 
-    # --- Confidence tier thresholds (gold-tuned, see §9.7) ---------------
+    # --- Confidence tier thresholds (gold-tuned, see Plan.md §9.7) -------
     tier_high_threshold: float = 0.78
     tier_low_threshold: float = 0.45
 
     # --- Paths -----------------------------------------------------------
+    # Stable local filename; contents are the CDC FY2027 release (the Makefile
+    # renames icd10cm-codes-2027.txt -> ...2026.txt so this path stays constant).
     icd10_catalog: Path = Field(
         default_factory=lambda: REPO_ROOT / "data" / "catalogs" / "icd10cm_codes_2026.txt"
     )

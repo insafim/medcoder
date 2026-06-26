@@ -49,7 +49,7 @@ test:
 test-fast:
 	$(PYTHON) -m pytest tests/ -v -m "not slow"
 
-# Gold-set evaluation: micro/macro/EMR/hierarchical/recall@k.
+# Gold-set evaluation: micro P/R/F1 (ICD+CPT), exact-match, hierarchical micro-F1, latency/cost. Needs an LLM key.
 .PHONY: eval
 eval: build-index
 	$(PYTHON) -m scripts.evaluate
@@ -60,6 +60,7 @@ lint:
 	$(PYTHON) -m ruff check src tests scripts
 
 # Generate the 1–2 page design PDF from DESIGN.md (requires pandoc + a LaTeX engine).
+# No LaTeX? scripts/build_pdf.sh renders via pandoc → headless Chrome (built the committed docs/DESIGN.pdf).
 .PHONY: pdf
 pdf:
 	@command -v pandoc >/dev/null || { echo "pandoc not found — install pandoc and a LaTeX engine first"; exit 1; }
@@ -79,7 +80,7 @@ docker:
 .PHONY: docker-run
 docker-run: docker
 	docker run --rm -e OPENAI_API_KEY -v "$(PWD)/data:/app/data" medcoder:dev \
-	  medcoder run /app/data/notes/note_01_outpatient_diabetes.txt --no-json-logs
+	  run /app/data/notes/note_01_outpatient_diabetes.txt --no-json-logs
 
 # Wipe build artefacts (keeps data + venv).
 .PHONY: clean

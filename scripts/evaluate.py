@@ -2,10 +2,9 @@
 
 Reports (split for ICD and CPT — see Plan.md §14):
   - micro P / R / F1
-  - macro P / R / F1
   - exact-match ratio (note-level)
   - hierarchical micro-F1 (ICD-10 truncated to 3-char category)
-  - retriever recall@k  (the end-to-end recall ceiling)
+  - mean latency and total cost (run observability)
 
 The gold schema separates "must_include" (counted in recall denominator) from
 "may_include" (counted as TP if predicted, but not penalised if missed). This
@@ -121,10 +120,26 @@ def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     icd_h = _sum_bucket(rows, "icd_hierarchical")
     return {
         "n_notes": len(rows),
-        "micro_icd":  {"p": _prf(*icd)[0],  "r": _prf(*icd)[1],  "f1": _prf(*icd)[2],  "tp": icd[0],  "fp": icd[1],  "fn": icd[2]},
-        "micro_cpt":  {"p": _prf(*cpt)[0],  "r": _prf(*cpt)[1],  "f1": _prf(*cpt)[2],  "tp": cpt[0],  "fp": cpt[1],  "fn": cpt[2]},
+        "micro_icd": {
+            "p": _prf(*icd)[0],
+            "r": _prf(*icd)[1],
+            "f1": _prf(*icd)[2],
+            "tp": icd[0],
+            "fp": icd[1],
+            "fn": icd[2],
+        },
+        "micro_cpt": {
+            "p": _prf(*cpt)[0],
+            "r": _prf(*cpt)[1],
+            "f1": _prf(*cpt)[2],
+            "tp": cpt[0],
+            "fp": cpt[1],
+            "fn": cpt[2],
+        },
         "micro_icd_hierarchical": {
-            "p": _prf(*icd_h)[0], "r": _prf(*icd_h)[1], "f1": _prf(*icd_h)[2],
+            "p": _prf(*icd_h)[0],
+            "r": _prf(*icd_h)[1],
+            "f1": _prf(*icd_h)[2],
         },
         "exact_match_icd_ratio": sum(1 for r in rows if r["exact_match_icd"]) / len(rows),
         "exact_match_cpt_ratio": sum(1 for r in rows if r["exact_match_cpt"]) / len(rows),
