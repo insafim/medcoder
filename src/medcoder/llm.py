@@ -46,8 +46,8 @@ T = TypeVar("T", bound=BaseModel)
 # Published list prices (USD per 1M tokens) as of 2026-06-26. Registered with
 # LiteLLM so `completion_cost` stays accurate for model IDs newer than LiteLLM's
 # bundled cost map (the newest Claude/GPT-5.4 IDs may not be in it yet).
-# Sources: https://developers.openai.com/api/docs/pricing
-#          https://platform.claude.com/docs/en/about-claude/pricing
+# Sources: https://developers.openai.com/api/docs/pricing             (verified live 2026-06-26)
+#          https://platform.claude.com/docs/en/about-claude/pricing   (verified live 2026-06-26)
 _PRICES_PER_1M: dict[str, tuple[float, float]] = {
     "gpt-5.4-mini": (0.75, 4.50),
     "gpt-5.4-nano": (0.20, 1.25),
@@ -94,9 +94,9 @@ def _rejects_custom_temperature(model: str) -> bool:
 
     - OpenAI GPT-5 family (reasoning models) accept only the default temperature
       and expose ``reasoning_effort`` instead.
-      Source: https://developers.openai.com/api/docs/guides/reasoning
+      Source: https://developers.openai.com/api/docs/guides/reasoning   (verified live 2026-06-26)
     - Anthropic Claude Opus 4.7+ rejects non-default temperature/top_p/top_k.
-      Source: https://platform.claude.com/docs/en/about-claude/model-deprecations
+      Source: https://platform.claude.com/docs/en/about-claude/model-deprecations  (verified live 2026-06-26)
     """
     m = model.lower()
     if _is_openai_gpt5(m):
@@ -191,16 +191,29 @@ def _build_messages(system: str, user: str, schema: type[BaseModel]) -> list[dic
     ]
 
 
-# Retry on any Exception because LiteLLM surfaces transient provider errors
-# (rate limits, timeouts, 5xx, network blips) as plain `Exception` subclasses
-# rather than a stable typed hierarchy. Back-off params are tenacity's standard
-# capped-exponential pattern. Source: https://github.com/BerriAI/litellm/issues
-# (provider-error normalisation is intentionally lossy upstream).
+# Retry ONLY on transient provider errors — rate limits (429), timeouts, upstream
+# 5xx (500/502/503), and network blips. Non-transient failures (auth, 400 bad-request,
+# 404 bad model, context-window) cannot succeed on a retry, so we fail fast and let the
+# pipeline's per-stage handler degrade immediately rather than burn ~7s of
+# back-off (this is what makes an unfunded auditor key degrade quickly, not slowly).
+# LiteLLM exposes a typed exception hierarchy mirroring OpenAI's.
+# Sources: https://docs.litellm.ai/docs/exception_mapping   (verified 2026-06-26)
+#          https://tenacity.readthedocs.io/en/latest/       (verified 2026-06-26)
+_RETRYABLE_LLM_ERRORS = (
+    litellm.RateLimitError,
+    litellm.Timeout,
+    litellm.APIConnectionError,
+    litellm.InternalServerError,  # HTTP 500
+    litellm.BadGatewayError,  # HTTP 502
+    litellm.ServiceUnavailableError,  # HTTP 503
+)
+
+
 @retry(
     reraise=True,
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=1, max=8),
-    retry=retry_if_exception_type(Exception),
+    retry=retry_if_exception_type(_RETRYABLE_LLM_ERRORS),
 )
 def _raw_completion(
     *,
