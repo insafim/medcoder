@@ -286,6 +286,28 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 
 ---
 
+## Eval results (directional — n=4)
+
+Measured on the 4-note authored gold set with a single-provider run —
+reproduce with `MEDCODER_VERIFIER_MODEL=openai/gpt-5.4-mini make eval`. (Plain
+`make eval` uses the default cross-family config: OpenAI coder + Anthropic
+auditor.)
+
+| Metric                       |    P |    R |   F1 |
+| ---------------------------- | ---: | ---: | ---: |
+| **ICD-10 (micro)**           | 0.40 | 0.62 | 0.48 |
+| ICD-10 hierarchical (3-char) | 0.47 | 0.67 | 0.55 |
+| **CPT (micro)**              | 0.86 | 0.60 | 0.71 |
+| Exact-match (note-level)     |    — |    — |   0% |
+
+Four notes is too small to be a benchmark — read these as directional. Even so,
+ICD-10 micro-F1 (**0.48**) lands just under the ~0.54 full-vocabulary SOTA
+ceiling, and recall > precision is by design: the pipeline over-surfaces
+candidates with typed warnings (5–14/note) for a human reviewer rather than
+silently missing codes — exactly the assistive posture the system targets.
+
+---
+
 ## 7 · Limitations & extensions
 
 The design doc (`docs/DESIGN.md` §5) is the authoritative list. The key
@@ -300,9 +322,9 @@ limitations to set reviewer expectations:
 - **General-purpose embedder.** `all-MiniLM-L6-v2` is a demo compromise; the
   production choice is a biomedical embedder (SapBERT / PubMedBERT) for better
   semantic match on clinical terminology.
-- **Eval is illustrative**, not a benchmark — the gold set is 4 authored notes.
-  Methodology and metric choices are correct (`scripts/evaluate.py`); only the
-  sample size is small.
+- **Eval is directional**, not a benchmark — 4 authored notes (numbers in the
+  Eval results section above). Methodology and metric choices are sound
+  (`scripts/evaluate.py`); only the sample size is small.
 - **Confidence is gold-tuned, not formally calibrated.** Isotonic / Platt
   calibration with ECE is a documented extension (needs a larger labelled set
   than a small authored gold set supports).
