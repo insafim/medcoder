@@ -11,7 +11,9 @@ requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "AppliedAI Exercise" }]
 dependencies = [
-    "litellm>=1.52.0",
+    # >=1.76 for GPT-5 cost tracking; exclude the compromised 1.82.7/1.82.8 artifacts
+    # (LiteLLM security advisory, March 2026).
+    "litellm>=1.76.0,!=1.82.7,!=1.82.8",
     "pydantic>=2.7",
     "pydantic-settings>=2.4",
     "typer>=0.12",

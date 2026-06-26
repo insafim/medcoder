@@ -28,15 +28,36 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # --- Models (pinned, dated snapshots for reproducibility) ------------
+    # --- Models (current generation; cost-optimised; cross-family auditor) ---
     # LiteLLM model strings: use provider-prefixed form so the gateway doesn't have to
     # guess the provider (recent LiteLLM versions stopped inferring it from "claude-…").
-    llm_model: str = Field("openai/gpt-4o-2024-08-06", description="Primary model (extract + code)")
-    verifier_model: str = Field(
-        "anthropic/claude-3-5-sonnet-20241022",
-        description="Independent auditor — defaults to a different family",
+    #
+    # Per-agent override: MEDCODER_EXTRACTION_MODEL / MEDCODER_CODER_MODEL fall back to
+    # MEDCODER_LLM_MODEL when unset; the auditor uses MEDCODER_VERIFIER_MODEL. This lets
+    # cost be tuned per role (e.g. drop extraction to the cheaper nano tier). Defaults
+    # verified current 2026-06-26; the prior gpt-4o / claude-3-5 snapshots are
+    # superseded (and the claude-3-5 IDs are now retired by Anthropic).
+    llm_model: str = Field(
+        "openai/gpt-5.4-mini",
+        description="Shared default for extraction + coder (balanced cost/quality)",
     )
+    extraction_model: str | None = Field(
+        None, description="Override for the extraction agent; falls back to llm_model"
+    )
+    coder_model: str | None = Field(
+        None, description="Override for the coder agent; falls back to llm_model"
+    )
+    verifier_model: str = Field(
+        "anthropic/claude-haiku-4-5-20251001",
+        description="Independent auditor — cheapest current Claude, a different family",
+    )
+    # OpenAI GPT-5 are reasoning models: they reject a non-default `temperature` and
+    # expose `reasoning_effort` instead. We keep temperature=0 for providers that honour
+    # it (Claude Haiku/Sonnet) and pass reasoning_effort to GPT-5 to bound reasoning cost.
     temperature: float = 0.0
+    reasoning_effort: str = Field(
+        "low", description="OpenAI GPT-5 reasoning effort (none|low|medium|high); bounds cost"
+    )
     max_tokens: int = 1500
 
     # --- Retrieval -------------------------------------------------------
@@ -73,12 +94,30 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     log_json: bool = True
 
+    def model_for(self, agent: str) -> str:
+        """Resolve the effective model ID for a pipeline agent.
+
+        extraction/coder fall back to the shared ``llm_model``; the auditor uses
+        ``verifier_model``. Centralised so logs, the config_hash, and the actual
+        calls all agree on which model ran for each role.
+        """
+        if agent == "extraction":
+            return self.extraction_model or self.llm_model
+        if agent == "coder":
+            return self.coder_model or self.llm_model
+        if agent == "auditor":
+            return self.verifier_model
+        return self.llm_model
+
     def config_hash(self) -> str:
         """Stable hash over reproducibility-relevant settings."""
         relevant = {
             "llm_model": self.llm_model,
+            "extraction_model": self.model_for("extraction"),
+            "coder_model": self.model_for("coder"),
             "verifier_model": self.verifier_model,
             "temperature": self.temperature,
+            "reasoning_effort": self.reasoning_effort,
             "embedder": self.embedder,
             "retrieval_top_k": self.retrieval_top_k,
             "rrf_k": self.rrf_k,

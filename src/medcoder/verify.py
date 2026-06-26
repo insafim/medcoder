@@ -47,9 +47,7 @@ def _needs_audit(assignment: CodedAssignment) -> bool:
     return False
 
 
-def _build_user_prompt(
-    note: IngestedNote, pairs: list[tuple[int, CodedAssignment]]
-) -> str:
+def _build_user_prompt(note: IngestedNote, pairs: list[tuple[int, CodedAssignment]]) -> str:
     payload = {
         "encounter_type": note.encounter_type.value,
         "note_text": note.text,
@@ -101,7 +99,7 @@ def audit_assignments(
         system_prompt=AUDITOR_SYSTEM,
         user_prompt=_build_user_prompt(note, pairs),
         schema=AuditorResponse,
-        model=s.verifier_model,
+        model=s.model_for("auditor"),
         aggregator=aggregator,
         mock_response=mock_response,
     )
@@ -112,11 +110,11 @@ def audit_assignments(
             continue
         v = by_idx.get(slot)
         if v is None:
-            log.warning("audit_missing_verdict", extra={"slot": slot, "code": assignment.candidate.code})
+            log.warning(
+                "audit_missing_verdict", extra={"slot": slot, "code": assignment.candidate.code}
+            )
             continue
-        outcomes[slot] = AuditOutcome(
-            assignment=assignment, agree=bool(v.agree), note=v.note or ""
-        )
+        outcomes[slot] = AuditOutcome(assignment=assignment, agree=bool(v.agree), note=v.note or "")
     log.info(
         "audit_done",
         extra={

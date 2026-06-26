@@ -61,7 +61,7 @@ def test_coding_result_roundtrip():
         ],
         metadata=RunMetadata(
             trace_id="abc123",
-            model_ids={"coder": "gpt-4o-2024-08-06"},
+            model_ids={"coder": "openai/gpt-5.4-mini"},
             pipeline_version="0.1.0",
             temperature=0.0,
             config_hash="deadbeef00000000",

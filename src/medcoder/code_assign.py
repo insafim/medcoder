@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 
+from .config import get_settings
 from .ingest import IngestedNote
 from .llm import CallAggregator, call_structured
 from .logging_setup import get_logger
@@ -96,6 +97,7 @@ def assign_codes(
         system_prompt=CODER_SYSTEM,
         user_prompt=_build_user_prompt(note, items),
         schema=CoderResponse,
+        model=get_settings().model_for("coder"),
         aggregator=aggregator,
         mock_response=mock_response,
     )

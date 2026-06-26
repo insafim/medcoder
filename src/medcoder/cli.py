@@ -28,7 +28,9 @@ app = typer.Typer(
 
 @app.command()
 def run(
-    note: Path = typer.Argument(..., exists=True, readable=True, help="Path to a .txt clinical note"),
+    note: Path = typer.Argument(
+        ..., exists=True, readable=True, help="Path to a .txt clinical note"
+    ),
     out: Path | None = typer.Option(
         None, "--out", "-o", help="Write JSON to this file (default: stdout)"
     ),
@@ -43,10 +45,16 @@ def run(
         s.no_verify = True
     configure_logging(level=log_level or s.log_level, json_mode=not no_json_logs)
 
-    if not have_api_key_for(s.llm_model):
+    # The default config is cross-family (OpenAI coder + Anthropic auditor), so a
+    # live run can need more than one provider key. Check every resolved model.
+    needed = {s.model_for("extraction"), s.model_for("coder")}
+    if not s.no_verify:
+        needed.add(s.model_for("auditor"))
+    missing = sorted(m for m in needed if not have_api_key_for(m))
+    if missing:
         typer.secho(
-            f"⚠ No API key in env for model {s.llm_model!r}. Set OPENAI_API_KEY / "
-            "ANTHROPIC_API_KEY / etc., or use the mock-based test suite.",
+            f"⚠ No API key in env for: {', '.join(missing)}. Set OPENAI_API_KEY / "
+            "ANTHROPIC_API_KEY / etc., or use the mock-based path (make smoke / make test).",
             fg=typer.colors.YELLOW,
             err=True,
         )
@@ -123,9 +131,7 @@ def retrieve_cmd(
     sys_ = CodeSystem.ICD10 if system == "icd10" else CodeSystem.CPT
     r = get_retriever(sys_)
     hits = r.search(query, top_k=k)
-    typer.echo(
-        json.dumps([h.model_dump(mode="json") for h in hits], indent=2)
-    )
+    typer.echo(json.dumps([h.model_dump(mode="json") for h in hits], indent=2))
 
 
 @app.command()
