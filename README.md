@@ -134,7 +134,7 @@ in-container `run` is fast.
     "model_ids": { "extraction": "openai/gpt-5.4-mini",
                    "coder":      "openai/gpt-5.4-mini",
                    "auditor":    "anthropic/claude-haiku-4-5-20251001" },
-    "pipeline_version": "0.1.0", "temperature": 0.0,
+    "pipeline_version": "0.1.1", "temperature": 0.0,
     "timestamp": "2026-06-26T00:00:00Z", "encounter_type": "outpatient",
     "metrics": {
       "stage_latency_ms": { "ingest": 0.6, "extract": 1842, "retrieve": 71,

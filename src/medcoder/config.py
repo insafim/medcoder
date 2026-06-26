@@ -14,7 +14,7 @@ from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-PIPELINE_VERSION = "0.1.0"
+PIPELINE_VERSION = "0.1.1"
 PROMPT_VERSION = "p1"
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
