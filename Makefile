@@ -79,7 +79,7 @@ docker:
 
 .PHONY: docker-run
 docker-run: docker
-	docker run --rm -e OPENAI_API_KEY -v "$(PWD)/data:/app/data" medcoder:dev \
+	docker run --rm -e OPENAI_API_KEY -e ANTHROPIC_API_KEY -v "$(PWD)/data:/app/data" medcoder:dev \
 	  run /app/data/notes/note_01_outpatient_diabetes.txt --no-json-logs
 
 # Wipe build artefacts (keeps data + venv).
