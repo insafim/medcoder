@@ -25,8 +25,10 @@ data:
 
 # Build FAISS + BM25 indexes for both code systems (cached on disk).
 .PHONY: build-index
+# Pass flags through with ARGS, e.g. `make build-index ARGS='--force'` to rebuild,
+# or `ARGS='--system cpt --force'` to rebuild a single system.
 build-index: data
-	$(PYTHON) -m scripts.build_index
+	$(PYTHON) -m scripts.build_index $(ARGS)
 
 # Run the pipeline on the first synthetic note (smoke test, requires LLM key).
 .PHONY: run
