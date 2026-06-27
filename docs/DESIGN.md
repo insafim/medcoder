@@ -45,7 +45,11 @@ note.txt ─► ① ingest ─► ② extract ─► ③ retrieve ─► ④ cod
 7. **Assemble (deterministic).** Blends and tiers the confidence (§3), builds
    the Pydantic-validated `CodingResult` and a `RunMetadata` envelope with
    `trace_id`, model snapshots, prompt version, config hash, and per-stage
-   metrics.
+   metrics. Each run persists a self-contained `outputs/<doc_id>/` folder:
+   `result.json` (or a Markdown review sheet via `--format md`) plus a
+   `trace.json` audit trail recording every stage's actual output — extracted
+   facts, the per-fact candidate whitelist, coder choices, and auditor verdicts —
+   so a reviewer can reconstruct *how* each code was reached.
 
 # 2 · Code retrieval / filtering strategy
 
@@ -132,7 +136,7 @@ demo gold supports.)
 
 | Decision                                            | Why                                                 | Trade-off accepted                     |
 | --------------------------------------------------- | --------------------------------------------------- | -------------------------------------- |
-| **Retrieve-then-constrain** (whitelist, not free generation) | Eliminates hallucinated codes; turns a 75k-way generation problem into a k-way selection (6% → ~100% on a comparable task — arXiv 2407.12849) | Bounded by **retriever recall@k** — the upstream recall ceiling on retrievable codes (not computed in the eval) |
+| **Retrieve-then-constrain** (whitelist, not free generation) | Eliminates hallucinated codes; turns a 75k-way generation problem into a k-way selection (6% → ~100% on a comparable task — arXiv 2407.12849) | Bounded by **retriever recall@k** — the upstream recall ceiling on retrievable codes (now measured per-stage in the eval, separating retrieval misses from coder misses) |
 | **Coder + independent Auditor** (multi-LLM)         | Best precision/recall on MIMIC-IV (MDPI Informatics 2026); heterogeneous verifiers cut correlated errors (A-HMAD 2025) | Extra LLM calls — mitigated by selective+batched verification |
 | **Hybrid retrieval + RRF**                          | Exact terms *and* paraphrases; no score-scale tuning | Two indexes to build; ~1 minute on 75k codes |
 | **Bounded 3-agent decomposition (no swarm)**        | MAST (NeurIPS 2025) shows speculative swarms add latency and "silent gray errors" without reliable accuracy gains | Foregoes ensemble-style accuracy gains for predictability |
@@ -150,8 +154,12 @@ ICD-10 tops out around micro-F1 ≈ 0.54 (RAG-Coding, 2026); a human reviewer is
 required by design and the payload (evidence spans, tiered confidence, mutable
 reviewer fields) is shaped to make that review fast. *CPT is synthetic* —
 real-CPT accuracy must be re-validated on a licensed catalog (architecture is
-drop-in). *General-purpose embedder* (`all-MiniLM-L6-v2`) is a demo compromise;
-production choice is biomedical (SapBERT / PubMedBERT). *Rule engine is a
+drop-in). *General-purpose embedder* (`all-MiniLM-L6-v2`) is a deliberate demo default —
+local, keyless, fast, and the dense half only embeds short strings (code
+descriptions + extracted terms, not raw notes), where it suffices alongside BM25;
+**pluggable** via `MEDCODER_EMBEDDER` (with an on-disk dim-guard), the production
+upgrade for clinical text is **SapBERT** (trained for exactly this mention→concept
+linking task) or PubMedBERT, with a hosted OpenAI backend opt-in. *Rule engine is a
 curated subset* (format, billable, Excludes1 short list, 7th-character chapters,
 dx↔px linkage, evidence anchoring); full guideline coverage needs the ICD-10
 tabular XML + CMS NCCI refresh pipeline. *Confidence calibration* is
