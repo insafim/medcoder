@@ -1,6 +1,6 @@
 ---
 title: "medcoder — Auditable Medical-Coding Pipeline"
-subtitle: "AppliedAI · Opus AI Engineer · Exercise 2"
+subtitle: "Design & architecture overview"
 author: "Design Document (1–2 pp distillation)"
 date: "June 2026"
 ---
@@ -167,14 +167,15 @@ gold-tuned thresholds, not formal Platt / isotonic — needs a larger labelled
 set. *Reproducibility* is engineered (temp=0, pinned dated snapshots, versioned
 prompts, full audit log) but not bit-for-bit guaranteed across provider model
 updates — exactly why we pin and log everything. *Evaluation* is directional
-on a small (n=4) authored gold set — ICD-10 micro-F1 ≈ 0.51 (≈ the ~0.54 SOTA
-ceiling), CPT micro-F1 ≈ 0.75; the metric methodology (`scripts/evaluate.py`:
-micro P/R/F1 for ICD and CPT, exact-match ratio, ICD-10-hierarchical micro-F1)
-is sound — only the sample size is small. *Precision (≈ 0.40) is over-coding-bound*
-— the coder emits more codes than gold — so a more selective coder and a larger
-gold set are the precision lever, not retrieval; the v2 changes (query expansion +
-LLM encounter type) lifted recall at held precision (ICD recall 0.62 → 0.71,
-encounter-type 3/4 → 4/4).
+on a small (n=4) authored gold set — ICD-10 micro-F1 ≈ 0.5 (≈ the ~0.54 SOTA
+ceiling), CPT micro-F1 ≈ 0.8; at n=4, ±0.05 between runs is normal LLM sampling
+noise, so the committed `outputs/eval/metrics.json` is one representative run, not
+a fixed score. The metric methodology (`scripts/evaluate.py`: micro P/R/F1 for ICD
+and CPT, exact-match ratio, ICD-10-hierarchical micro-F1, per-stage retrieval
+recall@k) is sound — only the sample size is small. *Precision (≈ 0.4) is
+over-coding-bound* — the coder emits more codes than gold — so a more selective
+coder and a larger gold set are the precision lever, not retrieval; the v2 changes
+(query expansion + LLM encounter type) lift recall at held precision.
 
 **Extensions (designed for, not built).** Postgres hybrid retrieval (`pgvector` +
 `tsvector` + `pg_trgm`); biomedical embeddings + SNOMED→ICD crosswalk; full
@@ -185,4 +186,4 @@ Airflow/Celery for orchestration.
 
 **References (load-bearing).** NEJM AI 2024 (LLMs are poor coders); arXiv 2407.12849
 (retrieve-then-rerank); MDPI Informatics 2026 (coder+auditor); MAST/NeurIPS 2025;
-Cormack 2009 (RRF); ICD-10-CM Official Guidelines FY2026 — full list in `docs/Plan.md` §20.
+Cormack 2009 (RRF); ICD-10-CM Official Guidelines FY2026.

@@ -1,6 +1,6 @@
 """End-to-end orchestration: note → CodingResult.
 
-Stages (per Plan.md §6):
+Stages:
     ingest → extract → retrieve → code → audit → rules → assemble
 
 Each stage:
@@ -102,7 +102,7 @@ def _retrieve_for_facts(
         retriever = get_retriever(system)
         # Query expansion: retrieve on the normalized term AND any LLM-supplied
         # synonyms, then merge candidates keeping the best score per code. Widens
-        # recall without relaxing the whitelist (§9.3).
+        # recall without relaxing the whitelist.
         merged: dict[str, CandidateCode] = {}
         for q in [f.normalized_term, *f.query_terms]:
             if not q or not q.strip():
@@ -114,7 +114,7 @@ def _retrieve_for_facts(
         ranked = sorted(merged.values(), key=lambda c: -c.retrieval_score)[:top_k]
         for pos, c in enumerate(ranked, start=1):
             # in-place mutation is intentional (Pydantic model, not frozen):
-            c.fused_rank = pos  # final post-merge rank feeds confidence (§9.7)
+            c.fused_rank = pos  # final post-merge rank feeds confidence
         out[i] = ranked
     return out
 
@@ -171,7 +171,7 @@ def run(
         metrics.n_facts = len(facts)
 
         # Encounter type: prefer the extraction LLM's whole-note classification;
-        # fall back to the deterministic ingest heuristic when it is unsure (§9.1).
+        # fall back to the deterministic ingest heuristic when it is unsure.
         encounter_type = (
             llm_encounter
             if llm_encounter not in (None, EncounterType.UNKNOWN)

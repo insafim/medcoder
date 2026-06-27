@@ -1,0 +1,265 @@
+{
+  "document_id": "note_01_outpatient_diabetes",
+  "diagnoses": [
+    {
+      "code": "I10",
+      "system": "ICD-10-CM",
+      "description": "Essential (primary) hypertension",
+      "confidence": 0.9955,
+      "confidence_tier": "high",
+      "rationale": "The note explicitly documents \"essential hypertension\" and later \"Essential hypertension, not at goal.\" This matches \"I10 Essential (primary) hypertension.\"",
+      "evidence": [
+        {
+          "text": "essential\nhypertension.",
+          "normalized_term": "essential hypertension",
+          "query_terms": [
+            "hypertension",
+            "HTN"
+          ],
+          "assertion_status": "present",
+          "start_offset": 215,
+          "end_offset": 238,
+          "section": "subjective",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "E11.42",
+      "system": "ICD-10-CM",
+      "description": "Type 2 diabetes mellitus with diabetic polyneuropathy",
+      "confidence": 0.9955,
+      "confidence_tier": "high",
+      "rationale": "Assessment states \"Type 2 diabetes mellitus with diabetic polyneuropathy\" and the exam documents reduced monofilament sensation in both feet. This is a direct match to \"E11.42 Type 2 diabetes mellitus with diabetic polyneuropathy.\"",
+      "evidence": [
+        {
+          "text": "Type 2 diabetes mellitus with diabetic polyneuropathy, with documented\n sensory deficits on monofilament testing \u2014 A1C above goal.",
+          "normalized_term": "type 2 diabetes mellitus with diabetic polyneuropathy",
+          "query_terms": [
+            "T2DM with diabetic polyneuropathy"
+          ],
+          "assertion_status": "present",
+          "start_offset": 971,
+          "end_offset": 1101,
+          "section": "assessment",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "E11.9",
+      "system": "ICD-10-CM",
+      "description": "Type 2 diabetes mellitus without complications",
+      "confidence": 0.901,
+      "confidence_tier": "high",
+      "rationale": "The note states a history of \"type 2 diabetes mellitus\" in routine follow-up, but this fact text does not include a specific complication. The most direct match among the candidates is \"E11.9 Type 2 diabetes mellitus without complications.\"",
+      "evidence": [
+        {
+          "text": "type 2 diabetes mellitus",
+          "normalized_term": "type 2 diabetes mellitus",
+          "query_terms": [
+            "T2DM",
+            "type 2 DM"
+          ],
+          "assertion_status": "present",
+          "start_offset": 186,
+          "end_offset": 210,
+          "section": "subjective",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "E11.21",
+      "system": "ICD-10-CM",
+      "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+      "confidence": 0.8499,
+      "confidence_tier": "high",
+      "rationale": "The assessment explicitly says \"Diabetic nephropathy, early \u2014 microalbuminuria,\" and the labs show elevated urine microalbumin. This supports \"E11.21 Type 2 diabetes mellitus with diabetic nephropathy.\"",
+      "evidence": [
+        {
+          "text": "Diabetic nephropathy, early \u2014 microalbuminuria.",
+          "normalized_term": "diabetic nephropathy",
+          "query_terms": [
+            "diabetic kidney disease"
+          ],
+          "assertion_status": "present",
+          "start_offset": 1157,
+          "end_offset": 1204,
+          "section": "assessment",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "E66.811",
+      "system": "ICD-10-CM",
+      "description": "Obesity, class 1",
+      "confidence": 0.8409,
+      "confidence_tier": "high",
+      "rationale": "The assessment lists \"Obesity, BMI 31.4.\" A BMI of 31.4 falls in obesity class 1, so \"E66.811 Obesity, class 1\" is the best match.",
+      "evidence": [
+        {
+          "text": "Obesity, BMI 31.4.",
+          "normalized_term": "obesity",
+          "query_terms": [],
+          "assertion_status": "present",
+          "start_offset": 1208,
+          "end_offset": 1226,
+          "section": "assessment",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    }
+  ],
+  "procedures": [
+    {
+      "code": "9T0012",
+      "system": "CPT",
+      "description": "[SYNTHETIC] Comprehensive diabetic foot examination",
+      "confidence": 1.0,
+      "confidence_tier": "high",
+      "rationale": "The procedure documented is \"Comprehensive diabetic foot exam performed\" and later \"Comprehensive diabetic foot examination performed today.\" This exactly matches the synthetic CPT code for a comprehensive diabetic foot examination.",
+      "evidence": [
+        {
+          "text": "Comprehensive diabetic foot exam performed:",
+          "normalized_term": "diabetic foot examination",
+          "query_terms": [
+            "comprehensive diabetic foot exam",
+            "diabetic foot exam"
+          ],
+          "assertion_status": "present",
+          "start_offset": 681,
+          "end_offset": 724,
+          "section": "objective",
+          "kind": "procedure"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": true,
+      "audit_note": "The note explicitly documents \"Comprehensive diabetic foot exam performed\" in the Objective section and reiterates \"Comprehensive diabetic foot examination performed today\" in the Plan, with detailed findings (monofilament testing, pedal pulses, ulceration/callosity assessment, capillary refill) that support the comprehensive nature of the examination."
+    }
+  ],
+  "warnings": [
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'shortness of breath' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'polyuria' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'visual changes' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'myocardial infarction' dropped from coding (assertion=family); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'stroke' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    }
+  ],
+  "metadata": {
+    "trace_id": "a94f8d732eba",
+    "model_ids": {
+      "extraction": "openai/gpt-5.4-mini",
+      "coder": "openai/gpt-5.4-mini",
+      "auditor": "anthropic/claude-haiku-4-5-20251001"
+    },
+    "pipeline_version": "0.1.1",
+    "temperature": 0.0,
+    "config_hash": "3bee7eea3e0cee68",
+    "timestamp": "2026-06-27T15:44:45.900469Z",
+    "encounter_type": "outpatient",
+    "metrics": {
+      "stage_latency_ms": {
+        "ingest": 0.13241700071375817,
+        "extract": 39520.50662500551,
+        "retrieve": 16447.948291999637,
+        "code": 5258.289457997307,
+        "audit": 2217.7965830051107,
+        "rules": 0.1631659979466349,
+        "assemble": 0.2594170073280111
+      },
+      "total_latency_ms": 63445.93020899629,
+      "tokens": {
+        "extraction.prompt_tokens": 1724,
+        "extraction.completion_tokens": 6179,
+        "extraction.total_tokens": 7903,
+        "extraction.calls": 1,
+        "coder.prompt_tokens": 6101,
+        "coder.completion_tokens": 637,
+        "coder.total_tokens": 6738,
+        "coder.calls": 1,
+        "auditor.prompt_tokens": 2171,
+        "auditor.completion_tokens": 127,
+        "auditor.total_tokens": 2298,
+        "auditor.calls": 1
+      },
+      "est_cost_usd": 0.039347,
+      "retries": 0,
+      "n_candidates": 105,
+      "n_warnings": 7,
+      "n_facts": 14,
+      "n_facts_coded": 6
+    }
+  }
+}
