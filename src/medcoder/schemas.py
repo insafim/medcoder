@@ -1,7 +1,7 @@
 """Pydantic data contracts for the medical-coding pipeline.
 
 Every stage exchanges these models; the final reviewer payload is
-`CodingResult`. Field names track Plan.md §10 directly so the schema is
+`CodingResult`. Field names track the design doc directly so the schema is
 diff-able against the design.
 """
 
@@ -120,7 +120,7 @@ class CodeSuggestion(BaseModel):
     rationale: str
     evidence: list[ExtractedFact] = Field(default_factory=list)
     status: Literal["primary", "secondary", "uncertain"] = "primary"
-    # Reviewer override surface (mutable lifecycle, see §11)
+    # Reviewer override surface (mutable lifecycle)
     reviewer_decision: ReviewerDecision = ReviewerDecision.SUGGESTED
     reviewer_code: str | None = None
     reviewer_note: str | None = None

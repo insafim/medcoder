@@ -9,7 +9,7 @@ description = "Auditable medical coding pipeline — ICD-10 + CPT suggestions fr
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "AppliedAI Exercise" }]
+authors = [{ name = "medcoder contributors" }]
 dependencies = [
     # >=1.76 for GPT-5 cost tracking; exclude the compromised 1.82.7/1.82.8 artifacts
     # (LiteLLM security advisory, March 2026).

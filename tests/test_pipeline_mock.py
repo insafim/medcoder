@@ -66,7 +66,7 @@ def test_pipeline_drops_offlist_coder_codes(small_icd_catalog):
     must be silently dropped, never propagated into the final CodingResult.
 
     This is the structural property the whole 'retrieve-then-constrain' design
-    rests on (Plan.md §9.3). If a regression removes the filter at
+    rests on. If a regression removes the filter at
     code_assign.assign_codes, this test would catch it.
     """
     note = "Assessment: Type 2 diabetes mellitus."
