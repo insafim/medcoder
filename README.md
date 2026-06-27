@@ -64,7 +64,11 @@ export ANTHROPIC_API_KEY=sk-ant-...       # independent auditor (claude-haiku-4-
 
 # 4. Run the pipeline on a sample note (live LLMs)
 make run                                  # uses note_01_outpatient_diabetes.txt
-#   → JSON CodingResult to stdout, structured logs to stderr
+#   → JSON CodingResult to stdout, AND saved to outputs/<doc_id>/
+#     (result.json + trace.json — the per-run audit trail). Flags:
+#       --no-save     stdout only (no outputs/ folder)
+#       --format md   human-readable review sheet instead of JSON
+#       --out PATH    write one file to an exact path
 
 # 4b. No LLM key? Use the mocked smoke run against the real ICD-10 index:
 make smoke                                # same JSON shape, canned LLM responses
@@ -154,6 +158,15 @@ the original note), a **blended-then-tiered confidence**, an **auditor verdict**
 and **reviewer-override fields** (`reviewer_decision`, `reviewer_code`,
 `reviewer_note`) so the reviewer can accept / modify / reject in place.
 
+**Two views, one payload.** JSON is the machine/audit format; `--format md`
+renders the same `CodingResult` as a human review sheet (one row per code with an
+Accept? column, confidence tier, evidence quote, and auditor verdict). **Audit
+trail.** Each run auto-saves a self-contained `outputs/<doc_id>/` folder:
+`result.json` (or `.md`) plus `trace.json` — the full decision trail (extracted
+facts, the retrieval candidate whitelist *per fact*, the coder's choices, and the
+auditor's verdicts), so a reviewer can reconstruct *how* each suggestion was
+reached, not just see the final codes. `--no-save` opts out.
+
 ---
 
 ## 3 · Data licensing — read this
@@ -222,7 +235,18 @@ MEDCODER_AUDIT_LOW_CONF_THRESHOLD=0.75        # ≤ this triggers the auditor
 Each agent's model is overridable independently (extraction / coder fall back to
 `MEDCODER_LLM_MODEL`; the auditor uses `MEDCODER_VERIFIER_MODEL`), so cost can be
 tuned per role — e.g. drop extraction to `openai/gpt-5.4-nano`. The defaults pin
-*specific* model IDs for reproducibility. Note the GPT-5 family are reasoning
+*specific* model IDs for reproducibility.
+
+**Embedder & single-provider behaviour.** `MEDCODER_EMBEDDER` selects the dense
+backend. Any sentence-transformers model runs **locally and keyless** — MiniLM by
+default, or a clinical model such as `cambridgeltl/SapBERT-from-PubMedBERT-fulltext`
+— while `openai/text-embedding-3-large` (or any `text-embedding-*`) uses a hosted
+OpenAI backend that needs `OPENAI_API_KEY` at *build* time. After changing it, run
+`make build-index ARGS='--force'`: each index records the embedder it was built
+with and refuses to load against a different one, preventing silent
+dimension-mismatch garbage. On the LLM side, if *only* the auditor's provider key
+is missing, the CLI degrades gracefully to `--no-verify` (with a warning) rather
+than hard-failing. Note the GPT-5 family are reasoning
 models that reject a non-default `temperature`, so `temperature=0` applies to
 providers that honour it (Claude) while GPT-5 determinism rests on Structured
 Outputs + low reasoning effort. The full reproducibility envelope (resolved
@@ -267,7 +291,8 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 │   ├── extract.py           # extraction agent + assertion backstop
 │   ├── retrieval/
 │   │   ├── catalog.py       # ICD-10 / CPT loaders
-│   │   ├── vector.py        # FAISS over MiniLM
+│   │   ├── embedders.py     # pluggable dense backends (MiniLM / SapBERT / OpenAI) + factory
+│   │   ├── vector.py        # FAISS dense index (pluggable embedder + dim-guard sidecar)
 │   │   ├── lexical.py       # BM25
 │   │   └── hybrid.py        # RRF fusion + the persistent retriever cache
 │   ├── code_assign.py       # coder agent (whitelist-constrained)
@@ -285,7 +310,9 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
     ├── test_rules.py
     ├── test_confidence.py
     ├── test_pipeline_mock.py
-    └── test_consistency.py  # reproducibility — same input + mocks → same output
+    ├── test_consistency.py  # reproducibility — same input + mocks → same output
+    ├── test_embedders.py    # embedder factory + OpenAI backend (mocked) + dim-guard
+    └── test_outputs_and_render.py  # md view, audit trace, auto-save, recall@k
 ```
 
 ---
@@ -312,6 +339,12 @@ classification over-surface candidates with typed warnings (5–14/note) for a h
 reviewer rather than silently missing codes. Precision (0.40) is bounded by
 **over-coding** (the coder emits more codes than gold), not by retrieval — a more
 selective coder and a larger gold set are the levers for higher precision.
+
+`make eval` also reports a per-stage **retrieval recall@k** — whether each gold
+code reached the candidate whitelist the retriever produced. This separates a
+*retrieval* miss ("the code was never surfaced") from a *coder* miss ("it was
+surfaced but not picked"), so an end-to-end miss is diagnosable to the stage that
+caused it rather than blamed on the pipeline as a whole.
 
 ---
 

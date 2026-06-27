@@ -16,7 +16,7 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass, field
 
-from .code_assign import CoderInput, assign_codes, split_by_system
+from .code_assign import CodedAssignment, CoderInput, assign_codes, split_by_system
 from .confidence import blend, make_inputs, tier_for
 from .config import PIPELINE_VERSION, get_settings
 from .extract import coding_eligible, extract_facts
@@ -66,9 +66,26 @@ class MockResponses:
 
 @dataclass
 class PipelineResult:
+    """Final `CodingResult` plus the per-stage intermediates behind it.
+
+    Everything here already exists in memory during `run()`; we surface it rather
+    than discard it so a downstream eval (recall@k) or the audit trace can inspect
+    *how* each suggestion was reached. Field relationships:
+
+      - ``facts``            — every extracted fact (incl. dropped absent/family)
+      - ``codable_facts``    — the coding-eligible subset of ``facts``, in order
+      - ``retrieval_by_fact``— candidate whitelist per codable fact; **keys are
+        indices into ``codable_facts`` (0..len(codable_facts)-1)**, not ``facts``
+      - ``assignments``      — coder choices, after whitelist re-validation
+      - ``outcomes``         — one auditor verdict per assignment
+    """
+
     coding_result: CodingResult
-    # Convenience: indexed access to retrieval lists if a downstream eval wants them
     retrieval_by_fact: dict[int, list[CandidateCode]] = field(default_factory=dict)
+    facts: list[ExtractedFact] = field(default_factory=list)
+    codable_facts: list[ExtractedFact] = field(default_factory=list)
+    assignments: list[CodedAssignment] = field(default_factory=list)
+    outcomes: list[AuditOutcome] = field(default_factory=list)
 
 
 def _kind_to_system(kind: str) -> CodeSystem:
@@ -287,7 +304,14 @@ def run(
                 "cost_usd": round(metrics.est_cost_usd, 6),
             },
         )
-        return PipelineResult(coding_result=result, retrieval_by_fact=retrieval)
+        return PipelineResult(
+            coding_result=result,
+            retrieval_by_fact=retrieval,
+            facts=facts,
+            codable_facts=codable,
+            assignments=assignments,
+            outcomes=outcomes,
+        )
 
 
 # ---- helpers --------------------------------------------------------------

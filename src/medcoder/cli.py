@@ -8,10 +8,12 @@ from pathlib import Path
 
 import typer
 
+from .audit_trace import build_trace
 from .config import get_settings
 from .llm import have_api_key_for
 from .logging_setup import configure_logging
 from .pipeline import run as run_pipeline
+from .render import render_markdown
 from .retrieval.hybrid import get_retriever
 from .schemas import CodeSystem
 
@@ -32,46 +34,93 @@ def run(
         ..., exists=True, readable=True, help="Path to a .txt clinical note"
     ),
     out: Path | None = typer.Option(
-        None, "--out", "-o", help="Write JSON to this file (default: stdout)"
+        None, "--out", "-o", help="Write the result to this exact path (no auto-save folder)"
+    ),
+    fmt: str = typer.Option(
+        "json", "--format", help="Output format: json (machine/audit) | md (human review)"
     ),
     document_id: str | None = typer.Option(None, "--id", help="Override document_id"),
     no_verify: bool = typer.Option(False, "--no-verify", help="Skip the auditor pass"),
+    no_save: bool = typer.Option(
+        False, "--no-save", help="Don't persist outputs/<doc_id>/ (stdout only)"
+    ),
     log_level: str = typer.Option(None, "--log-level", help="DEBUG / INFO / WARNING / ERROR"),
     no_json_logs: bool = typer.Option(False, "--no-json-logs", help="Pretty-print logs to stderr"),
 ) -> None:
-    """Run the pipeline on a single note."""
+    """Run the pipeline on a single note.
+
+    By default the result is printed to stdout *and* persisted to
+    `outputs/<doc_id>/` as `result.{json,md}` + `trace.json` (the per-run audit
+    trail). Use `--no-save` for stdout only, or `--out PATH` to write one file
+    to an exact path.
+    """
     s = get_settings()
     if no_verify:
         s.no_verify = True
     configure_logging(level=log_level or s.log_level, json_mode=not no_json_logs)
 
-    # The default config is cross-family (OpenAI coder + Anthropic auditor), so a
-    # live run can need more than one provider key. Check every resolved model.
-    needed = {s.model_for("extraction"), s.model_for("coder")}
-    if not s.no_verify:
-        needed.add(s.model_for("auditor"))
-    missing = sorted(m for m in needed if not have_api_key_for(m))
-    if missing:
+    fmt = fmt.lower()
+    if fmt not in ("json", "md"):
+        typer.secho(f"⚠ Unknown --format {fmt!r}; expected 'json' or 'md'.", fg="yellow", err=True)
+        raise typer.Exit(code=2)
+
+    # The default config is cross-family (OpenAI coder + Anthropic auditor). The
+    # coder path (extraction + coder) is mandatory; the auditor is optional, so
+    # degrade gracefully rather than hard-failing when *only* the auditor key is
+    # missing. We only hard-stop when the mandatory coder path has no usable key.
+    core_models = {s.model_for("extraction"), s.model_for("coder")}
+    missing_core = sorted(m for m in core_models if not have_api_key_for(m))
+    if missing_core:
         typer.secho(
-            f"⚠ No API key in env for: {', '.join(missing)}. Set OPENAI_API_KEY / "
+            f"⚠ No API key in env for: {', '.join(missing_core)}. Set OPENAI_API_KEY / "
             "ANTHROPIC_API_KEY / etc., or use the mock-based path (make smoke / make test).",
             fg=typer.colors.YELLOW,
             err=True,
         )
         raise typer.Exit(code=2)
+    if not s.no_verify and not have_api_key_for(s.model_for("auditor")):
+        typer.secho(
+            f"⚠ No API key for auditor model {s.model_for('auditor')}; continuing "
+            "with --no-verify (codes shown without independent verification). "
+            "Set the auditor provider key, or set MEDCODER_VERIFIER_MODEL to a "
+            "same-family model, to re-enable the audit pass.",
+            fg=typer.colors.YELLOW,
+            err=True,
+        )
+        s.no_verify = True
 
     text = note.read_text()
-    result = run_pipeline(
+    pres = run_pipeline(
         text,
         document_id=document_id or note.stem,
     )
-    payload = result.coding_result.model_dump(mode="json")
-    rendered = json.dumps(payload, indent=2, default=str)
+    result = pres.coding_result
+
+    if fmt == "md":
+        rendered = render_markdown(result)
+    else:
+        rendered = json.dumps(result.model_dump(mode="json"), indent=2, default=str)
+
     if out is not None:
+        # Exact-path mode: write the single rendered file, no folder/trace.
         out.write_text(rendered + "\n")
         typer.echo(f"wrote {out}", err=True)
-    else:
-        sys.stdout.write(rendered + "\n")
+        return
+
+    # Always echo to stdout so piping (e.g. to jq) keeps working.
+    sys.stdout.write(rendered + "\n")
+
+    if no_save:
+        return
+
+    # Auto-save: one self-contained, inspectable folder per run.
+    out_dir = Path("outputs") / result.document_id
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ext = "md" if fmt == "md" else "json"
+    (out_dir / f"result.{ext}").write_text(rendered + "\n")
+    trace = json.dumps(build_trace(pres), indent=2, default=str)
+    (out_dir / "trace.json").write_text(trace + "\n")
+    typer.echo(f"wrote {out_dir}/ (result.{ext}, trace.json)", err=True)
 
 
 @app.command("build-index")
