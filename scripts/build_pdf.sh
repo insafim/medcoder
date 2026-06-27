@@ -51,7 +51,7 @@ if [ ! -x "$CHROME" ]; then
   CHROME="$(command -v google-chrome || true)"
 fi
 if [ -z "$CHROME" ]; then
-  echo "No Chrome found — install Google Chrome or use 'make pdf' (pandoc + xelatex)."
+  echo "No Chrome found — install Google Chrome, or use 'make pdf-latex' (pandoc + xelatex)."
   exit 1
 fi
 
