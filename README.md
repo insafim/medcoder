@@ -34,7 +34,7 @@ against the cited evidence.
 | **The design** (architecture, retrieval, prompting, trade-offs, limitations) — *the document to grade* | **[`docs/DESIGN.pdf`](docs/DESIGN.pdf)** — the 1–2 page PDF deliverable |
 | **To run it** (local or Docker)                 | This README, §1 below                                                |
 | **Real output, without running anything**       | [`outputs/`](outputs/) — pre-run results + audit traces for all 4 notes (§2) |
-| **A stage-by-stage code tour**                  | [`WALKTHROUGH.md`](WALKTHROUGH.md) — the optional deep-dive          |
+| **A stage-by-stage code tour**                  | [`docs/WALKTHROUGH.md`](docs/WALKTHROUGH.md) — the optional deep-dive |
 
 > **`docs/DESIGN.pdf` is the primary written deliverable.** It is the concise
 > (1–2 page) design document the exercise asks for. `docs/DESIGN.md` is its
@@ -301,7 +301,6 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 ```
 .
 ├── README.md                # ← this file (the runbook)
-├── WALKTHROUGH.md            # optional stage-by-stage code tour
 ├── LICENSING.md             # data / code licensing notes
 ├── pyproject.toml
 ├── Makefile                 # install / data / build-index / run / test / eval / pdf / docker
@@ -314,7 +313,8 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 │   └── index/               # cached FAISS + BM25 indexes (gitignored)
 ├── docs/
 │   ├── DESIGN.md            # full design (the source for the 1–2 page PDF)
-│   └── DESIGN.pdf           # ← the PDF deliverable; built by `make pdf`
+│   ├── DESIGN.pdf           # ← the PDF deliverable; built by `make pdf`
+│   └── WALKTHROUGH.md       # optional stage-by-stage code tour
 ├── outputs/                 # COMMITTED pre-run examples (4 notes + eval metrics)
 │   ├── note_01.../          #   result.json + result.md + result.annotated.md + trace.json
 │   └── eval/metrics.json    #   gold-set scores (P/R/F1, recall@k, latency, cost)
