@@ -1,0 +1,1953 @@
+{
+  "document_id": "note_04_multipage_postop",
+  "trace_id": "1a95bdfd05c8",
+  "config_hash": "3bee7eea3e0cee68",
+  "encounter_type": "inpatient",
+  "stages": {
+    "extract": {
+      "facts": [
+        {
+          "text": "laparoscopic cholecystectomy",
+          "normalized_term": "laparoscopic cholecystectomy",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "subjective",
+          "start_offset": 210,
+          "end_offset": 238
+        },
+        {
+          "text": "symptomatic cholelithiasis",
+          "normalized_term": "cholelithiasis",
+          "query_terms": [
+            "gallstones"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 267,
+          "end_offset": 293
+        },
+        {
+          "text": "incisional pain",
+          "normalized_term": "incisional pain",
+          "query_terms": [
+            "postoperative pain"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 338,
+          "end_offset": 353
+        },
+        {
+          "text": "nausea",
+          "normalized_term": "nausea",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 441,
+          "end_offset": 447
+        },
+        {
+          "text": "vomiting",
+          "normalized_term": "vomiting",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 451,
+          "end_offset": 459
+        },
+        {
+          "text": "ave moved ",
+          "normalized_term": "chest pain",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 469,
+          "end_offset": 479
+        },
+        {
+          "text": "fever",
+          "normalized_term": "fever",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 501,
+          "end_offset": 506
+        },
+        {
+          "text": "chills",
+          "normalized_term": "chills",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 508,
+          "end_offset": 514
+        },
+        {
+          "text": "shortness of breath",
+          "normalized_term": "dyspnea",
+          "query_terms": [
+            "shortness of breath",
+            "SOB"
+          ],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 516,
+          "end_offset": 535
+        },
+        {
+          "text": "leg swelling",
+          "normalized_term": "leg swelling",
+          "query_terms": [
+            "lower extremity edema"
+          ],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 555,
+          "end_offset": 567
+        },
+        {
+          "text": "Type 2 diabetes mellitus",
+          "normalized_term": "type 2 diabetes mellitus",
+          "query_terms": [
+            "T2DM",
+            "type 2 DM"
+          ],
+          "assertion_status": "historical",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 594,
+          "end_offset": 618
+        },
+        {
+          "text": "Obesity, BMI 33.",
+          "normalized_term": "obesity",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 680,
+          "end_offset": 696
+        },
+        {
+          "text": "Migraine without aura.",
+          "normalized_term": "migraine without aura",
+          "query_terms": [
+            "migraine"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 699,
+          "end_offset": 721
+        },
+        {
+          "text": "No prior abdominal surgeries.",
+          "normalized_term": "prior abdominal surgery",
+          "query_terms": [
+            "abdominal surgery"
+          ],
+          "assertion_status": "absent",
+          "kind": "procedure",
+          "section": "past medical history",
+          "start_offset": 724,
+          "end_offset": 753
+        },
+        {
+          "text": "Status post laparoscopic cholecystectomy for acute calculous cholecystitis",
+          "normalized_term": "status post laparoscopic cholecystectomy",
+          "query_terms": [
+            "postoperative state"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1623,
+          "end_offset": 1697
+        },
+        {
+          "text": "acute calculous cholecystitis",
+          "normalized_term": "acute calculous cholecystitis",
+          "query_terms": [
+            "acute cholecystitis"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 1668,
+          "end_offset": 1697
+        },
+        {
+          "text": "Type 2 diabetes mellitus, currently well-controlled",
+          "normalized_term": "type 2 diabetes mellitus",
+          "query_terms": [
+            "T2DM",
+            "type 2 DM"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1768,
+          "end_offset": 1819
+        },
+        {
+          "text": "Pain, post-procedural, controlled.",
+          "normalized_term": "postprocedural pain",
+          "query_terms": [
+            "post-operative pain"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "assessment",
+          "start_offset": 1916,
+          "end_offset": 1950
+        },
+        {
+          "text": "Bile leak",
+          "normalized_term": "bile leak",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "considered but excluded",
+          "start_offset": 1979,
+          "end_offset": 1988
+        },
+        {
+          "text": "Post-operative ileus",
+          "normalized_term": "postoperative ileus",
+          "query_terms": [
+            "ileus"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "considered but excluded",
+          "start_offset": 2089,
+          "end_offset": 2109
+        },
+        {
+          "text": "Venous thromboembolism",
+          "normalized_term": "venous thromboembolism",
+          "query_terms": [
+            "VTE"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "considered but excluded",
+          "start_offset": 2155,
+          "end_offset": 2177
+        },
+        {
+          "text": "Abdominal ultrasound",
+          "normalized_term": "abdominal ultrasound",
+          "query_terms": [
+            "ultrasound of abdomen"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "procedures performed during this admission",
+          "start_offset": 2751,
+          "end_offset": 2771
+        }
+      ]
+    },
+    "retrieve": {
+      "by_fact": [
+        {
+          "fact": "laparoscopic cholecystectomy",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9S0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Laparoscopic cholecystectomy without exploration",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9S0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Laparoscopic appendectomy",
+              "retrieval_score": 0.032258,
+              "fused_rank": 2
+            },
+            {
+              "code": "9S0013",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Laparoscopic inguinal hernia repair initial unilateral",
+              "retrieval_score": 0.031498,
+              "fused_rank": 3
+            },
+            {
+              "code": "9R0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+              "retrieval_score": 0.028083,
+              "fused_rank": 4
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.027826,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material",
+              "retrieval_score": 0.026786,
+              "fused_rank": 6
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.026611,
+              "fused_rank": 7
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.026374,
+              "fused_rank": 8
+            },
+            {
+              "code": "9R0060",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Magnetic resonance imaging lumbar spine without contrast material",
+              "retrieval_score": 0.025974,
+              "fused_rank": 9
+            },
+            {
+              "code": "9R0050",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Magnetic resonance imaging brain without contrast material",
+              "retrieval_score": 0.025004,
+              "fused_rank": 10
+            },
+            {
+              "code": "9R0080",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Mammography screening bilateral",
+              "retrieval_score": 0.024625,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.024451,
+              "fused_rank": 12
+            },
+            {
+              "code": "9L0014",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Hemoglobin A1c glycosylated",
+              "retrieval_score": 0.024449,
+              "fused_rank": 13
+            },
+            {
+              "code": "9R0051",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Magnetic resonance imaging brain with and without contrast material",
+              "retrieval_score": 0.024056,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0091",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination knee three views",
+              "retrieval_score": 0.02298,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "cholelithiasis",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "K80.80",
+              "system": "ICD-10-CM",
+              "description": "Other cholelithiasis without obstruction",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "K80.81",
+              "system": "ICD-10-CM",
+              "description": "Other cholelithiasis with obstruction",
+              "retrieval_score": 0.032258,
+              "fused_rank": 2
+            },
+            {
+              "code": "K91.86",
+              "system": "ICD-10-CM",
+              "description": "Retained cholelithiasis following cholecystectomy",
+              "retrieval_score": 0.031746,
+              "fused_rank": 3
+            },
+            {
+              "code": "K56.3",
+              "system": "ICD-10-CM",
+              "description": "Gallstone ileus",
+              "retrieval_score": 0.016393,
+              "fused_rank": 4
+            },
+            {
+              "code": "S00.512A",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, initial encounter",
+              "retrieval_score": 0.016393,
+              "fused_rank": 5
+            },
+            {
+              "code": "S00.512S",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, sequela",
+              "retrieval_score": 0.016129,
+              "fused_rank": 6
+            },
+            {
+              "code": "K82.9",
+              "system": "ICD-10-CM",
+              "description": "Disease of gallbladder, unspecified",
+              "retrieval_score": 0.016129,
+              "fused_rank": 7
+            },
+            {
+              "code": "S00.502D",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, subsequent encounter",
+              "retrieval_score": 0.015873,
+              "fused_rank": 8
+            },
+            {
+              "code": "K82.8",
+              "system": "ICD-10-CM",
+              "description": "Other specified diseases of gallbladder",
+              "retrieval_score": 0.015873,
+              "fused_rank": 9
+            },
+            {
+              "code": "K81.9",
+              "system": "ICD-10-CM",
+              "description": "Cholecystitis, unspecified",
+              "retrieval_score": 0.015625,
+              "fused_rank": 10
+            },
+            {
+              "code": "K82.0",
+              "system": "ICD-10-CM",
+              "description": "Obstruction of gallbladder",
+              "retrieval_score": 0.015625,
+              "fused_rank": 11
+            },
+            {
+              "code": "S00.511A",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of lip, initial encounter",
+              "retrieval_score": 0.015625,
+              "fused_rank": 12
+            },
+            {
+              "code": "K65.3",
+              "system": "ICD-10-CM",
+              "description": "Choleperitonitis",
+              "retrieval_score": 0.015385,
+              "fused_rank": 13
+            },
+            {
+              "code": "S36.123S",
+              "system": "ICD-10-CM",
+              "description": "Laceration of gallbladder, sequela",
+              "retrieval_score": 0.015385,
+              "fused_rank": 14
+            },
+            {
+              "code": "S00.452A",
+              "system": "ICD-10-CM",
+              "description": "Superficial foreign body of left ear, initial encounter",
+              "retrieval_score": 0.015385,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "incisional pain",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R07.82",
+              "system": "ICD-10-CM",
+              "description": "Intercostal pain",
+              "retrieval_score": 0.03055,
+              "fused_rank": 1
+            },
+            {
+              "code": "K43.2",
+              "system": "ICD-10-CM",
+              "description": "Incisional hernia without obstruction or gangrene",
+              "retrieval_score": 0.030415,
+              "fused_rank": 2
+            },
+            {
+              "code": "R52",
+              "system": "ICD-10-CM",
+              "description": "Pain, unspecified",
+              "retrieval_score": 0.029412,
+              "fused_rank": 3
+            },
+            {
+              "code": "R10.33",
+              "system": "ICD-10-CM",
+              "description": "Periumbilical pain",
+              "retrieval_score": 0.029274,
+              "fused_rank": 4
+            },
+            {
+              "code": "T81.41XD",
+              "system": "ICD-10-CM",
+              "description": "Infection following a procedure, superficial incisional surgical site, subsequent encounter",
+              "retrieval_score": 0.029214,
+              "fused_rank": 5
+            },
+            {
+              "code": "T81.41XA",
+              "system": "ICD-10-CM",
+              "description": "Infection following a procedure, superficial incisional surgical site, initial encounter",
+              "retrieval_score": 0.029116,
+              "fused_rank": 6
+            },
+            {
+              "code": "T81.42XD",
+              "system": "ICD-10-CM",
+              "description": "Infection following a procedure, deep incisional surgical site, subsequent encounter",
+              "retrieval_score": 0.028373,
+              "fused_rank": 7
+            },
+            {
+              "code": "T81.41XS",
+              "system": "ICD-10-CM",
+              "description": "Infection following a procedure, superficial incisional surgical site, sequela",
+              "retrieval_score": 0.028259,
+              "fused_rank": 8
+            },
+            {
+              "code": "R10.24",
+              "system": "ICD-10-CM",
+              "description": "Suprapubic pain",
+              "retrieval_score": 0.028259,
+              "fused_rank": 9
+            },
+            {
+              "code": "R07.2",
+              "system": "ICD-10-CM",
+              "description": "Precordial pain",
+              "retrieval_score": 0.028219,
+              "fused_rank": 10
+            },
+            {
+              "code": "T81.42XA",
+              "system": "ICD-10-CM",
+              "description": "Infection following a procedure, deep incisional surgical site, initial encounter",
+              "retrieval_score": 0.028043,
+              "fused_rank": 11
+            },
+            {
+              "code": "T81.42XS",
+              "system": "ICD-10-CM",
+              "description": "Infection following a procedure, deep incisional surgical site, sequela",
+              "retrieval_score": 0.027242,
+              "fused_rank": 12
+            },
+            {
+              "code": "O86.01",
+              "system": "ICD-10-CM",
+              "description": "Infection of obstetric surgical wound, superficial incisional site",
+              "retrieval_score": 0.027149,
+              "fused_rank": 13
+            },
+            {
+              "code": "R10.9",
+              "system": "ICD-10-CM",
+              "description": "Unspecified abdominal pain",
+              "retrieval_score": 0.026014,
+              "fused_rank": 14
+            },
+            {
+              "code": "G89.18",
+              "system": "ICD-10-CM",
+              "description": "Other acute postprocedural pain",
+              "retrieval_score": 0.026009,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "obesity",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E66.9",
+              "system": "ICD-10-CM",
+              "description": "Obesity, unspecified",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "E66.812",
+              "system": "ICD-10-CM",
+              "description": "Obesity, class 2",
+              "retrieval_score": 0.031514,
+              "fused_rank": 2
+            },
+            {
+              "code": "E66.811",
+              "system": "ICD-10-CM",
+              "description": "Obesity, class 1",
+              "retrieval_score": 0.03125,
+              "fused_rank": 3
+            },
+            {
+              "code": "E66.813",
+              "system": "ICD-10-CM",
+              "description": "Obesity, class 3",
+              "retrieval_score": 0.031025,
+              "fused_rank": 4
+            },
+            {
+              "code": "O99.214",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating childbirth",
+              "retrieval_score": 0.030214,
+              "fused_rank": 5
+            },
+            {
+              "code": "E66.1",
+              "system": "ICD-10-CM",
+              "description": "Drug-induced obesity",
+              "retrieval_score": 0.029762,
+              "fused_rank": 6
+            },
+            {
+              "code": "Z15.2",
+              "system": "ICD-10-CM",
+              "description": "Genetic susceptibility to obesity",
+              "retrieval_score": 0.029412,
+              "fused_rank": 7
+            },
+            {
+              "code": "E66.09",
+              "system": "ICD-10-CM",
+              "description": "Other obesity due to excess calories",
+              "retrieval_score": 0.028665,
+              "fused_rank": 8
+            },
+            {
+              "code": "E66.89",
+              "system": "ICD-10-CM",
+              "description": "Other obesity not elsewhere classified",
+              "retrieval_score": 0.028624,
+              "fused_rank": 9
+            },
+            {
+              "code": "O99.215",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating the puerperium",
+              "retrieval_score": 0.028624,
+              "fused_rank": 10
+            },
+            {
+              "code": "O99.213",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, third trimester",
+              "retrieval_score": 0.028006,
+              "fused_rank": 11
+            },
+            {
+              "code": "E66.01",
+              "system": "ICD-10-CM",
+              "description": "Morbid (severe) obesity due to excess calories",
+              "retrieval_score": 0.027651,
+              "fused_rank": 12
+            },
+            {
+              "code": "O99.211",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, first trimester",
+              "retrieval_score": 0.027418,
+              "fused_rank": 13
+            },
+            {
+              "code": "O99.212",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, second trimester",
+              "retrieval_score": 0.027273,
+              "fused_rank": 14
+            },
+            {
+              "code": "O99.210",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, unspecified trimester",
+              "retrieval_score": 0.027047,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "migraine without aura",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "G43.009",
+              "system": "ICD-10-CM",
+              "description": "Migraine without aura, not intractable, without status migrainosus",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "G43.019",
+              "system": "ICD-10-CM",
+              "description": "Migraine without aura, intractable, without status migrainosus",
+              "retrieval_score": 0.031778,
+              "fused_rank": 2
+            },
+            {
+              "code": "G43.709",
+              "system": "ICD-10-CM",
+              "description": "Chronic migraine without aura, not intractable, without status migrainosus",
+              "retrieval_score": 0.031025,
+              "fused_rank": 3
+            },
+            {
+              "code": "G43.109",
+              "system": "ICD-10-CM",
+              "description": "Migraine with aura, not intractable, without status migrainosus",
+              "retrieval_score": 0.030835,
+              "fused_rank": 4
+            },
+            {
+              "code": "G43.119",
+              "system": "ICD-10-CM",
+              "description": "Migraine with aura, intractable, without status migrainosus",
+              "retrieval_score": 0.03055,
+              "fused_rank": 5
+            },
+            {
+              "code": "G43.719",
+              "system": "ICD-10-CM",
+              "description": "Chronic migraine without aura, intractable, without status migrainosus",
+              "retrieval_score": 0.030366,
+              "fused_rank": 6
+            },
+            {
+              "code": "G43.001",
+              "system": "ICD-10-CM",
+              "description": "Migraine without aura, not intractable, with status migrainosus",
+              "retrieval_score": 0.029644,
+              "fused_rank": 7
+            },
+            {
+              "code": "G43.E09",
+              "system": "ICD-10-CM",
+              "description": "Chronic migraine with aura, not intractable, without status migrainosus",
+              "retrieval_score": 0.029514,
+              "fused_rank": 8
+            },
+            {
+              "code": "G43.011",
+              "system": "ICD-10-CM",
+              "description": "Migraine without aura, intractable, with status migrainosus",
+              "retrieval_score": 0.029274,
+              "fused_rank": 9
+            },
+            {
+              "code": "G43.909",
+              "system": "ICD-10-CM",
+              "description": "Migraine, unspecified, not intractable, without status migrainosus",
+              "retrieval_score": 0.029052,
+              "fused_rank": 10
+            },
+            {
+              "code": "G43.E19",
+              "system": "ICD-10-CM",
+              "description": "Chronic migraine with aura, intractable, without status migrainosus",
+              "retrieval_score": 0.02901,
+              "fused_rank": 11
+            },
+            {
+              "code": "G43.901",
+              "system": "ICD-10-CM",
+              "description": "Migraine, unspecified, not intractable, with status migrainosus",
+              "retrieval_score": 0.028694,
+              "fused_rank": 12
+            },
+            {
+              "code": "G43.701",
+              "system": "ICD-10-CM",
+              "description": "Chronic migraine without aura, not intractable, with status migrainosus",
+              "retrieval_score": 0.027984,
+              "fused_rank": 13
+            },
+            {
+              "code": "G43.711",
+              "system": "ICD-10-CM",
+              "description": "Chronic migraine without aura, intractable, with status migrainosus",
+              "retrieval_score": 0.027799,
+              "fused_rank": 14
+            },
+            {
+              "code": "G43.919",
+              "system": "ICD-10-CM",
+              "description": "Migraine, unspecified, intractable, without status migrainosus",
+              "retrieval_score": 0.027212,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "status post laparoscopic cholecystectomy",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "K91.86",
+              "system": "ICD-10-CM",
+              "description": "Retained cholelithiasis following cholecystectomy",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "Z53.31",
+              "system": "ICD-10-CM",
+              "description": "Laparoscopic surgical procedure converted to open procedure",
+              "retrieval_score": 0.031746,
+              "fused_rank": 2
+            },
+            {
+              "code": "Z98.3",
+              "system": "ICD-10-CM",
+              "description": "Post therapeutic collapse of lung status",
+              "retrieval_score": 0.016393,
+              "fused_rank": 3
+            },
+            {
+              "code": "I97.121",
+              "system": "ICD-10-CM",
+              "description": "Postprocedural cardiac arrest following other surgery",
+              "retrieval_score": 0.016393,
+              "fused_rank": 4
+            },
+            {
+              "code": "Z78.0",
+              "system": "ICD-10-CM",
+              "description": "Asymptomatic menopausal state",
+              "retrieval_score": 0.016393,
+              "fused_rank": 5
+            },
+            {
+              "code": "K82.A2",
+              "system": "ICD-10-CM",
+              "description": "Perforation of gallbladder in cholecystitis",
+              "retrieval_score": 0.016129,
+              "fused_rank": 6
+            },
+            {
+              "code": "Z48.89",
+              "system": "ICD-10-CM",
+              "description": "Encounter for other specified surgical aftercare",
+              "retrieval_score": 0.016129,
+              "fused_rank": 7
+            },
+            {
+              "code": "Z33.1",
+              "system": "ICD-10-CM",
+              "description": "Pregnant state, incidental",
+              "retrieval_score": 0.016129,
+              "fused_rank": 8
+            },
+            {
+              "code": "Z48.812",
+              "system": "ICD-10-CM",
+              "description": "Encounter for surgical aftercare following surgery on the circulatory system",
+              "retrieval_score": 0.015873,
+              "fused_rank": 9
+            },
+            {
+              "code": "G83.5",
+              "system": "ICD-10-CM",
+              "description": "Locked-in state",
+              "retrieval_score": 0.015873,
+              "fused_rank": 10
+            },
+            {
+              "code": "K80.01",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder with acute cholecystitis with obstruction",
+              "retrieval_score": 0.015625,
+              "fused_rank": 11
+            },
+            {
+              "code": "R56.1",
+              "system": "ICD-10-CM",
+              "description": "Post traumatic seizures",
+              "retrieval_score": 0.015625,
+              "fused_rank": 12
+            },
+            {
+              "code": "T81.328A",
+              "system": "ICD-10-CM",
+              "description": "Disruption or dehiscence of closure of other specified internal operation (surgical) wound, initial encounter",
+              "retrieval_score": 0.015625,
+              "fused_rank": 13
+            },
+            {
+              "code": "R40.3",
+              "system": "ICD-10-CM",
+              "description": "Persistent vegetative state",
+              "retrieval_score": 0.015625,
+              "fused_rank": 14
+            },
+            {
+              "code": "K80.63",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder and bile duct with acute cholecystitis with obstruction",
+              "retrieval_score": 0.015385,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "acute calculous cholecystitis",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "K81.0",
+              "system": "ICD-10-CM",
+              "description": "Acute cholecystitis",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "K81.2",
+              "system": "ICD-10-CM",
+              "description": "Acute cholecystitis with chronic cholecystitis",
+              "retrieval_score": 0.032258,
+              "fused_rank": 2
+            },
+            {
+              "code": "K80.01",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder with acute cholecystitis with obstruction",
+              "retrieval_score": 0.030579,
+              "fused_rank": 3
+            },
+            {
+              "code": "K81.9",
+              "system": "ICD-10-CM",
+              "description": "Cholecystitis, unspecified",
+              "retrieval_score": 0.030366,
+              "fused_rank": 4
+            },
+            {
+              "code": "K80.00",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder with acute cholecystitis without obstruction",
+              "retrieval_score": 0.030159,
+              "fused_rank": 5
+            },
+            {
+              "code": "K81.1",
+              "system": "ICD-10-CM",
+              "description": "Chronic cholecystitis",
+              "retrieval_score": 0.029911,
+              "fused_rank": 6
+            },
+            {
+              "code": "K80.43",
+              "system": "ICD-10-CM",
+              "description": "Calculus of bile duct with acute cholecystitis with obstruction",
+              "retrieval_score": 0.029469,
+              "fused_rank": 7
+            },
+            {
+              "code": "K80.63",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder and bile duct with acute cholecystitis with obstruction",
+              "retrieval_score": 0.029236,
+              "fused_rank": 8
+            },
+            {
+              "code": "K80.13",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder with acute and chronic cholecystitis with obstruction",
+              "retrieval_score": 0.028814,
+              "fused_rank": 9
+            },
+            {
+              "code": "K80.62",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder and bile duct with acute cholecystitis without obstruction",
+              "retrieval_score": 0.028814,
+              "fused_rank": 10
+            },
+            {
+              "code": "K80.42",
+              "system": "ICD-10-CM",
+              "description": "Calculus of bile duct with acute cholecystitis without obstruction",
+              "retrieval_score": 0.028665,
+              "fused_rank": 11
+            },
+            {
+              "code": "K80.12",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder with acute and chronic cholecystitis without obstruction",
+              "retrieval_score": 0.028405,
+              "fused_rank": 12
+            },
+            {
+              "code": "K80.47",
+              "system": "ICD-10-CM",
+              "description": "Calculus of bile duct with acute and chronic cholecystitis with obstruction",
+              "retrieval_score": 0.026519,
+              "fused_rank": 13
+            },
+            {
+              "code": "K80.67",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder and bile duct with acute and chronic cholecystitis with obstruction",
+              "retrieval_score": 0.026501,
+              "fused_rank": 14
+            },
+            {
+              "code": "K80.66",
+              "system": "ICD-10-CM",
+              "description": "Calculus of gallbladder and bile duct with acute and chronic cholecystitis without obstruction",
+              "retrieval_score": 0.026491,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "type 2 diabetes mellitus",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E11.9",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus without complications",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "I21.A1",
+              "system": "ICD-10-CM",
+              "description": "Myocardial infarction type 2",
+              "retrieval_score": 0.032266,
+              "fused_rank": 2
+            },
+            {
+              "code": "Q99.812",
+              "system": "ICD-10-CM",
+              "description": "Usher syndrome, type 2",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "E11.65",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with hyperglycemia",
+              "retrieval_score": 0.031754,
+              "fused_rank": 4
+            },
+            {
+              "code": "E11.8",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with unspecified complications",
+              "retrieval_score": 0.031099,
+              "fused_rank": 5
+            },
+            {
+              "code": "Q85.02",
+              "system": "ICD-10-CM",
+              "description": "Neurofibromatosis, type 2",
+              "retrieval_score": 0.030478,
+              "fused_rank": 6
+            },
+            {
+              "code": "E11.21",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.02971,
+              "fused_rank": 7
+            },
+            {
+              "code": "E11.41",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic mononeuropathy",
+              "retrieval_score": 0.029083,
+              "fused_rank": 8
+            },
+            {
+              "code": "E10.A2",
+              "system": "ICD-10-CM",
+              "description": "Type 1 diabetes mellitus, presymptomatic, Stage 2",
+              "retrieval_score": 0.028814,
+              "fused_rank": 9
+            },
+            {
+              "code": "E11.44",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic amyotrophy",
+              "retrieval_score": 0.028382,
+              "fused_rank": 10
+            },
+            {
+              "code": "E11.42",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic polyneuropathy",
+              "retrieval_score": 0.028382,
+              "fused_rank": 11
+            },
+            {
+              "code": "E11.36",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic cataract",
+              "retrieval_score": 0.028373,
+              "fused_rank": 12
+            },
+            {
+              "code": "E11.A",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus without complications in remission",
+              "retrieval_score": 0.028205,
+              "fused_rank": 13
+            },
+            {
+              "code": "D68.029",
+              "system": "ICD-10-CM",
+              "description": "Von Willebrand disease, type 2, unspecified",
+              "retrieval_score": 0.027971,
+              "fused_rank": 14
+            },
+            {
+              "code": "E11.69",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with other specified complication",
+              "retrieval_score": 0.027921,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "postprocedural pain",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "G89.18",
+              "system": "ICD-10-CM",
+              "description": "Other acute postprocedural pain",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "G89.28",
+              "system": "ICD-10-CM",
+              "description": "Other chronic postprocedural pain",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "G89.12",
+              "system": "ICD-10-CM",
+              "description": "Acute post-thoracotomy pain",
+              "retrieval_score": 0.032258,
+              "fused_rank": 3
+            },
+            {
+              "code": "G89.22",
+              "system": "ICD-10-CM",
+              "description": "Chronic post-thoracotomy pain",
+              "retrieval_score": 0.032018,
+              "fused_rank": 4
+            },
+            {
+              "code": "R10.33",
+              "system": "ICD-10-CM",
+              "description": "Periumbilical pain",
+              "retrieval_score": 0.029572,
+              "fused_rank": 5
+            },
+            {
+              "code": "R52",
+              "system": "ICD-10-CM",
+              "description": "Pain, unspecified",
+              "retrieval_score": 0.02904,
+              "fused_rank": 6
+            },
+            {
+              "code": "R10.24",
+              "system": "ICD-10-CM",
+              "description": "Suprapubic pain",
+              "retrieval_score": 0.028485,
+              "fused_rank": 7
+            },
+            {
+              "code": "R07.82",
+              "system": "ICD-10-CM",
+              "description": "Intercostal pain",
+              "retrieval_score": 0.028219,
+              "fused_rank": 8
+            },
+            {
+              "code": "R07.2",
+              "system": "ICD-10-CM",
+              "description": "Precordial pain",
+              "retrieval_score": 0.026145,
+              "fused_rank": 9
+            },
+            {
+              "code": "G89.29",
+              "system": "ICD-10-CM",
+              "description": "Other chronic pain",
+              "retrieval_score": 0.025795,
+              "fused_rank": 10
+            },
+            {
+              "code": "G89.4",
+              "system": "ICD-10-CM",
+              "description": "Chronic pain syndrome",
+              "retrieval_score": 0.024878,
+              "fused_rank": 11
+            },
+            {
+              "code": "R10.13",
+              "system": "ICD-10-CM",
+              "description": "Epigastric pain",
+              "retrieval_score": 0.024611,
+              "fused_rank": 12
+            },
+            {
+              "code": "G89.0",
+              "system": "ICD-10-CM",
+              "description": "Central pain syndrome",
+              "retrieval_score": 0.024451,
+              "fused_rank": 13
+            },
+            {
+              "code": "R10.84",
+              "system": "ICD-10-CM",
+              "description": "Generalized abdominal pain",
+              "retrieval_score": 0.023412,
+              "fused_rank": 14
+            },
+            {
+              "code": "G50.1",
+              "system": "ICD-10-CM",
+              "description": "Atypical facial pain",
+              "retrieval_score": 0.022989,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "abdominal ultrasound",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9R0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.032266,
+              "fused_rank": 2
+            },
+            {
+              "code": "9R0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "9N0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Lumbar puncture diagnostic",
+              "retrieval_score": 0.030798,
+              "fused_rank": 4
+            },
+            {
+              "code": "9V0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Arterial puncture withdrawal of blood for diagnosis",
+              "retrieval_score": 0.028259,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0031",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest with contrast material",
+              "retrieval_score": 0.02782,
+              "fused_rank": 6
+            },
+            {
+              "code": "9R0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest without contrast material",
+              "retrieval_score": 0.027433,
+              "fused_rank": 7
+            },
+            {
+              "code": "9G0022",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Colonoscopy with removal of polyp by snare technique",
+              "retrieval_score": 0.026876,
+              "fused_rank": 8
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.02632,
+              "fused_rank": 9
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.026235,
+              "fused_rank": 10
+            },
+            {
+              "code": "9V0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Venipuncture for collection of specimen routine",
+              "retrieval_score": 0.026137,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+              "retrieval_score": 0.025914,
+              "fused_rank": 12
+            },
+            {
+              "code": "9L0016",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Urinalysis automated with microscopy",
+              "retrieval_score": 0.025678,
+              "fused_rank": 13
+            },
+            {
+              "code": "9R0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest single view frontal",
+              "retrieval_score": 0.025579,
+              "fused_rank": 14
+            },
+            {
+              "code": "9U0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Insertion of urinary catheter Foley two-way",
+              "retrieval_score": 0.025575,
+              "fused_rank": 15
+            }
+          ]
+        }
+      ]
+    },
+    "code": {
+      "assignments": [
+        {
+          "fact": "laparoscopic cholecystectomy",
+          "code": "9S0010",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Laparoscopic cholecystectomy without exploration",
+          "coder_confidence": 0.99,
+          "rationale": "The note explicitly documents \"laparoscopic cholecystectomy\" and the procedure list states \"Laparoscopic cholecystectomy on 06/18/2026 (primary procedure).\" This matches the candidate for laparoscopic cholecystectomy without exploration."
+        },
+        {
+          "fact": "incisional pain",
+          "code": "G89.18",
+          "system": "ICD-10-CM",
+          "description": "Other acute postprocedural pain",
+          "coder_confidence": 0.96,
+          "rationale": "\"Incisional pain controlled on oral acetaminophen with oxycodone PRN\" is acute post-procedural pain after surgery. This is more specific than unspecified pain."
+        },
+        {
+          "fact": "Obesity, BMI 33.",
+          "code": "E66.811",
+          "system": "ICD-10-CM",
+          "description": "Obesity, class 1",
+          "coder_confidence": 0.95,
+          "rationale": "The note documents \"Obesity, BMI 33.\" A BMI of 33 falls in class 1 obesity, which is more specific than unspecified obesity."
+        },
+        {
+          "fact": "Migraine without aura.",
+          "code": "G43.009",
+          "system": "ICD-10-CM",
+          "description": "Migraine without aura, not intractable, without status migrainosus",
+          "coder_confidence": 0.97,
+          "rationale": "The past medical history states \"Migraine without aura\" and does not mention intractable symptoms, status migrainosus, or chronic migraine. This supports migraine without aura, not intractable, without status migrainosus."
+        },
+        {
+          "fact": "Status post laparoscopic cholecystectomy for acute calculous cholecystitis",
+          "code": "Z48.89",
+          "system": "ICD-10-CM",
+          "description": "Encounter for other specified surgical aftercare",
+          "coder_confidence": 0.9,
+          "rationale": "The assessment documents postoperative care: \"Status post laparoscopic cholecystectomy ... tolerating recovery well\" on post-op day 2. The best matching aftercare code is encounter for other specified surgical aftercare."
+        },
+        {
+          "fact": "acute calculous cholecystitis",
+          "code": "K80.00",
+          "system": "ICD-10-CM",
+          "description": "Calculus of gallbladder with acute cholecystitis without obstruction",
+          "coder_confidence": 0.93,
+          "rationale": "\"Acute calculous cholecystitis\" corresponds to calculus of gallbladder with acute cholecystitis without obstruction, since no obstruction is documented anywhere in the note."
+        },
+        {
+          "fact": "Type 2 diabetes mellitus, currently well-controlled",
+          "code": "E11.9",
+          "system": "ICD-10-CM",
+          "description": "Type 2 diabetes mellitus without complications",
+          "coder_confidence": 0.98,
+          "rationale": "The note states \"Type 2 diabetes mellitus, currently well-controlled\" and does not document complications or hyperglycemia requiring a more specific diabetes code. \"Glucose 124\" is not enough by itself to code hyperglycemia."
+        },
+        {
+          "fact": "Pain, post-procedural, controlled.",
+          "code": "G89.18",
+          "system": "ICD-10-CM",
+          "description": "Other acute postprocedural pain",
+          "coder_confidence": 0.97,
+          "rationale": "The assessment explicitly lists \"Pain, post-procedural, controlled.\" This is acute postprocedural pain."
+        },
+        {
+          "fact": "Abdominal ultrasound",
+          "code": "9R0070",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+          "coder_confidence": 0.99,
+          "rationale": "The admission imaging is described as \"Abdominal ultrasound\" and \"Operative ultrasound on admission.\" This matches ultrasound abdomen complete real-time with image documentation."
+        }
+      ]
+    },
+    "audit": {
+      "verdicts": [
+        {
+          "code": "9S0010",
+          "agree": true,
+          "note": "Evidence clearly documents \"laparoscopic cholecystectomy\" performed on 06/18/2026 for acute calculous cholecystitis; no mention of common bile duct exploration, supporting the 'without exploration' variant."
+        },
+        {
+          "code": "G89.18",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "E66.811",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "G43.009",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "Z48.89",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "K80.00",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "E11.9",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "G89.18",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "9R0070",
+          "agree": true,
+          "note": "Evidence explicitly states \"Abdominal ultrasound\" and \"Operative ultrasound on admission documented gallbladder wall thickening with multiple stones,\" consistent with complete real-time ultrasound with image documentation."
+        }
+      ]
+    },
+    "rules": {
+      "warnings": [
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'nausea' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'vomiting' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'fever' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'chills' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'dyspnea' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'leg swelling' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'type 2 diabetes mellitus' dropped from coding (assertion=historical); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'prior abdominal surgery' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'bile leak' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'postoperative ileus' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'venous thromboembolism' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        }
+      ]
+    }
+  },
+  "result": {
+    "document_id": "note_04_multipage_postop",
+    "diagnoses": [
+      {
+        "code": "E11.9",
+        "system": "ICD-10-CM",
+        "description": "Type 2 diabetes mellitus without complications",
+        "confidence": 0.991,
+        "confidence_tier": "high",
+        "rationale": "The note states \"Type 2 diabetes mellitus, currently well-controlled\" and does not document complications or hyperglycemia requiring a more specific diabetes code. \"Glucose 124\" is not enough by itself to code hyperglycemia.",
+        "evidence": [
+          {
+            "text": "Type 2 diabetes mellitus, currently well-controlled",
+            "normalized_term": "type 2 diabetes mellitus",
+            "query_terms": [
+              "T2DM",
+              "type 2 DM"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1768,
+            "end_offset": 1819,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "G43.009",
+        "system": "ICD-10-CM",
+        "description": "Migraine without aura, not intractable, without status migrainosus",
+        "confidence": 0.9865,
+        "confidence_tier": "high",
+        "rationale": "The past medical history states \"Migraine without aura\" and does not mention intractable symptoms, status migrainosus, or chronic migraine. This supports migraine without aura, not intractable, without status migrainosus.",
+        "evidence": [
+          {
+            "text": "Migraine without aura.",
+            "normalized_term": "migraine without aura",
+            "query_terms": [
+              "migraine"
+            ],
+            "assertion_status": "present",
+            "start_offset": 699,
+            "end_offset": 721,
+            "section": "past medical history",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "G89.18",
+        "system": "ICD-10-CM",
+        "description": "Other acute postprocedural pain",
+        "confidence": 0.9865,
+        "confidence_tier": "high",
+        "rationale": "The assessment explicitly lists \"Pain, post-procedural, controlled.\" This is acute postprocedural pain.",
+        "evidence": [
+          {
+            "text": "Pain, post-procedural, controlled.",
+            "normalized_term": "postprocedural pain",
+            "query_terms": [
+              "post-operative pain"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1916,
+            "end_offset": 1950,
+            "section": "assessment",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "E66.811",
+        "system": "ICD-10-CM",
+        "description": "Obesity, class 1",
+        "confidence": 0.8319,
+        "confidence_tier": "high",
+        "rationale": "The note documents \"Obesity, BMI 33.\" A BMI of 33 falls in class 1 obesity, which is more specific than unspecified obesity.",
+        "evidence": [
+          {
+            "text": "Obesity, BMI 33.",
+            "normalized_term": "obesity",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 680,
+            "end_offset": 696,
+            "section": "past medical history",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "K80.00",
+        "system": "ICD-10-CM",
+        "description": "Calculus of gallbladder with acute cholecystitis without obstruction",
+        "confidence": 0.7383,
+        "confidence_tier": "medium",
+        "rationale": "\"Acute calculous cholecystitis\" corresponds to calculus of gallbladder with acute cholecystitis without obstruction, since no obstruction is documented anywhere in the note.",
+        "evidence": [
+          {
+            "text": "acute calculous cholecystitis",
+            "normalized_term": "acute calculous cholecystitis",
+            "query_terms": [
+              "acute cholecystitis"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1668,
+            "end_offset": 1697,
+            "section": "subjective",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "Z48.89",
+        "system": "ICD-10-CM",
+        "description": "Encounter for other specified surgical aftercare",
+        "confidence": 0.6694,
+        "confidence_tier": "medium",
+        "rationale": "The assessment documents postoperative care: \"Status post laparoscopic cholecystectomy ... tolerating recovery well\" on post-op day 2. The best matching aftercare code is encounter for other specified surgical aftercare.",
+        "evidence": [
+          {
+            "text": "Status post laparoscopic cholecystectomy for acute calculous cholecystitis",
+            "normalized_term": "status post laparoscopic cholecystectomy",
+            "query_terms": [
+              "postoperative state"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1623,
+            "end_offset": 1697,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "G89.18",
+        "system": "ICD-10-CM",
+        "description": "Other acute postprocedural pain",
+        "confidence": 0.5883,
+        "confidence_tier": "medium",
+        "rationale": "\"Incisional pain controlled on oral acetaminophen with oxycodone PRN\" is acute post-procedural pain after surgery. This is more specific than unspecified pain.",
+        "evidence": [
+          {
+            "text": "incisional pain",
+            "normalized_term": "incisional pain",
+            "query_terms": [
+              "postoperative pain"
+            ],
+            "assertion_status": "present",
+            "start_offset": 338,
+            "end_offset": 353,
+            "section": "subjective",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      }
+    ],
+    "procedures": [
+      {
+        "code": "9S0010",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Laparoscopic cholecystectomy without exploration",
+        "confidence": 1.0,
+        "confidence_tier": "high",
+        "rationale": "The note explicitly documents \"laparoscopic cholecystectomy\" and the procedure list states \"Laparoscopic cholecystectomy on 06/18/2026 (primary procedure).\" This matches the candidate for laparoscopic cholecystectomy without exploration.",
+        "evidence": [
+          {
+            "text": "laparoscopic cholecystectomy",
+            "normalized_term": "laparoscopic cholecystectomy",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 210,
+            "end_offset": 238,
+            "section": "subjective",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "Evidence clearly documents \"laparoscopic cholecystectomy\" performed on 06/18/2026 for acute calculous cholecystitis; no mention of common bile duct exploration, supporting the 'without exploration' variant."
+      },
+      {
+        "code": "9R0070",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+        "confidence": 1.0,
+        "confidence_tier": "high",
+        "rationale": "The admission imaging is described as \"Abdominal ultrasound\" and \"Operative ultrasound on admission.\" This matches ultrasound abdomen complete real-time with image documentation.",
+        "evidence": [
+          {
+            "text": "Abdominal ultrasound",
+            "normalized_term": "abdominal ultrasound",
+            "query_terms": [
+              "ultrasound of abdomen"
+            ],
+            "assertion_status": "present",
+            "start_offset": 2751,
+            "end_offset": 2771,
+            "section": "procedures performed during this admission",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "Evidence explicitly states \"Abdominal ultrasound\" and \"Operative ultrasound on admission documented gallbladder wall thickening with multiple stones,\" consistent with complete real-time ultrasound with image documentation."
+      }
+    ],
+    "warnings": [
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'nausea' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'vomiting' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'fever' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'chills' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'dyspnea' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'leg swelling' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'type 2 diabetes mellitus' dropped from coding (assertion=historical); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'prior abdominal surgery' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'bile leak' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'postoperative ileus' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'venous thromboembolism' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      }
+    ],
+    "metadata": {
+      "trace_id": "1a95bdfd05c8",
+      "model_ids": {
+        "extraction": "openai/gpt-5.4-mini",
+        "coder": "openai/gpt-5.4-mini",
+        "auditor": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "pipeline_version": "0.1.1",
+      "temperature": 0.0,
+      "config_hash": "3bee7eea3e0cee68",
+      "timestamp": "2026-06-27T15:46:15.137979Z",
+      "encounter_type": "inpatient",
+      "metrics": {
+        "stage_latency_ms": {
+          "ingest": 0.2283750072820112,
+          "extract": 21950.696250001783,
+          "retrieve": 682.9523330088705,
+          "code": 5856.271374999778,
+          "audit": 1767.9530830064323,
+          "rules": 0.08983300358522683,
+          "assemble": 0.20945799769833684
+        },
+        "total_latency_ms": 30259.39395900059,
+        "tokens": {
+          "extraction.prompt_tokens": 2069,
+          "extraction.completion_tokens": 3371,
+          "extraction.total_tokens": 5440,
+          "extraction.calls": 1,
+          "coder.prompt_tokens": 8701,
+          "coder.completion_tokens": 856,
+          "coder.total_tokens": 9557,
+          "coder.calls": 1,
+          "auditor.prompt_tokens": 2836,
+          "auditor.completion_tokens": 193,
+          "auditor.total_tokens": 3029,
+          "auditor.calls": 1
+        },
+        "est_cost_usd": 0.0309,
+        "retries": 0,
+        "n_candidates": 150,
+        "n_warnings": 12,
+        "n_facts": 22,
+        "n_facts_coded": 9
+      }
+    }
+  }
+}

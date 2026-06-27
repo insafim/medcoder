@@ -75,7 +75,7 @@ def test_coding_eligible_inpatient_vs_outpatient():
 def test_coding_eligible_filters_historical_and_family_under_both_encounters():
     """Historical findings and family-history are never coded as active diagnoses,
     regardless of encounter type. Coding either is the top false-positive source
-    in clinical NLP (Plan.md §5)."""
+    in clinical NLP."""
     for status in (AssertionStatus.HISTORICAL, AssertionStatus.FAMILY, AssertionStatus.ABSENT):
         f = ExtractedFact(
             text="myocardial infarction",

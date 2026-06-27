@@ -1,7 +1,7 @@
 """Confidence blending + 3-tier labelling.
 
-Plan.md §9.7: raw LLM verbalised confidence is systematically overconfident, so
-we never surface it directly. We blend three signals into a final score and bin
+Raw LLM verbalised confidence is systematically overconfident, so we never
+surface it directly. We blend three signals into a final score and bin
 it into 🟢/🟡/🔴 tiers using gold-tuned thresholds (formal Platt / isotonic
 calibration is documented as a production extension).
 
@@ -55,8 +55,7 @@ def blend(inputs: ConfidenceInputs) -> float:
 
     Weights: 0.55 retrieval, 0.45 coder — empirical starting point. Re-tune via
     ``scripts/evaluate.py`` against ``data/gold/labels.json`` when the gold set
-    grows large enough to support formal calibration (isotonic / Platt — see
-    Plan.md §9.7).
+    grows large enough to support formal calibration (isotonic / Platt).
     """
     s_ret = _retrieval_subscore(inputs.retrieval_score, inputs.retrieval_rank)
     s_coder = max(0.0, min(1.0, inputs.coder_confidence))

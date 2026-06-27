@@ -1,6 +1,6 @@
 """Ingestion stage — deterministic preprocessing of raw notes.
 
-Plan.md §9.1: normalise → detect encounter type → segment SOAP → window long
+Pipeline: normalise → detect encounter type → segment SOAP → window long
 notes with overlap → preserve **global** char offsets.
 
 Global offsets matter because every evidence span in the final payload must point
@@ -141,9 +141,7 @@ class Window:
     index: int  # 0-based window number
 
 
-def window_text(
-    text: str, max_chars: int = 6000, overlap: int = 400
-) -> list[Window]:
+def window_text(text: str, max_chars: int = 6000, overlap: int = 400) -> list[Window]:
     """Split a long note into overlapping windows.
 
     `max_chars` is a coarse proxy for token budget (≈ 1500 tokens). Overlap

@@ -1,0 +1,438 @@
+{
+  "document_id": "note_03_inpatient_pneumonia_ambiguity",
+  "diagnoses": [
+    {
+      "code": "J44.1",
+      "system": "ICD-10-CM",
+      "description": "Chronic obstructive pulmonary disease with (acute) exacerbation",
+      "confidence": 0.9955,
+      "confidence_tier": "high",
+      "rationale": "The note explicitly documents \"Acute exacerbation of COPD,\" which directly maps to \"Chronic obstructive pulmonary disease with (acute) exacerbation.\"",
+      "evidence": [
+        {
+          "text": "Acute exacerbation of COPD",
+          "normalized_term": "acute exacerbation of chronic obstructive pulmonary disease",
+          "query_terms": [
+            "AECOPD"
+          ],
+          "assertion_status": "present",
+          "start_offset": 0,
+          "end_offset": 0,
+          "section": "assessment",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "J96.01",
+      "system": "ICD-10-CM",
+      "description": "Acute respiratory failure with hypoxia",
+      "confidence": 0.9955,
+      "confidence_tier": "high",
+      "rationale": "The assessment states \"Acute hypoxic respiratory failure\" and the vitals show hypoxia (SpO2 89% on 2 L), supporting \"Acute respiratory failure with hypoxia.\"",
+      "evidence": [
+        {
+          "text": "Acute hypoxic respiratory failure",
+          "normalized_term": "acute hypoxic respiratory failure",
+          "query_terms": [],
+          "assertion_status": "present",
+          "start_offset": 0,
+          "end_offset": 0,
+          "section": "assessment",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "I10",
+      "system": "ICD-10-CM",
+      "description": "Essential (primary) hypertension",
+      "confidence": 0.9955,
+      "confidence_tier": "high",
+      "rationale": "The past medical history explicitly lists \"Essential hypertension,\" which maps directly to essential (primary) hypertension.",
+      "evidence": [
+        {
+          "text": "Essential hypertension.",
+          "normalized_term": "essential hypertension",
+          "query_terms": [
+            "hypertension"
+          ],
+          "assertion_status": "present",
+          "start_offset": 726,
+          "end_offset": 749,
+          "section": "past medical history",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "M16.11",
+      "system": "ICD-10-CM",
+      "description": "Unilateral primary osteoarthritis, right hip",
+      "confidence": 0.991,
+      "confidence_tier": "high",
+      "rationale": "The past medical history documents \"Right hip osteoarthritis.\" In the absence of a different subtype, the best match is unilateral primary osteoarthritis, right hip.",
+      "evidence": [
+        {
+          "text": "Right hip osteoarthritis.",
+          "normalized_term": "osteoarthritis of right hip",
+          "query_terms": [
+            "right hip osteoarthritis"
+          ],
+          "assertion_status": "present",
+          "start_offset": 807,
+          "end_offset": 832,
+          "section": "past medical history",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "R06.02",
+      "system": "ICD-10-CM",
+      "description": "Shortness of breath",
+      "confidence": 0.9071,
+      "confidence_tier": "high",
+      "rationale": "The HPI states \"progressive dyspnea,\" which matches \"Shortness of breath.\"",
+      "evidence": [
+        {
+          "text": "progressive dyspnea",
+          "normalized_term": "dyspnea",
+          "query_terms": [
+            "shortness of breath"
+          ],
+          "assertion_status": "present",
+          "start_offset": 399,
+          "end_offset": 418,
+          "section": "hpi",
+          "kind": "symptom"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "R06.02",
+      "system": "ICD-10-CM",
+      "description": "Shortness of breath",
+      "confidence": 0.892,
+      "confidence_tier": "high",
+      "rationale": "The chief complaint includes \"dyspnea\" along with cough and fever; among the available symptom codes, \"Shortness of breath\" is the best match for the documented breathing complaint.",
+      "evidence": [
+        {
+          "text": "Productive cough, fever, dyspnea.",
+          "normalized_term": "productive cough; fever; dyspnea",
+          "query_terms": [
+            "cough",
+            "shortness of breath"
+          ],
+          "assertion_status": "present",
+          "start_offset": 182,
+          "end_offset": 215,
+          "section": "chief complaint",
+          "kind": "symptom"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "J15.9",
+      "system": "ICD-10-CM",
+      "description": "Unspecified bacterial pneumonia",
+      "confidence": 0.8711,
+      "confidence_tier": "high",
+      "rationale": "The assessment states \"Community-acquired pneumonia, right lower lobe, probably bacterial.\" Among the candidates, \"Unspecified bacterial pneumonia\" best matches the documented bacterial etiology.",
+      "evidence": [
+        {
+          "text": "Community-acquired pneumonia, right lower lobe, probably bacterial",
+          "normalized_term": "community-acquired pneumonia",
+          "query_terms": [
+            "CAP"
+          ],
+          "assertion_status": "possible",
+          "start_offset": 0,
+          "end_offset": 0,
+          "section": "assessment",
+          "kind": "diagnosis"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "R50.9",
+      "system": "ICD-10-CM",
+      "description": "Fever, unspecified",
+      "confidence": 0.8499,
+      "confidence_tier": "high",
+      "rationale": "The HPI documents \"subjective fevers to 38.7 C,\" which maps directly to \"Fever, unspecified.\"",
+      "evidence": [
+        {
+          "text": "subjective fevers to 38.7 C",
+          "normalized_term": "fever",
+          "query_terms": [
+            "pyrexia"
+          ],
+          "assertion_status": "present",
+          "start_offset": 366,
+          "end_offset": 393,
+          "section": "hpi",
+          "kind": "symptom"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    },
+    {
+      "code": "R09.3",
+      "system": "ICD-10-CM",
+      "description": "Abnormal sputum",
+      "confidence": 0.8184,
+      "confidence_tier": "high",
+      "rationale": "\"Productive cough\" is best captured by \"Abnormal sputum\" since the note documents productive sputum/cough rather than a specific cough chronicity.",
+      "evidence": [
+        {
+          "text": "productive cough",
+          "normalized_term": "productive cough",
+          "query_terms": [
+            "cough with sputum"
+          ],
+          "assertion_status": "present",
+          "start_offset": 348,
+          "end_offset": 364,
+          "section": "hpi",
+          "kind": "symptom"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": null,
+      "audit_note": null
+    }
+  ],
+  "procedures": [
+    {
+      "code": "9R0011",
+      "system": "CPT",
+      "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+      "confidence": 1.0,
+      "confidence_tier": "high",
+      "rationale": "The imaging section documents \"Chest X-ray two views,\" which matches \"Radiologic examination chest two views frontal and lateral.\"",
+      "evidence": [
+        {
+          "text": "Chest X-ray two views",
+          "normalized_term": "chest radiograph, 2 views",
+          "query_terms": [
+            "CXR",
+            "chest x-ray"
+          ],
+          "assertion_status": "present",
+          "start_offset": 0,
+          "end_offset": 0,
+          "section": "imaging",
+          "kind": "procedure"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": true,
+      "audit_note": "Evidence clearly documents 'Chest X-ray two views' in imaging section, which directly supports the CPT code for radiologic examination chest two views frontal and lateral."
+    },
+    {
+      "code": "9P0020",
+      "system": "CPT",
+      "description": "[SYNTHETIC] Nebulizer treatment for the administration of an inhalation solution",
+      "confidence": 1.0,
+      "confidence_tier": "high",
+      "rationale": "The plan explicitly orders \"Nebulizer treatment with albuterol/ipratropium every 4 hours,\" which matches nebulizer treatment for inhalation solution administration.",
+      "evidence": [
+        {
+          "text": "Nebulizer treatment with albuterol/ipratropium every 4 hours.",
+          "normalized_term": "nebulized bronchodilator treatment",
+          "query_terms": [
+            "nebulizer treatment"
+          ],
+          "assertion_status": "present",
+          "start_offset": 0,
+          "end_offset": 0,
+          "section": "plan",
+          "kind": "procedure"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": true,
+      "audit_note": "Plan explicitly orders 'Nebulizer treatment with albuterol/ipratropium every 4 hours,' which directly supports the nebulizer treatment code for inhalation solution administration."
+    },
+    {
+      "code": "9E0011",
+      "system": "CPT",
+      "description": "[SYNTHETIC] Hospital inpatient or observation care - initial - high complexity",
+      "confidence": 0.9684,
+      "confidence_tier": "high",
+      "rationale": "The plan says \"Admit to medical floor with telemetry.\" This is an initial hospital inpatient admission, and the documented acute pneumonia/COPD/respiratory failure makes high-complexity inpatient care the best match.",
+      "evidence": [
+        {
+          "text": "Admit to medical floor with telemetry.",
+          "normalized_term": "hospital admission with telemetry",
+          "query_terms": [
+            "telemetry monitoring"
+          ],
+          "assertion_status": "present",
+          "start_offset": 0,
+          "end_offset": 0,
+          "section": "plan",
+          "kind": "procedure"
+        }
+      ],
+      "status": "primary",
+      "reviewer_decision": "suggested",
+      "reviewer_code": null,
+      "reviewer_note": null,
+      "audit_agree": true,
+      "audit_note": "Plan documents initial inpatient admission to medical floor; patient presents with acute pneumonia, COPD exacerbation, and respiratory failure\u2014clinical complexity supports high-complexity inpatient care code."
+    }
+  ],
+  "warnings": [
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'influenza' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'COVID-19' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'hemoptysis' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'recent sick contacts' dropped from coding (assertion=absent); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'fall' dropped from coding (assertion=historical); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'chronic obstructive pulmonary disease' dropped from coding (assertion=historical); retained as context only.",
+      "refs": []
+    },
+    {
+      "type": "ambiguity",
+      "severity": "info",
+      "message": "Fact 'history of smoking' dropped from coding (assertion=historical); retained as context only.",
+      "refs": []
+    }
+  ],
+  "metadata": {
+    "trace_id": "9bb0de03ba89",
+    "model_ids": {
+      "extraction": "openai/gpt-5.4-mini",
+      "coder": "openai/gpt-5.4-mini",
+      "auditor": "anthropic/claude-haiku-4-5-20251001"
+    },
+    "pipeline_version": "0.1.1",
+    "temperature": 0.0,
+    "config_hash": "3bee7eea3e0cee68",
+    "timestamp": "2026-06-27T15:45:44.873505Z",
+    "encounter_type": "inpatient",
+    "metrics": {
+      "stage_latency_ms": {
+        "ingest": 0.3057089925277978,
+        "extract": 35734.20649999753,
+        "retrieve": 1171.6922499908833,
+        "code": 6964.2284589936025,
+        "audit": 2210.0028330023633,
+        "rules": 0.13041700003668666,
+        "assemble": 0.2431659959256649
+      },
+      "total_latency_ms": 46081.89920800214,
+      "tokens": {
+        "extraction.prompt_tokens": 1832,
+        "extraction.completion_tokens": 5347,
+        "extraction.total_tokens": 7179,
+        "extraction.calls": 1,
+        "coder.prompt_tokens": 11591,
+        "coder.completion_tokens": 1124,
+        "coder.total_tokens": 12715,
+        "coder.calls": 1,
+        "auditor.prompt_tokens": 2705,
+        "auditor.completion_tokens": 243,
+        "auditor.total_tokens": 2948,
+        "auditor.calls": 1
+      },
+      "est_cost_usd": 0.043107,
+      "retries": 0,
+      "n_candidates": 225,
+      "n_warnings": 8,
+      "n_facts": 23,
+      "n_facts_coded": 7
+    }
+  }
+}
