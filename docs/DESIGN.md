@@ -150,8 +150,8 @@ gold-tuned thresholds, not formal Platt / isotonic — needs a larger labelled
 set. *Reproducibility* is engineered (temp=0, pinned dated snapshots, versioned
 prompts, full audit log) but not bit-for-bit guaranteed across provider model
 updates — exactly why we pin and log everything. *Evaluation* is directional
-on a small (n=4) authored gold set — ICD-10 micro-F1 ≈ 0.48 (≈ the ~0.54 SOTA
-ceiling), CPT micro-F1 ≈ 0.71; the metric methodology (`scripts/evaluate.py`:
+on a small (n=4) authored gold set — ICD-10 micro-F1 ≈ 0.51 (≈ the ~0.54 SOTA
+ceiling), CPT micro-F1 ≈ 0.75; the metric methodology (`scripts/evaluate.py`:
 micro P/R/F1 for ICD and CPT, exact-match ratio, ICD-10-hierarchical micro-F1)
 is sound — only the sample size is small.
 

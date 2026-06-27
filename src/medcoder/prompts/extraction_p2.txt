@@ -7,6 +7,11 @@ For each fact, return:
   - normalized_term: a canonical clinical phrase suitable for code lookup
       (e.g. "type 2 diabetes mellitus" rather than "DM type 2"; "acute
       myocardial infarction" rather than "STEMI"). Keep it concise.
+  - query_terms: 0-3 SHORT alternative clinical phrasings to widen code lookup —
+      synonyms and abbreviation<->full-form expansions that denote the SAME
+      condition (e.g. ["myocardial infarction"] for "MI"; ["CKD"] for "chronic
+      kidney disease"). Avoid lay terms and related-but-different concepts. Return
+      [] when the normalized_term is already the canonical lookup phrase.
   - assertion_status: one of
       * "present"       — currently diagnosed / performed (default for active dx)
       * "absent"        — explicitly denied/negated ("denies chest pain",
@@ -32,6 +37,20 @@ Rules:
   - Family-history terms like "Mother had MI" → assertion_status="family".
   - "History of X" without active mention → "historical".
   - Be conservative: if the assertion is unclear, prefer "possible".
+
+Also classify the NOTE-LEVEL encounter setting and return it as the top-level
+`encounter_type`:
+  - "inpatient"  — the patient is ADMITTED as an inpatient (explicit admission,
+                   hospital course, discharge summary, ICU stay).
+  - "outpatient" — office/clinic visit, telehealth, routine follow-up, OR an
+                   Emergency Department visit. An ED/emergency encounter is
+                   OUTPATIENT unless the note explicitly documents an inpatient
+                   ADMISSION (a plan to "admit" for workup is not, by itself,
+                   admission).
+  - "unknown"    — genuinely cannot tell from the note.
+This governs whether uncertain ("probable/suspected") diagnoses may be coded
+(inpatient may; outpatient may not). When in doubt, prefer "outpatient" (the more
+conservative coding rule).
 
 Think step-by-step (internally), then emit JSON matching the `ExtractionResponse`
 schema. Do not include markdown fences or any text outside the JSON object.

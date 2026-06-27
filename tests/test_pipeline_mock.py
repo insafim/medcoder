@@ -28,7 +28,9 @@ def small_icd_catalog():
     pytest.importorskip("sentence_transformers")
     entries = [
         CatalogEntry("E11.9", CodeSystem.ICD10, "Type 2 diabetes mellitus without complications"),
-        CatalogEntry("E11.42", CodeSystem.ICD10, "Type 2 diabetes mellitus with diabetic polyneuropathy"),
+        CatalogEntry(
+            "E11.42", CodeSystem.ICD10, "Type 2 diabetes mellitus with diabetic polyneuropathy"
+        ),
         CatalogEntry("I10", CodeSystem.ICD10, "Essential (primary) hypertension"),
         CatalogEntry("E66.9", CodeSystem.ICD10, "Obesity, unspecified"),
     ]
@@ -43,8 +45,14 @@ def small_icd_catalog():
 def small_cpt_catalog():
     pytest.importorskip("sentence_transformers")
     entries = [
-        CatalogEntry("9E0002", CodeSystem.CPT, "[SYNTHETIC] Office visit established patient moderate complexity"),
-        CatalogEntry("9T0012", CodeSystem.CPT, "[SYNTHETIC] Comprehensive diabetic foot examination"),
+        CatalogEntry(
+            "9E0002",
+            CodeSystem.CPT,
+            "[SYNTHETIC] Office visit established patient moderate complexity",
+        ),
+        CatalogEntry(
+            "9T0012", CodeSystem.CPT, "[SYNTHETIC] Comprehensive diabetic foot examination"
+        ),
     ]
     r = HybridRetriever(CodeSystem.CPT, entries)
     r.build()
@@ -82,10 +90,16 @@ def test_pipeline_drops_offlist_coder_codes(small_icd_catalog):
             {
                 "fact_index": 0,
                 "choices": [
-                    {"code": "Z99.999", "confidence": 0.95,
-                     "rationale": "Hallucinated — would slip through without the whitelist guard."},
-                    {"code": "E11.9", "confidence": 0.90,
-                     "rationale": "Real candidate from the whitelist."},
+                    {
+                        "code": "Z99.999",
+                        "confidence": 0.95,
+                        "rationale": "Hallucinated — would slip through without the whitelist guard.",
+                    },
+                    {
+                        "code": "E11.9",
+                        "confidence": 0.90,
+                        "rationale": "Real candidate from the whitelist.",
+                    },
                 ],
             }
         ]
@@ -123,7 +137,8 @@ def test_pipeline_runs_with_mock_llm(small_icd_catalog, small_cpt_catalog):
                 "normalized_term": "type 2 diabetes mellitus",
                 "assertion_status": "present",
                 "start_offset": note.index("Type 2 diabetes mellitus"),
-                "end_offset": note.index("Type 2 diabetes mellitus") + len("Type 2 diabetes mellitus"),
+                "end_offset": note.index("Type 2 diabetes mellitus")
+                + len("Type 2 diabetes mellitus"),
                 "section": "assessment",
                 "kind": "diagnosis",
             },
@@ -146,7 +161,9 @@ def test_pipeline_runs_with_mock_llm(small_icd_catalog, small_cpt_catalog):
             },
             {
                 "fact_index": 1,
-                "choices": [{"code": "I10", "confidence": 0.91, "rationale": "Essential HTN stated."}],
+                "choices": [
+                    {"code": "I10", "confidence": 0.91, "rationale": "Essential HTN stated."}
+                ],
             },
         ]
     }
@@ -179,3 +196,110 @@ def test_pipeline_runs_with_mock_llm(small_icd_catalog, small_cpt_catalog):
     assert res.metadata.metrics.total_latency_ms > 0
     # No CPT in this note
     assert res.procedures == []
+
+
+@pytest.mark.slow
+def test_extraction_encounter_type_overrides_heuristic(small_icd_catalog):
+    """The extraction LLM's encounter_type wins over the keyword heuristic.
+
+    The note has no inpatient keywords (heuristic → unknown), but the LLM reports
+    'inpatient'; the run metadata must reflect the LLM's whole-note call.
+    """
+    note = "Assessment: Type 2 diabetes mellitus."
+    extraction = {
+        "encounter_type": "inpatient",
+        "facts": [
+            {
+                "text": "Type 2 diabetes mellitus",
+                "normalized_term": "type 2 diabetes mellitus",
+                "assertion_status": "present",
+                "start_offset": note.index("Type 2"),
+                "end_offset": note.index("Type 2") + len("Type 2 diabetes mellitus"),
+                "section": "assessment",
+                "kind": "diagnosis",
+            }
+        ],
+    }
+    coder = {
+        "assignments": [
+            {
+                "fact_index": 0,
+                "choices": [{"code": "E11.9", "confidence": 0.9, "rationale": "T2DM."}],
+            }
+        ]
+    }
+    auditor = {"verdicts": [{"pair_index": 0, "agree": True, "note": ""}]}
+
+    res = run_pipeline(
+        note,
+        document_id="t_enc",
+        mocks=MockResponses(
+            extraction=json.dumps(extraction),
+            coder=json.dumps(coder),
+            auditor=json.dumps(auditor),
+        ),
+    ).coding_result
+    assert res.metadata.encounter_type.value == "inpatient"
+
+
+def test_query_expansion_issues_a_search_per_term(monkeypatch):
+    """_retrieve_for_facts must query the normalized_term AND every query_term, in order."""
+    from medcoder.pipeline import _retrieve_for_facts
+    from medcoder.schemas import ExtractedFact
+
+    calls: list[str] = []
+
+    class StubRetriever:
+        def search(self, q, top_k=None):
+            calls.append(q)
+            return []
+
+    monkeypatch.setattr("medcoder.pipeline.get_retriever", lambda system: StubRetriever())
+
+    fact = ExtractedFact(
+        text="MI",
+        normalized_term="myocardial infarction",
+        query_terms=["MI", "heart attack"],
+        assertion_status="present",
+        start_offset=0,
+        end_offset=2,
+        kind="diagnosis",
+    )
+    _retrieve_for_facts([fact])
+    assert calls == ["myocardial infarction", "MI", "heart attack"]
+
+
+def test_query_expansion_skips_blank_terms_and_empty_list(monkeypatch):
+    """Empty query_terms → only the normalized_term is queried; blank terms are skipped."""
+    from medcoder.pipeline import _retrieve_for_facts
+    from medcoder.schemas import ExtractedFact
+
+    calls: list[str] = []
+
+    class StubRetriever:
+        def search(self, q, top_k=None):
+            calls.append(q)
+            return []
+
+    monkeypatch.setattr("medcoder.pipeline.get_retriever", lambda system: StubRetriever())
+
+    fact_empty = ExtractedFact(
+        text="x",
+        normalized_term="hypertension",
+        query_terms=[],
+        assertion_status="present",
+        start_offset=0,
+        end_offset=1,
+        kind="diagnosis",
+    )
+    fact_blank = ExtractedFact(
+        text="y",
+        normalized_term="diabetes",
+        query_terms=["", "  "],
+        assertion_status="present",
+        start_offset=0,
+        end_offset=1,
+        kind="diagnosis",
+    )
+    _retrieve_for_facts([fact_empty, fact_blank])
+    assert calls == ["hypertension", "diabetes"]

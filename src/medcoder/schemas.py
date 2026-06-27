@@ -54,6 +54,9 @@ class ReviewerDecision(str, Enum):
 
 
 class EncounterType(str, Enum):
+    """Care setting — gates the ICD-10-CM Guideline IV.H "uncertain diagnosis" rule
+    (outpatient: don't code probable/suspected; inpatient: code as if present)."""
+
     INPATIENT = "inpatient"
     OUTPATIENT = "outpatient"
     UNKNOWN = "unknown"
@@ -66,6 +69,10 @@ class ExtractedFact(BaseModel):
 
     text: str = Field(..., description="Verbatim span from the note")
     normalized_term: str = Field(..., description="Canonical clinical phrase used for retrieval")
+    query_terms: list[str] = Field(
+        default_factory=list,
+        description="Synonyms / abbreviation↔expansion used for retrieval query expansion",
+    )
     assertion_status: AssertionStatus
     start_offset: int = Field(..., ge=0, description="Global char offset into the original note")
     end_offset: int = Field(..., ge=0)
@@ -84,6 +91,9 @@ class CandidateCode(BaseModel):
     retrieval_score: float = Field(..., description="Fused RRF score (higher = better)")
     dense_rank: int | None = None
     lexical_rank: int | None = None
+    fused_rank: int | None = Field(
+        None, description="1-based position in the fused/merged candidate list"
+    )
 
 
 class Warning(BaseModel):
@@ -175,6 +185,10 @@ class ExtractionResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     facts: list[ExtractedFact]
+    encounter_type: EncounterType | None = Field(
+        None,
+        description="Note-level encounter classification; None/unknown → heuristic fallback",
+    )
 
 
 class CoderCodeChoice(BaseModel):
