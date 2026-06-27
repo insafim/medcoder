@@ -54,8 +54,13 @@ coverage.xml
 data/index/
 data/catalogs/icd10cm_codes_2026.txt
 
-# Generated outputs
-outputs/
+# Pre-run example outputs ARE committed (outputs/) so a reviewer can inspect
+# real, structured, auditable results without running anything. `make run`
+# overwrites a reviewer's local copy. Only transient logs are ignored.
 *.log
+
+# Private working docs (kept locally only — never part of the public deliverable).
+# Safe to drop this folder inside the repo temporarily; git will ignore it.
+medcoder-private-docs/
 
 # PDF intermediates (none — the rendered PDF IS committed for reviewer convenience)
