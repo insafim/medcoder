@@ -26,6 +26,7 @@ from typing import Any
 from medcoder.config import get_settings
 from medcoder.logging_setup import configure_logging, get_logger, trace_context
 from medcoder.pipeline import run as run_pipeline
+from medcoder.schemas import CodeSystem
 
 log = get_logger("evaluate")
 
@@ -72,7 +73,8 @@ def evaluate_note(
 ) -> dict[str, Any]:
     text = note_path.read_text()
     with trace_context() as tid:
-        result = run_pipeline(text, document_id=note_path.stem, trace_id=tid).coding_result
+        pres = run_pipeline(text, document_id=note_path.stem, trace_id=tid)
+    result = pres.coding_result
     pred_dx = {s.code for s in result.diagnoses}
     pred_px = {s.code for s in result.procedures}
     dx_must = set(gold["diagnoses"]["must_include"])
@@ -92,6 +94,23 @@ def evaluate_note(
     exact_dx = pred_dx == dx_must
     exact_px = pred_px == px_must
 
+    # Per-stage diagnostic: retrieval recall@k. Was each gold (must) code present
+    # in the candidate whitelist the retriever surfaced? This separates "the
+    # retriever never surfaced it" (a retrieval miss) from "the coder didn't pick
+    # it" (a coder miss) — an end-to-end FN alone can't tell them apart.
+    icd_cands = {
+        c.code
+        for cands in pres.retrieval_by_fact.values()
+        for c in cands
+        if c.system == CodeSystem.ICD10
+    }
+    cpt_cands = {
+        c.code
+        for cands in pres.retrieval_by_fact.values()
+        for c in cands
+        if c.system == CodeSystem.CPT
+    }
+
     return {
         "note": note_path.name,
         "n_dx_pred": len(pred_dx),
@@ -99,6 +118,8 @@ def evaluate_note(
         "icd": {"tp": dx_tp, "fp": dx_fp, "fn": dx_fn},
         "cpt": {"tp": px_tp, "fp": px_fp, "fn": px_fn},
         "icd_hierarchical": {"tp": h_tp, "fp": h_fp, "fn": h_fn},
+        "icd_retrieval": {"hit": len(dx_must & icd_cands), "total": len(dx_must)},
+        "cpt_retrieval": {"hit": len(px_must & cpt_cands), "total": len(px_must)},
         "exact_match_icd": exact_dx,
         "exact_match_cpt": exact_px,
         "latency_ms": result.metadata.metrics.total_latency_ms,
@@ -114,11 +135,21 @@ def _sum_bucket(rows: list[dict[str, Any]], key: str) -> tuple[int, int, int]:
     return tp, fp, fn
 
 
+def _recall_at_k(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
+    """Aggregate retrieval recall@k: fraction of gold (must) codes that the
+    retriever surfaced into the candidate whitelist across all notes."""
+    hit = sum(r[key]["hit"] for r in rows)
+    total = sum(r[key]["total"] for r in rows)
+    return {"recall_at_k": (hit / total if total else 0.0), "hit": hit, "total": total}
+
+
 def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     icd = _sum_bucket(rows, "icd")
     cpt = _sum_bucket(rows, "cpt")
     icd_h = _sum_bucket(rows, "icd_hierarchical")
     return {
+        "retrieval_recall_icd": _recall_at_k(rows, "icd_retrieval"),
+        "retrieval_recall_cpt": _recall_at_k(rows, "cpt_retrieval"),
         "n_notes": len(rows),
         "micro_icd": {
             "p": _prf(*icd)[0],
@@ -165,6 +196,11 @@ def run_eval(notes_dir: Path, gold_path: Path) -> dict[str, Any]:
 
 
 def main() -> None:
+    """Standalone entry point (`python scripts/evaluate.py`).
+
+    Mirrors the `medcoder eval` Typer command but parses its own argparse flags
+    (--notes / --gold / --out); both invocation paths ultimately call run_eval().
+    """
     parser = argparse.ArgumentParser(description="Run gold-set evaluation.")
     parser.add_argument("--notes", type=Path, default=Path("data/notes"))
     parser.add_argument("--gold", type=Path, default=Path("data/gold/labels.json"))
