@@ -46,10 +46,11 @@ note.txt ─► ① ingest ─► ② extract ─► ③ retrieve ─► ④ cod
    the Pydantic-validated `CodingResult` and a `RunMetadata` envelope with
    `trace_id`, model snapshots, prompt version, config hash, and per-stage
    metrics. Each run persists a self-contained `outputs/<doc_id>/` folder:
-   `result.json` (or a Markdown review sheet via `--format md`) plus a
-   `trace.json` audit trail recording every stage's actual output — extracted
-   facts, the per-fact candidate whitelist, coder choices, and auditor verdicts —
-   so a reviewer can reconstruct *how* each code was reached.
+   `result.json` (plus a Markdown review sheet via `--format md`, and an
+   *annotated note* via `--format annotated` — the note with each code spliced in
+   inline at its evidence span) alongside a `trace.json` audit trail recording every
+   stage's actual output — extracted facts, the per-fact candidate whitelist, coder
+   choices, and auditor verdicts — so a reviewer can reconstruct *how* each code was reached.
 
 # 2 · Code retrieval / filtering strategy
 

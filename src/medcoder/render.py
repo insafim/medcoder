@@ -75,3 +75,97 @@ def render_markdown(result: CodingResult) -> str:
         "(`trace.json`) carry the full machine-readable record.\n"
     )
     return "\n".join(out)
+
+
+# ---- annotated-note view -------------------------------------------------
+
+# Keyed by the enum *value* strings (not the enum types) so this module needs no
+# extra schema imports — and so a ruff autofix can't strip an "unused" import.
+_TIER_GLYPH = {"high": "🟢", "medium": "🟡", "low": "🔴"}
+_AUDIT_GLYPH_INLINE = {True: "✓", False: "✗", None: "–"}
+
+
+def _suggestion_marker(s: CodeSuggestion) -> str:
+    """Render the inline `「…」` marker `render_annotated` splices in after each span.
+
+    Packs the four things a reviewer needs to act on a code without leaving the note —
+    the code, its system, its confidence tier (glyph + word), and the auditor verdict —
+    into one ` · `-separated string, e.g. `E11.42 · ICD-10-CM · 🟢 high · ✓`. Both glyph
+    lookups use `.get(..., fallback)` so an unexpected enum/None value degrades to a
+    placeholder rather than raising mid-render.
+    """
+    tier = s.confidence_tier.value
+    glyph = _TIER_GLYPH.get(tier, "")
+    audit = _AUDIT_GLYPH_INLINE.get(s.audit_agree, "?")
+    return f"{s.code} · {s.system.value} · {glyph} {tier} · {audit}"
+
+
+def render_annotated(result: CodingResult, note_text: str) -> str:
+    """Render the clinical note with each suggested code spliced in at its evidence span.
+
+    `note_text` MUST be the **normalized** note (``ingest.normalize(raw)``): that is the
+    text the offsets were computed against, because evidence `start_offset`/`end_offset`
+    index it, not the raw file. Passing raw text instead does NOT raise — it silently
+    splices markers at the wrong positions (or trips the unanchored fallback below), so
+    callers must normalize first. Each coded span is wrapped «like this» and followed by
+    a 「CODE · SYSTEM · tier · audit」 marker; text with no code is left verbatim. This is
+    a third human-review view alongside the JSON payload and the Markdown review sheet —
+    not a replacement for either.
+
+    Robustness: spans are spliced right-to-left so earlier offsets stay valid; codes
+    sharing one span are merged into a single marker; any span that is out of bounds,
+    overlaps an already-spliced span, or whose text no longer matches the recorded
+    evidence is reported in an "unanchored" footer instead of corrupting the note.
+    """
+    # Group every suggestion by the exact (start, end) span it cites. One fact can
+    # back several codes; several codes can share one fact.
+    by_span: dict[tuple[int, int], list[CodeSuggestion]] = {}
+    ev_text: dict[tuple[int, int], str] = {}
+    for s in [*result.diagnoses, *result.procedures]:
+        for ev in s.evidence:
+            key = (ev.start_offset, ev.end_offset)
+            by_span.setdefault(key, []).append(s)
+            ev_text.setdefault(key, ev.text)
+
+    text = note_text
+    n = len(note_text)
+    unanchored: list[str] = []
+    # Splice from the rightmost span leftwards; require each span to end at/before the
+    # start of the last one spliced, which also rejects overlaps cleanly.
+    last_start = n
+    for (start, end), sugs in sorted(by_span.items(), key=lambda kv: kv[0][0], reverse=True):
+        markers = " + ".join(_suggestion_marker(s) for s in sugs)
+        valid = (
+            0 <= start <= end <= n
+            and end <= last_start
+            and note_text[start:end].strip() == ev_text[(start, end)].strip()
+        )
+        if not valid:
+            unanchored.append(f'- 「{markers}」 — evidence: "{ev_text[(start, end)]}"')
+            continue
+        span = text[start:end]
+        text = f"{text[:start]}«{span}»「{markers}」{text[end:]}"
+        last_start = start
+
+    m = result.metadata
+    out: list[str] = []
+    out.append(f"# Annotated note — `{result.document_id}`\n")
+    out.append(
+        "> The clinical note with each suggested code shown inline at the evidence span "
+        "that justifies it. «…» marks the evidence; 「code · system · tier · audit」 is the "
+        "suggestion. **Legend:** 🟢 high · 🟡 medium · 🔴 low confidence; ✓ auditor agreed · "
+        "✗ disagreed · – not audited. The machine-readable record is `result.json`; the "
+        "decision trail is `trace.json`.\n"
+    )
+    out.append(f"- **Encounter:** {m.encounter_type.value}  - **Trace:** `{m.trace_id}`\n")
+    out.append("```text")
+    out.append(text)
+    out.append("```")
+    if unanchored:
+        out.append(
+            "\n## Unanchored codes\n\n_Suggested, but their evidence span could not be "
+            "placed inline (offset drift or overlap) — see `result.json` for the full record._\n"
+        )
+        out.extend(unanchored)
+        out.append("")
+    return "\n".join(out)
