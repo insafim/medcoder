@@ -59,11 +59,18 @@ eval: build-index
 lint:
 	$(PYTHON) -m ruff check src tests scripts
 
-# Generate the 1–2 page design PDF from DESIGN.md (requires pandoc + a LaTeX engine).
-# No LaTeX? scripts/build_pdf.sh renders via pandoc → headless Chrome (built the committed docs/DESIGN.pdf).
+# Generate the 1–2 page design PDF from DESIGN.md.
+# Default renders via pandoc → headless Chrome — no LaTeX install needed (this is
+# the path that built the committed docs/DESIGN.pdf). Prefer LaTeX? use `make pdf-latex`.
 .PHONY: pdf
 pdf:
+	bash scripts/build_pdf.sh
+
+# Alternative: render with a LaTeX engine (requires pandoc + xelatex installed).
+.PHONY: pdf-latex
+pdf-latex:
 	@command -v pandoc >/dev/null || { echo "pandoc not found — install pandoc and a LaTeX engine first"; exit 1; }
+	@command -v xelatex >/dev/null || { echo "xelatex not found — install a LaTeX engine, or use 'make pdf'"; exit 1; }
 	pandoc docs/DESIGN.md \
 	  -o docs/DESIGN.pdf \
 	  --pdf-engine=xelatex \
@@ -98,7 +105,8 @@ help:
 	@echo "make test-fast    — quick tests only (skip slow embedding tests)"
 	@echo "make eval         — gold-set evaluation"
 	@echo "make lint         — ruff"
-	@echo "make pdf          — DESIGN.md → docs/DESIGN.pdf (needs pandoc + xelatex)"
+	@echo "make pdf          — DESIGN.md → docs/DESIGN.pdf (pandoc → headless Chrome; no LaTeX)"
+	@echo "make pdf-latex    — same, via a LaTeX engine (needs pandoc + xelatex)"
 	@echo "make docker       — build the Docker image"
 	@echo "make docker-run   — run the pipeline inside the container"
 	@echo "make clean        — remove build artefacts (keeps venv + data)"
