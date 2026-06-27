@@ -34,15 +34,15 @@ verdicts.
 set and can never free-generate a code. For each extracted fact, a short list of
 real catalog codes is retrieved; the coder may choose only from that list, and
 any code not on it is discarded during validation. Invalid codes are therefore
-impossible by construction, which matters because models left to free-generate
-ICD-10 produce up to roughly 35% of codes that are invalid or non-billable [1].
+impossible by construction, which matters because models that free-generate
+ICD-10 codes frequently emit invalid or non-billable ones [1].
 
 The shortlist is built from two complementary searches over the code
 descriptions, fused into one ranked list:
 
 - **Dense search** matches by meaning (semantic similarity via cosine), so
   "DM type 2" finds "type 2 diabetes mellitus". Sentence-transformer embeddings
-  are queried over a FAISS index (top 50).
+  (`all-MiniLM-L6-v2` by default) are queried over a FAISS index (top 50).
 - **Lexical search (BM25)** matches exact wording, where a phrase like "essential
   hypertension" must be read word for word (top 50).
 - **Reciprocal Rank Fusion** [2] merges the two by rank, so the different scoring
@@ -110,7 +110,8 @@ variable.
   A larger synthetic set would not add credibility; real validation needs a
   licensed labelled corpus such as MIMIC-IV. Precision is over-coding-bound (more
   codes emitted than gold labels), so the main lever is a more selective coder.
-- *Extensions (designed, not built).* A Postgres-backed retriever (semantic,
+- *Extensions the architecture supports but does not yet implement.* A
+  Postgres-backed retriever (semantic,
   full-text, and fuzzy search in one datastore), biomedical embeddings with a
   SNOMED-to-ICD crosswalk, a fuller rule engine (ICD-10 tabular plus CMS NCCI),
   and a FastAPI reviewer UI. Idempotent stages can be orchestrated by Airflow or

@@ -73,8 +73,8 @@ stage's output, so a reviewer can reconstruct how each code was reached.
 set and can never free-generate a code. For each extracted fact, a short list of
 real catalog codes is retrieved; the coder may choose only from that list, and
 any code not on it is discarded during validation. Invalid codes are therefore
-impossible by construction, which matters because models left to free-generate
-ICD-10 produce up to about 35% of codes that are non-billable or do not exist [2].
+impossible by construction, which matters because models that free-generate
+ICD-10 codes frequently emit invalid or non-billable ones [2].
 
 **How the shortlist is built.** For each fact, two complementary searches are run
 over the code descriptions and combined:
@@ -83,7 +83,8 @@ over the code descriptions and combined:
 
 - **Dense search** matches by meaning (semantic similarity via cosine), so
   "DM type 2" still finds "type 2 diabetes mellitus". Sentence-transformer
-  embeddings are queried over a FAISS index, returning the top 50.
+  embeddings (`all-MiniLM-L6-v2` by default) are queried over a FAISS index,
+  returning the top 50.
 - **Lexical search (BM25)** matches the exact wording, which matters when a
   phrase like "essential hypertension" must be read word for word. It also
   returns the top 50.
@@ -194,8 +195,8 @@ extension but needs a larger labelled set than the demo has.
   over-coding-bound (the coder emits more codes than the gold labels), so the
   main lever is a more selective coder, not retrieval.
 
-**Extensions (designed for, not built).** Several extensions are planned but not
-implemented: a Postgres-backed retriever (semantic, full-text, and fuzzy search
+**Extensions the architecture supports but does not yet implement.** A
+Postgres-backed retriever (semantic, full-text, and fuzzy search
 in one datastore via pgvector, tsvector, and pg_trgm); domain-specific biomedical
 embeddings with a SNOMED-to-ICD crosswalk; a fuller rule engine (the complete
 ICD-10 tabular guidelines plus CMS NCCI); a FastAPI service with a reviewer UI;
