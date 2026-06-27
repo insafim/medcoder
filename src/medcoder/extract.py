@@ -8,15 +8,25 @@ but catches the most common LLM polarity slip ("denies chest pain" → present).
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 
 from .config import get_settings
 from .ingest import IngestedNote
 from .llm import CallAggregator, call_structured
 from .logging_setup import get_logger
 from .prompts import EXTRACTION_SYSTEM
-from .schemas import AssertionStatus, ExtractedFact, ExtractionResponse
+from .schemas import AssertionStatus, EncounterType, ExtractedFact, ExtractionResponse
 
 log = get_logger(__name__)
+
+
+@dataclass
+class ExtractionResult:
+    """Extraction output: merged facts plus the note-level encounter type the LLM
+    inferred (None/unknown → the pipeline falls back to the ingest heuristic)."""
+
+    facts: list[ExtractedFact]
+    encounter_type: EncounterType | None = None
 
 
 # ---- deterministic backstop ---------------------------------------------
@@ -116,10 +126,11 @@ def extract_facts(
     *,
     aggregator: CallAggregator | None = None,
     mock_response: str | None = None,
-) -> list[ExtractedFact]:
+) -> ExtractionResult:
     """Run the extraction agent over every window and merge results."""
     model = get_settings().model_for("extraction")
     all_facts: list[ExtractedFact] = []
+    encounter: EncounterType | None = None
     for window in note.windows:
         resp = call_structured(
             agent="extraction",
@@ -130,6 +141,8 @@ def extract_facts(
             aggregator=aggregator,
             mock_response=mock_response,
         )
+        if encounter is None and resp.encounter_type not in (None, EncounterType.UNKNOWN):
+            encounter = resp.encounter_type
         for f in resp.facts:
             # Translate window-local offsets to global note offsets.
             shift = window.start
@@ -164,9 +177,13 @@ def extract_facts(
     merged = _merge_facts(all_facts)
     log.info(
         "extraction_done",
-        extra={"n_raw": len(all_facts), "n_merged": len(merged)},
+        extra={
+            "n_raw": len(all_facts),
+            "n_merged": len(merged),
+            "encounter_type": encounter.value if encounter else None,
+        },
     )
-    return merged
+    return ExtractionResult(facts=merged, encounter_type=encounter)
 
 
 def coding_eligible(fact: ExtractedFact, *, allow_possible_inpatient: bool = False) -> bool:

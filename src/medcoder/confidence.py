@@ -77,8 +77,20 @@ def tier_for(score: float) -> ConfidenceTier:
 def make_inputs(
     candidate: CandidateCode, coder_confidence: float, audit_agree: bool | None
 ) -> ConfidenceInputs:
-    # Rank prefers fused rank but falls back to dense or lexical
-    rank = candidate.dense_rank or candidate.lexical_rank or 99
+    """Assemble the three confidence signals for one candidate.
+
+    The retrieval rank prefers the **fused** (post-merge) rank, then the dense
+    rank, then the lexical rank, then a large sentinel. Explicit ``is not None``
+    checks (not ``or``) so a legitimate rank of 0 is never skipped as falsy.
+    """
+    rank = next(
+        (
+            r
+            for r in (candidate.fused_rank, candidate.dense_rank, candidate.lexical_rank)
+            if r is not None
+        ),
+        99,
+    )
     return ConfidenceInputs(
         coder_confidence=coder_confidence,
         retrieval_score=candidate.retrieval_score,

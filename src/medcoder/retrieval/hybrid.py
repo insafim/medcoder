@@ -81,7 +81,7 @@ class HybridRetriever:
 
         ranked = sorted(fused.items(), key=lambda kv: -kv[1]["score"])[:top_k]
         out: list[CandidateCode] = []
-        for idx, info in ranked:
+        for pos, (idx, info) in enumerate(ranked, start=1):
             entry = self.entries[idx]
             out.append(
                 CandidateCode(
@@ -91,6 +91,7 @@ class HybridRetriever:
                     retrieval_score=float(info["score"]),
                     dense_rank=info["dense_rank"],
                     lexical_rank=info["lex_rank"],
+                    fused_rank=pos,
                 )
             )
         return out

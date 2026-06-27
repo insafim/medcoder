@@ -78,12 +78,27 @@ def _kind_to_system(kind: str) -> CodeSystem:
 def _retrieve_for_facts(
     facts: list[ExtractedFact],
 ) -> dict[int, list[CandidateCode]]:
+    top_k = get_settings().retrieval_top_k
     out: dict[int, list[CandidateCode]] = {}
     for i, f in enumerate(facts):
         system = _kind_to_system(f.kind)
         retriever = get_retriever(system)
-        candidates = retriever.search(f.normalized_term)
-        out[i] = candidates
+        # Query expansion: retrieve on the normalized term AND any LLM-supplied
+        # synonyms, then merge candidates keeping the best score per code. Widens
+        # recall without relaxing the whitelist (§9.3).
+        merged: dict[str, CandidateCode] = {}
+        for q in [f.normalized_term, *f.query_terms]:
+            if not q or not q.strip():
+                continue
+            for c in retriever.search(q):
+                prev = merged.get(c.code)
+                if prev is None or c.retrieval_score > prev.retrieval_score:
+                    merged[c.code] = c
+        ranked = sorted(merged.values(), key=lambda c: -c.retrieval_score)[:top_k]
+        for pos, c in enumerate(ranked, start=1):
+            # in-place mutation is intentional (Pydantic model, not frozen):
+            c.fused_rank = pos  # final post-merge rank feeds confidence (§9.7)
+        out[i] = ranked
     return out
 
 
@@ -119,11 +134,13 @@ def run(
         warnings: list[Warning] = []
 
         # ---- 2) Extract ----------------------------------------------
+        llm_encounter: EncounterType | None = None
+        facts: list[ExtractedFact] = []
         try:
             with timed("extract", metrics.stage_latency_ms):
-                facts: list[ExtractedFact] = extract_facts(
-                    note, aggregator=agg, mock_response=mocks.extraction
-                )
+                extraction = extract_facts(note, aggregator=agg, mock_response=mocks.extraction)
+            facts = extraction.facts
+            llm_encounter = extraction.encounter_type
         except Exception as e:  # noqa: BLE001  pipeline-level boundary
             log.exception("extract_failed", extra={"error": str(e)})
             warnings.append(
@@ -136,7 +153,14 @@ def run(
             facts = []
         metrics.n_facts = len(facts)
 
-        allow_inpatient = note.encounter_type == EncounterType.INPATIENT
+        # Encounter type: prefer the extraction LLM's whole-note classification;
+        # fall back to the deterministic ingest heuristic when it is unsure (§9.1).
+        encounter_type = (
+            llm_encounter
+            if llm_encounter not in (None, EncounterType.UNKNOWN)
+            else note.encounter_type
+        )
+        allow_inpatient = encounter_type == EncounterType.INPATIENT
         codable = [f for f in facts if coding_eligible(f, allow_possible_inpatient=allow_inpatient)]
         skipped = [f for f in facts if f not in codable]
         for f in skipped:
@@ -243,7 +267,7 @@ def run(
             pipeline_version=PIPELINE_VERSION,
             temperature=settings.temperature,
             config_hash=settings.config_hash(),
-            encounter_type=note.encounter_type,
+            encounter_type=encounter_type,
             metrics=metrics,
         )
         result = CodingResult(
