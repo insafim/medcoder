@@ -1,6 +1,6 @@
 """Auditor agent — independent model verifies each (evidence, code) pair.
 
-Triage rules (Plan.md §8.3) keep this cheap:
+Triage rules keep this cheap:
   - ALWAYS audit procedures (high cost of error, smaller list).
   - ALWAYS audit if coder confidence ≤ audit_low_conf_threshold.
   - Otherwise skip — the lightweight whitelist + assertion checks are enough.

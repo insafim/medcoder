@@ -1,7 +1,7 @@
 """Dense semantic index — embeddings stored in FAISS.
 
 The embedder is pluggable (see embedders.py). Default is the small general-purpose
-local MiniLM — Plan.md §3 marks this as a demo compromise; the production swap for
+local MiniLM — a demo compromise; the production swap for
 clinical text is a domain embedder such as SapBERT/PubMedBERT, and a hosted OpenAI
 backend is available opt-in. All backends emit L2-normalized vectors so the
 `IndexFlatIP` below is cosine similarity.

@@ -97,7 +97,7 @@ class Settings(BaseSettings):
     )
     audit_always_for_procedures: bool = True
 
-    # --- Confidence tier thresholds (gold-tuned, see Plan.md §9.7) -------
+    # --- Confidence tier thresholds (gold-tuned) ------------------------
     tier_high_threshold: float = 0.78
     tier_low_threshold: float = 0.45
 

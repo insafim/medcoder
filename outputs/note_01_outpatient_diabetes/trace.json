@@ -1,0 +1,1355 @@
+{
+  "document_id": "note_01_outpatient_diabetes",
+  "trace_id": "a94f8d732eba",
+  "config_hash": "3bee7eea3e0cee68",
+  "encounter_type": "outpatient",
+  "stages": {
+    "extract": {
+      "facts": [
+        {
+          "text": "type 2 diabetes mellitus",
+          "normalized_term": "type 2 diabetes mellitus",
+          "query_terms": [
+            "T2DM",
+            "type 2 DM"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 186,
+          "end_offset": 210
+        },
+        {
+          "text": "essential\nhypertension.",
+          "normalized_term": "essential hypertension",
+          "query_terms": [
+            "hypertension",
+            "HTN"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 215,
+          "end_offset": 238
+        },
+        {
+          "text": "denies chest pain",
+          "normalized_term": "chest pain",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 316,
+          "end_offset": 333
+        },
+        {
+          "text": "shortness of breath",
+          "normalized_term": "shortness of breath",
+          "query_terms": [
+            "dyspnea"
+          ],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 335,
+          "end_offset": 354
+        },
+        {
+          "text": "polyuria",
+          "normalized_term": "polyuria",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 356,
+          "end_offset": 364
+        },
+        {
+          "text": "visual changes",
+          "normalized_term": "visual changes",
+          "query_terms": [
+            "vision changes"
+          ],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 369,
+          "end_offset": 383
+        },
+        {
+          "text": "mild bilateral foot numbness",
+          "normalized_term": "foot numbness",
+          "query_terms": [
+            "numbness of feet"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "subjective",
+          "start_offset": 394,
+          "end_offset": 422
+        },
+        {
+          "text": "myocardial infarction",
+          "normalized_term": "myocardial infarction",
+          "query_terms": [
+            "MI",
+            "heart attack"
+          ],
+          "assertion_status": "family",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 545,
+          "end_offset": 566
+        },
+        {
+          "text": "No personal history of\nstroke",
+          "normalized_term": "stroke",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 604,
+          "end_offset": 633
+        },
+        {
+          "text": "MI.",
+          "normalized_term": "myocardial infarction",
+          "query_terms": [
+            "MI",
+            "heart attack"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "subjective",
+          "start_offset": 637,
+          "end_offset": 640
+        },
+        {
+          "text": "Comprehensive diabetic foot exam performed:",
+          "normalized_term": "diabetic foot examination",
+          "query_terms": [
+            "comprehensive diabetic foot exam",
+            "diabetic foot exam"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "objective",
+          "start_offset": 681,
+          "end_offset": 724
+        },
+        {
+          "text": "Type 2 diabetes mellitus with diabetic polyneuropathy, with documented\n sensory deficits on monofilament testing \u2014 A1C above goal.",
+          "normalized_term": "type 2 diabetes mellitus with diabetic polyneuropathy",
+          "query_terms": [
+            "T2DM with diabetic polyneuropathy"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 971,
+          "end_offset": 1101
+        },
+        {
+          "text": "Diabetic nephropathy, early \u2014 microalbuminuria.",
+          "normalized_term": "diabetic nephropathy",
+          "query_terms": [
+            "diabetic kidney disease"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1157,
+          "end_offset": 1204
+        },
+        {
+          "text": "Obesity, BMI 31.4.",
+          "normalized_term": "obesity",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1208,
+          "end_offset": 1226
+        }
+      ]
+    },
+    "retrieve": {
+      "by_fact": [
+        {
+          "fact": "type 2 diabetes mellitus",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E11.9",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus without complications",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "I21.A1",
+              "system": "ICD-10-CM",
+              "description": "Myocardial infarction type 2",
+              "retrieval_score": 0.032266,
+              "fused_rank": 2
+            },
+            {
+              "code": "Q99.812",
+              "system": "ICD-10-CM",
+              "description": "Usher syndrome, type 2",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "E11.65",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with hyperglycemia",
+              "retrieval_score": 0.031754,
+              "fused_rank": 4
+            },
+            {
+              "code": "E11.8",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with unspecified complications",
+              "retrieval_score": 0.031099,
+              "fused_rank": 5
+            },
+            {
+              "code": "Q85.02",
+              "system": "ICD-10-CM",
+              "description": "Neurofibromatosis, type 2",
+              "retrieval_score": 0.030478,
+              "fused_rank": 6
+            },
+            {
+              "code": "E11.21",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.02971,
+              "fused_rank": 7
+            },
+            {
+              "code": "E11.41",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic mononeuropathy",
+              "retrieval_score": 0.029083,
+              "fused_rank": 8
+            },
+            {
+              "code": "E10.A2",
+              "system": "ICD-10-CM",
+              "description": "Type 1 diabetes mellitus, presymptomatic, Stage 2",
+              "retrieval_score": 0.028814,
+              "fused_rank": 9
+            },
+            {
+              "code": "E11.44",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic amyotrophy",
+              "retrieval_score": 0.028382,
+              "fused_rank": 10
+            },
+            {
+              "code": "E11.42",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic polyneuropathy",
+              "retrieval_score": 0.028382,
+              "fused_rank": 11
+            },
+            {
+              "code": "E11.36",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic cataract",
+              "retrieval_score": 0.028373,
+              "fused_rank": 12
+            },
+            {
+              "code": "E11.A",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus without complications in remission",
+              "retrieval_score": 0.028205,
+              "fused_rank": 13
+            },
+            {
+              "code": "D68.029",
+              "system": "ICD-10-CM",
+              "description": "Von Willebrand disease, type 2, unspecified",
+              "retrieval_score": 0.027971,
+              "fused_rank": 14
+            },
+            {
+              "code": "E11.69",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with other specified complication",
+              "retrieval_score": 0.027921,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "essential hypertension",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "I10",
+              "system": "ICD-10-CM",
+              "description": "Essential (primary) hypertension",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "I97.3",
+              "system": "ICD-10-CM",
+              "description": "Postprocedural hypertension",
+              "retrieval_score": 0.031778,
+              "fused_rank": 2
+            },
+            {
+              "code": "I1A.0",
+              "system": "ICD-10-CM",
+              "description": "Resistant hypertension",
+              "retrieval_score": 0.031754,
+              "fused_rank": 3
+            },
+            {
+              "code": "I15.0",
+              "system": "ICD-10-CM",
+              "description": "Renovascular hypertension",
+              "retrieval_score": 0.031746,
+              "fused_rank": 4
+            },
+            {
+              "code": "O10.03",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating the puerperium",
+              "retrieval_score": 0.030798,
+              "fused_rank": 5
+            },
+            {
+              "code": "O10.02",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating childbirth",
+              "retrieval_score": 0.030622,
+              "fused_rank": 6
+            },
+            {
+              "code": "I15.8",
+              "system": "ICD-10-CM",
+              "description": "Other secondary hypertension",
+              "retrieval_score": 0.029911,
+              "fused_rank": 7
+            },
+            {
+              "code": "P29.2",
+              "system": "ICD-10-CM",
+              "description": "Neonatal hypertension",
+              "retrieval_score": 0.029828,
+              "fused_rank": 8
+            },
+            {
+              "code": "I15.9",
+              "system": "ICD-10-CM",
+              "description": "Secondary hypertension, unspecified",
+              "retrieval_score": 0.029236,
+              "fused_rank": 9
+            },
+            {
+              "code": "K76.6",
+              "system": "ICD-10-CM",
+              "description": "Portal hypertension",
+              "retrieval_score": 0.029214,
+              "fused_rank": 10
+            },
+            {
+              "code": "O10.019",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, unspecified trimester",
+              "retrieval_score": 0.02904,
+              "fused_rank": 11
+            },
+            {
+              "code": "O10.012",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, second trimester",
+              "retrieval_score": 0.028958,
+              "fused_rank": 12
+            },
+            {
+              "code": "O10.011",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, first trimester",
+              "retrieval_score": 0.028439,
+              "fused_rank": 13
+            },
+            {
+              "code": "O10.013",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, third trimester",
+              "retrieval_score": 0.028372,
+              "fused_rank": 14
+            },
+            {
+              "code": "I27.20",
+              "system": "ICD-10-CM",
+              "description": "Pulmonary hypertension, unspecified",
+              "retrieval_score": 0.027778,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "foot numbness",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R26.81",
+              "system": "ICD-10-CM",
+              "description": "Unsteadiness on feet",
+              "retrieval_score": 0.031545,
+              "fused_rank": 1
+            },
+            {
+              "code": "M25.076",
+              "system": "ICD-10-CM",
+              "description": "Hemarthrosis, unspecified foot",
+              "retrieval_score": 0.026631,
+              "fused_rank": 2
+            },
+            {
+              "code": "M25.075",
+              "system": "ICD-10-CM",
+              "description": "Hemarthrosis, left foot",
+              "retrieval_score": 0.025353,
+              "fused_rank": 3
+            },
+            {
+              "code": "M25.074",
+              "system": "ICD-10-CM",
+              "description": "Hemarthrosis, right foot",
+              "retrieval_score": 0.025015,
+              "fused_rank": 4
+            },
+            {
+              "code": "M79.673",
+              "system": "ICD-10-CM",
+              "description": "Pain in unspecified foot",
+              "retrieval_score": 0.016393,
+              "fused_rank": 5
+            },
+            {
+              "code": "M21.379",
+              "system": "ICD-10-CM",
+              "description": "Foot drop, unspecified foot",
+              "retrieval_score": 0.016393,
+              "fused_rank": 6
+            },
+            {
+              "code": "Q66.6",
+              "system": "ICD-10-CM",
+              "description": "Other congenital valgus deformities of feet",
+              "retrieval_score": 0.016393,
+              "fused_rank": 7
+            },
+            {
+              "code": "M79.671",
+              "system": "ICD-10-CM",
+              "description": "Pain in right foot",
+              "retrieval_score": 0.016129,
+              "fused_rank": 8
+            },
+            {
+              "code": "M21.372",
+              "system": "ICD-10-CM",
+              "description": "Foot drop, left foot",
+              "retrieval_score": 0.016129,
+              "fused_rank": 9
+            },
+            {
+              "code": "Q66.89",
+              "system": "ICD-10-CM",
+              "description": "Other specified congenital deformities of feet",
+              "retrieval_score": 0.016129,
+              "fused_rank": 10
+            },
+            {
+              "code": "S90.32XS",
+              "system": "ICD-10-CM",
+              "description": "Contusion of left foot, sequela",
+              "retrieval_score": 0.015873,
+              "fused_rank": 11
+            },
+            {
+              "code": "M21.371",
+              "system": "ICD-10-CM",
+              "description": "Foot drop, right foot",
+              "retrieval_score": 0.015873,
+              "fused_rank": 12
+            },
+            {
+              "code": "S90.30XS",
+              "system": "ICD-10-CM",
+              "description": "Contusion of unspecified foot, sequela",
+              "retrieval_score": 0.015873,
+              "fused_rank": 13
+            },
+            {
+              "code": "Q66.90",
+              "system": "ICD-10-CM",
+              "description": "Congenital deformity of feet, unspecified, unspecified foot",
+              "retrieval_score": 0.015873,
+              "fused_rank": 14
+            },
+            {
+              "code": "T69.029S",
+              "system": "ICD-10-CM",
+              "description": "Immersion foot, unspecified foot, sequela",
+              "retrieval_score": 0.015625,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "diabetic foot examination",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9T0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Comprehensive diabetic foot examination",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.032002,
+              "fused_rank": 2
+            },
+            {
+              "code": "9R0091",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination knee three views",
+              "retrieval_score": 0.031514,
+              "fused_rank": 3
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.03009,
+              "fused_rank": 4
+            },
+            {
+              "code": "9E0002",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - moderate complexity",
+              "retrieval_score": 0.029199,
+              "fused_rank": 5
+            },
+            {
+              "code": "9L0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Comprehensive metabolic panel",
+              "retrieval_score": 0.026655,
+              "fused_rank": 6
+            },
+            {
+              "code": "9C0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Cardiovascular stress test using maximal or submaximal treadmill or bicycle",
+              "retrieval_score": 0.02579,
+              "fused_rank": 7
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.025238,
+              "fused_rank": 8
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.024971,
+              "fused_rank": 9
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.024837,
+              "fused_rank": 10
+            },
+            {
+              "code": "9R0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+              "retrieval_score": 0.024476,
+              "fused_rank": 11
+            },
+            {
+              "code": "9C0060",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Holter monitoring 24-hour continuous recording with interpretation",
+              "retrieval_score": 0.024394,
+              "fused_rank": 12
+            },
+            {
+              "code": "9E0003",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - high complexity",
+              "retrieval_score": 0.024326,
+              "fused_rank": 13
+            },
+            {
+              "code": "9L0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Basic metabolic panel",
+              "retrieval_score": 0.024286,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0080",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Mammography screening bilateral",
+              "retrieval_score": 0.024147,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "type 2 diabetes mellitus with diabetic polyneuropathy",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E11.42",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic polyneuropathy",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "E13.42",
+              "system": "ICD-10-CM",
+              "description": "Other specified diabetes mellitus with diabetic polyneuropathy",
+              "retrieval_score": 0.031746,
+              "fused_rank": 2
+            },
+            {
+              "code": "E10.42",
+              "system": "ICD-10-CM",
+              "description": "Type 1 diabetes mellitus with diabetic polyneuropathy",
+              "retrieval_score": 0.031054,
+              "fused_rank": 3
+            },
+            {
+              "code": "E08.42",
+              "system": "ICD-10-CM",
+              "description": "Diabetes mellitus due to underlying condition with diabetic polyneuropathy",
+              "retrieval_score": 0.03101,
+              "fused_rank": 4
+            },
+            {
+              "code": "E11.41",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic mononeuropathy",
+              "retrieval_score": 0.030777,
+              "fused_rank": 5
+            },
+            {
+              "code": "E09.42",
+              "system": "ICD-10-CM",
+              "description": "Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy",
+              "retrieval_score": 0.03009,
+              "fused_rank": 6
+            },
+            {
+              "code": "E11.40",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic neuropathy, unspecified",
+              "retrieval_score": 0.029644,
+              "fused_rank": 7
+            },
+            {
+              "code": "E11.43",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic autonomic (poly)neuropathy",
+              "retrieval_score": 0.029206,
+              "fused_rank": 8
+            },
+            {
+              "code": "E11.49",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with other diabetic neurological complication",
+              "retrieval_score": 0.027864,
+              "fused_rank": 9
+            },
+            {
+              "code": "E11.44",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic amyotrophy",
+              "retrieval_score": 0.027271,
+              "fused_rank": 10
+            },
+            {
+              "code": "G62.9",
+              "system": "ICD-10-CM",
+              "description": "Polyneuropathy, unspecified",
+              "retrieval_score": 0.02712,
+              "fused_rank": 11
+            },
+            {
+              "code": "E11.610",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic neuropathic arthropathy",
+              "retrieval_score": 0.026905,
+              "fused_rank": 12
+            },
+            {
+              "code": "E11.21",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.02629,
+              "fused_rank": 13
+            },
+            {
+              "code": "E11.618",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with other diabetic arthropathy",
+              "retrieval_score": 0.025397,
+              "fused_rank": 14
+            },
+            {
+              "code": "G63",
+              "system": "ICD-10-CM",
+              "description": "Polyneuropathy in diseases classified elsewhere",
+              "retrieval_score": 0.025353,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "diabetic nephropathy",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E13.22",
+              "system": "ICD-10-CM",
+              "description": "Other specified diabetes mellitus with diabetic chronic kidney disease",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "E13.21",
+              "system": "ICD-10-CM",
+              "description": "Other specified diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "E11.21",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.032018,
+              "fused_rank": 3
+            },
+            {
+              "code": "E08.21",
+              "system": "ICD-10-CM",
+              "description": "Diabetes mellitus due to underlying condition with diabetic nephropathy",
+              "retrieval_score": 0.031754,
+              "fused_rank": 4
+            },
+            {
+              "code": "E08.22",
+              "system": "ICD-10-CM",
+              "description": "Diabetes mellitus due to underlying condition with diabetic chronic kidney disease",
+              "retrieval_score": 0.031754,
+              "fused_rank": 5
+            },
+            {
+              "code": "E09.21",
+              "system": "ICD-10-CM",
+              "description": "Drug or chemical induced diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.031258,
+              "fused_rank": 6
+            },
+            {
+              "code": "E10.21",
+              "system": "ICD-10-CM",
+              "description": "Type 1 diabetes mellitus with diabetic nephropathy",
+              "retrieval_score": 0.031258,
+              "fused_rank": 7
+            },
+            {
+              "code": "E10.22",
+              "system": "ICD-10-CM",
+              "description": "Type 1 diabetes mellitus with diabetic chronic kidney disease",
+              "retrieval_score": 0.031054,
+              "fused_rank": 8
+            },
+            {
+              "code": "E11.22",
+              "system": "ICD-10-CM",
+              "description": "Type 2 diabetes mellitus with diabetic chronic kidney disease",
+              "retrieval_score": 0.030579,
+              "fused_rank": 9
+            },
+            {
+              "code": "E09.22",
+              "system": "ICD-10-CM",
+              "description": "Drug or chemical induced diabetes mellitus with diabetic chronic kidney disease",
+              "retrieval_score": 0.029877,
+              "fused_rank": 10
+            },
+            {
+              "code": "N18.9",
+              "system": "ICD-10-CM",
+              "description": "Chronic kidney disease, unspecified",
+              "retrieval_score": 0.028439,
+              "fused_rank": 11
+            },
+            {
+              "code": "E13.29",
+              "system": "ICD-10-CM",
+              "description": "Other specified diabetes mellitus with other diabetic kidney complication",
+              "retrieval_score": 0.027289,
+              "fused_rank": 12
+            },
+            {
+              "code": "N14.0",
+              "system": "ICD-10-CM",
+              "description": "Analgesic nephropathy",
+              "retrieval_score": 0.027271,
+              "fused_rank": 13
+            },
+            {
+              "code": "E08.29",
+              "system": "ICD-10-CM",
+              "description": "Diabetes mellitus due to underlying condition with other diabetic kidney complication",
+              "retrieval_score": 0.027237,
+              "fused_rank": 14
+            },
+            {
+              "code": "N18.1",
+              "system": "ICD-10-CM",
+              "description": "Chronic kidney disease, stage 1",
+              "retrieval_score": 0.026357,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "obesity",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E66.9",
+              "system": "ICD-10-CM",
+              "description": "Obesity, unspecified",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "E66.812",
+              "system": "ICD-10-CM",
+              "description": "Obesity, class 2",
+              "retrieval_score": 0.031514,
+              "fused_rank": 2
+            },
+            {
+              "code": "E66.811",
+              "system": "ICD-10-CM",
+              "description": "Obesity, class 1",
+              "retrieval_score": 0.03125,
+              "fused_rank": 3
+            },
+            {
+              "code": "E66.813",
+              "system": "ICD-10-CM",
+              "description": "Obesity, class 3",
+              "retrieval_score": 0.031025,
+              "fused_rank": 4
+            },
+            {
+              "code": "O99.214",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating childbirth",
+              "retrieval_score": 0.030214,
+              "fused_rank": 5
+            },
+            {
+              "code": "E66.1",
+              "system": "ICD-10-CM",
+              "description": "Drug-induced obesity",
+              "retrieval_score": 0.029762,
+              "fused_rank": 6
+            },
+            {
+              "code": "Z15.2",
+              "system": "ICD-10-CM",
+              "description": "Genetic susceptibility to obesity",
+              "retrieval_score": 0.029412,
+              "fused_rank": 7
+            },
+            {
+              "code": "E66.09",
+              "system": "ICD-10-CM",
+              "description": "Other obesity due to excess calories",
+              "retrieval_score": 0.028665,
+              "fused_rank": 8
+            },
+            {
+              "code": "E66.89",
+              "system": "ICD-10-CM",
+              "description": "Other obesity not elsewhere classified",
+              "retrieval_score": 0.028624,
+              "fused_rank": 9
+            },
+            {
+              "code": "O99.215",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating the puerperium",
+              "retrieval_score": 0.028624,
+              "fused_rank": 10
+            },
+            {
+              "code": "O99.213",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, third trimester",
+              "retrieval_score": 0.028006,
+              "fused_rank": 11
+            },
+            {
+              "code": "E66.01",
+              "system": "ICD-10-CM",
+              "description": "Morbid (severe) obesity due to excess calories",
+              "retrieval_score": 0.027651,
+              "fused_rank": 12
+            },
+            {
+              "code": "O99.211",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, first trimester",
+              "retrieval_score": 0.027418,
+              "fused_rank": 13
+            },
+            {
+              "code": "O99.212",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, second trimester",
+              "retrieval_score": 0.027273,
+              "fused_rank": 14
+            },
+            {
+              "code": "O99.210",
+              "system": "ICD-10-CM",
+              "description": "Obesity complicating pregnancy, unspecified trimester",
+              "retrieval_score": 0.027047,
+              "fused_rank": 15
+            }
+          ]
+        }
+      ]
+    },
+    "code": {
+      "assignments": [
+        {
+          "fact": "type 2 diabetes mellitus",
+          "code": "E11.9",
+          "system": "ICD-10-CM",
+          "description": "Type 2 diabetes mellitus without complications",
+          "coder_confidence": 0.78,
+          "rationale": "The note states a history of \"type 2 diabetes mellitus\" in routine follow-up, but this fact text does not include a specific complication. The most direct match among the candidates is \"E11.9 Type 2 diabetes mellitus without complications.\""
+        },
+        {
+          "fact": "essential\nhypertension.",
+          "code": "I10",
+          "system": "ICD-10-CM",
+          "description": "Essential (primary) hypertension",
+          "coder_confidence": 0.99,
+          "rationale": "The note explicitly documents \"essential hypertension\" and later \"Essential hypertension, not at goal.\" This matches \"I10 Essential (primary) hypertension.\""
+        },
+        {
+          "fact": "Comprehensive diabetic foot exam performed:",
+          "code": "9T0012",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Comprehensive diabetic foot examination",
+          "coder_confidence": 0.98,
+          "rationale": "The procedure documented is \"Comprehensive diabetic foot exam performed\" and later \"Comprehensive diabetic foot examination performed today.\" This exactly matches the synthetic CPT code for a comprehensive diabetic foot examination."
+        },
+        {
+          "fact": "Type 2 diabetes mellitus with diabetic polyneuropathy, with documented\n sensory deficits on monofilament testing \u2014 A1C above goal.",
+          "code": "E11.42",
+          "system": "ICD-10-CM",
+          "description": "Type 2 diabetes mellitus with diabetic polyneuropathy",
+          "coder_confidence": 0.99,
+          "rationale": "Assessment states \"Type 2 diabetes mellitus with diabetic polyneuropathy\" and the exam documents reduced monofilament sensation in both feet. This is a direct match to \"E11.42 Type 2 diabetes mellitus with diabetic polyneuropathy.\""
+        },
+        {
+          "fact": "Diabetic nephropathy, early \u2014 microalbuminuria.",
+          "code": "E11.21",
+          "system": "ICD-10-CM",
+          "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+          "coder_confidence": 0.99,
+          "rationale": "The assessment explicitly says \"Diabetic nephropathy, early \u2014 microalbuminuria,\" and the labs show elevated urine microalbumin. This supports \"E11.21 Type 2 diabetes mellitus with diabetic nephropathy.\""
+        },
+        {
+          "fact": "Obesity, BMI 31.4.",
+          "code": "E66.811",
+          "system": "ICD-10-CM",
+          "description": "Obesity, class 1",
+          "coder_confidence": 0.97,
+          "rationale": "The assessment lists \"Obesity, BMI 31.4.\" A BMI of 31.4 falls in obesity class 1, so \"E66.811 Obesity, class 1\" is the best match."
+        }
+      ]
+    },
+    "audit": {
+      "verdicts": [
+        {
+          "code": "E11.9",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "I10",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "9T0012",
+          "agree": true,
+          "note": "The note explicitly documents \"Comprehensive diabetic foot exam performed\" in the Objective section and reiterates \"Comprehensive diabetic foot examination performed today\" in the Plan, with detailed findings (monofilament testing, pedal pulses, ulceration/callosity assessment, capillary refill) that support the comprehensive nature of the examination."
+        },
+        {
+          "code": "E11.42",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "E11.21",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "E66.811",
+          "agree": null,
+          "note": null
+        }
+      ]
+    },
+    "rules": {
+      "warnings": [
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'shortness of breath' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'polyuria' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'visual changes' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'myocardial infarction' dropped from coding (assertion=family); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'stroke' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        }
+      ]
+    }
+  },
+  "result": {
+    "document_id": "note_01_outpatient_diabetes",
+    "diagnoses": [
+      {
+        "code": "I10",
+        "system": "ICD-10-CM",
+        "description": "Essential (primary) hypertension",
+        "confidence": 0.9955,
+        "confidence_tier": "high",
+        "rationale": "The note explicitly documents \"essential hypertension\" and later \"Essential hypertension, not at goal.\" This matches \"I10 Essential (primary) hypertension.\"",
+        "evidence": [
+          {
+            "text": "essential\nhypertension.",
+            "normalized_term": "essential hypertension",
+            "query_terms": [
+              "hypertension",
+              "HTN"
+            ],
+            "assertion_status": "present",
+            "start_offset": 215,
+            "end_offset": 238,
+            "section": "subjective",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "E11.42",
+        "system": "ICD-10-CM",
+        "description": "Type 2 diabetes mellitus with diabetic polyneuropathy",
+        "confidence": 0.9955,
+        "confidence_tier": "high",
+        "rationale": "Assessment states \"Type 2 diabetes mellitus with diabetic polyneuropathy\" and the exam documents reduced monofilament sensation in both feet. This is a direct match to \"E11.42 Type 2 diabetes mellitus with diabetic polyneuropathy.\"",
+        "evidence": [
+          {
+            "text": "Type 2 diabetes mellitus with diabetic polyneuropathy, with documented\n sensory deficits on monofilament testing \u2014 A1C above goal.",
+            "normalized_term": "type 2 diabetes mellitus with diabetic polyneuropathy",
+            "query_terms": [
+              "T2DM with diabetic polyneuropathy"
+            ],
+            "assertion_status": "present",
+            "start_offset": 971,
+            "end_offset": 1101,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "E11.9",
+        "system": "ICD-10-CM",
+        "description": "Type 2 diabetes mellitus without complications",
+        "confidence": 0.901,
+        "confidence_tier": "high",
+        "rationale": "The note states a history of \"type 2 diabetes mellitus\" in routine follow-up, but this fact text does not include a specific complication. The most direct match among the candidates is \"E11.9 Type 2 diabetes mellitus without complications.\"",
+        "evidence": [
+          {
+            "text": "type 2 diabetes mellitus",
+            "normalized_term": "type 2 diabetes mellitus",
+            "query_terms": [
+              "T2DM",
+              "type 2 DM"
+            ],
+            "assertion_status": "present",
+            "start_offset": 186,
+            "end_offset": 210,
+            "section": "subjective",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "E11.21",
+        "system": "ICD-10-CM",
+        "description": "Type 2 diabetes mellitus with diabetic nephropathy",
+        "confidence": 0.8499,
+        "confidence_tier": "high",
+        "rationale": "The assessment explicitly says \"Diabetic nephropathy, early \u2014 microalbuminuria,\" and the labs show elevated urine microalbumin. This supports \"E11.21 Type 2 diabetes mellitus with diabetic nephropathy.\"",
+        "evidence": [
+          {
+            "text": "Diabetic nephropathy, early \u2014 microalbuminuria.",
+            "normalized_term": "diabetic nephropathy",
+            "query_terms": [
+              "diabetic kidney disease"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1157,
+            "end_offset": 1204,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "E66.811",
+        "system": "ICD-10-CM",
+        "description": "Obesity, class 1",
+        "confidence": 0.8409,
+        "confidence_tier": "high",
+        "rationale": "The assessment lists \"Obesity, BMI 31.4.\" A BMI of 31.4 falls in obesity class 1, so \"E66.811 Obesity, class 1\" is the best match.",
+        "evidence": [
+          {
+            "text": "Obesity, BMI 31.4.",
+            "normalized_term": "obesity",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 1208,
+            "end_offset": 1226,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      }
+    ],
+    "procedures": [
+      {
+        "code": "9T0012",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Comprehensive diabetic foot examination",
+        "confidence": 1.0,
+        "confidence_tier": "high",
+        "rationale": "The procedure documented is \"Comprehensive diabetic foot exam performed\" and later \"Comprehensive diabetic foot examination performed today.\" This exactly matches the synthetic CPT code for a comprehensive diabetic foot examination.",
+        "evidence": [
+          {
+            "text": "Comprehensive diabetic foot exam performed:",
+            "normalized_term": "diabetic foot examination",
+            "query_terms": [
+              "comprehensive diabetic foot exam",
+              "diabetic foot exam"
+            ],
+            "assertion_status": "present",
+            "start_offset": 681,
+            "end_offset": 724,
+            "section": "objective",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "The note explicitly documents \"Comprehensive diabetic foot exam performed\" in the Objective section and reiterates \"Comprehensive diabetic foot examination performed today\" in the Plan, with detailed findings (monofilament testing, pedal pulses, ulceration/callosity assessment, capillary refill) that support the comprehensive nature of the examination."
+      }
+    ],
+    "warnings": [
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'shortness of breath' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'polyuria' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'visual changes' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'myocardial infarction' dropped from coding (assertion=family); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'stroke' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      }
+    ],
+    "metadata": {
+      "trace_id": "a94f8d732eba",
+      "model_ids": {
+        "extraction": "openai/gpt-5.4-mini",
+        "coder": "openai/gpt-5.4-mini",
+        "auditor": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "pipeline_version": "0.1.1",
+      "temperature": 0.0,
+      "config_hash": "3bee7eea3e0cee68",
+      "timestamp": "2026-06-27T15:44:45.900469Z",
+      "encounter_type": "outpatient",
+      "metrics": {
+        "stage_latency_ms": {
+          "ingest": 0.13241700071375817,
+          "extract": 39520.50662500551,
+          "retrieve": 16447.948291999637,
+          "code": 5258.289457997307,
+          "audit": 2217.7965830051107,
+          "rules": 0.1631659979466349,
+          "assemble": 0.2594170073280111
+        },
+        "total_latency_ms": 63445.93020899629,
+        "tokens": {
+          "extraction.prompt_tokens": 1724,
+          "extraction.completion_tokens": 6179,
+          "extraction.total_tokens": 7903,
+          "extraction.calls": 1,
+          "coder.prompt_tokens": 6101,
+          "coder.completion_tokens": 637,
+          "coder.total_tokens": 6738,
+          "coder.calls": 1,
+          "auditor.prompt_tokens": 2171,
+          "auditor.completion_tokens": 127,
+          "auditor.total_tokens": 2298,
+          "auditor.calls": 1
+        },
+        "est_cost_usd": 0.039347,
+        "retries": 0,
+        "n_candidates": 105,
+        "n_warnings": 7,
+        "n_facts": 14,
+        "n_facts_coded": 6
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ bundled `icd10cm_codes_*.txt`:
   - evidence-anchor check (every code must have at least one fact)
   - dx ↔ px linkage (every procedure should have a supporting dx)
   - Excludes1-like conflict pairs (curated short list — full graph needs the
-    ICD-10 tabular XML, documented as an extension in Plan.md §9.6)
+    ICD-10 tabular XML, documented as an extension)
 
 Output is a list of typed Warnings; the pipeline collects them into the
 CodingResult envelope.
@@ -27,7 +27,9 @@ from .schemas import CodeSystem, Warning, WarningSeverity, WarningType
 # ----------------------------------------------------------------------------
 
 _ICD10_FORMAT = re.compile(r"^[A-Z][0-9][0-9A-Z](\.?[0-9A-Z]{1,4})?$")
-_CPT_FORMAT = re.compile(r"^[A-Z0-9-]{4,8}$")  # broad: catches both real CPT and our synthetic shape
+_CPT_FORMAT = re.compile(
+    r"^[A-Z0-9-]{4,8}$"
+)  # broad: catches both real CPT and our synthetic shape
 
 
 def _format_ok(code: str, system: CodeSystem) -> bool:
@@ -56,8 +58,7 @@ def _is_unspecified(description: str) -> bool:
 # ----------------------------------------------------------------------------
 
 # Categories where a 7th-character extension is generally required.
-# This is the well-known short list — Plan.md §9.6 notes that complete
-# coverage needs the tabular XML.
+# This is the well-known short list; complete coverage needs the tabular XML.
 _SEVENTH_CHAR_PREFIXES = ("S", "T", "M48.4", "M48.5", "M84.3", "M84.4", "M84.5", "M84.6", "O")
 
 
@@ -79,7 +80,7 @@ def _has_seventh_char(code: str) -> bool:
 
 # Each pair is (prefix_a, prefix_b, reason). If both a code starting with
 # prefix_a AND one with prefix_b are assigned, we surface a conflict warning.
-# This is a small curated subset — see Plan.md §9.6 for the full-tabular extension.
+# This is a small curated subset; the full-tabular extension is a documented future step.
 _EXCLUDES1_PAIRS: list[tuple[str, str, str]] = [
     (
         "E10",

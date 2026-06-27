@@ -1,0 +1,174 @@
+{
+  "per_note": [
+    {
+      "note": "note_01_outpatient_diabetes.txt",
+      "n_dx_pred": 5,
+      "n_px_pred": 1,
+      "icd": {
+        "tp": 3,
+        "fp": 2,
+        "fn": 1
+      },
+      "cpt": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1
+      },
+      "icd_hierarchical": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "icd_retrieval": {
+        "hit": 4,
+        "total": 4
+      },
+      "cpt_retrieval": {
+        "hit": 2,
+        "total": 2
+      },
+      "exact_match_icd": false,
+      "exact_match_cpt": false,
+      "latency_ms": 472.72237500874326,
+      "cost_usd": 0.039347,
+      "n_warnings": 7
+    },
+    {
+      "note": "note_02_ed_chest_pain.txt",
+      "n_dx_pred": 3,
+      "n_px_pred": 3,
+      "icd": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 2
+      },
+      "cpt": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 1
+      },
+      "icd_hierarchical": {
+        "tp": 1,
+        "fp": 2,
+        "fn": 2
+      },
+      "icd_retrieval": {
+        "hit": 0,
+        "total": 2
+      },
+      "cpt_retrieval": {
+        "hit": 2,
+        "total": 2
+      },
+      "exact_match_icd": false,
+      "exact_match_cpt": false,
+      "latency_ms": 194.00966599641833,
+      "cost_usd": 0.017818,
+      "n_warnings": 9
+    },
+    {
+      "note": "note_03_inpatient_pneumonia_ambiguity.txt",
+      "n_dx_pred": 8,
+      "n_px_pred": 3,
+      "icd": {
+        "tp": 3,
+        "fp": 5,
+        "fn": 1
+      },
+      "cpt": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "icd_hierarchical": {
+        "tp": 3,
+        "fp": 5,
+        "fn": 1
+      },
+      "icd_retrieval": {
+        "hit": 2,
+        "total": 3
+      },
+      "cpt_retrieval": {
+        "hit": 2,
+        "total": 2
+      },
+      "exact_match_icd": false,
+      "exact_match_cpt": false,
+      "latency_ms": 689.6728749998147,
+      "cost_usd": 0.043107,
+      "n_warnings": 8
+    },
+    {
+      "note": "note_04_multipage_postop.txt",
+      "n_dx_pred": 6,
+      "n_px_pred": 2,
+      "icd": {
+        "tp": 2,
+        "fp": 4,
+        "fn": 1
+      },
+      "cpt": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "icd_hierarchical": {
+        "tp": 3,
+        "fp": 3,
+        "fn": 0
+      },
+      "icd_retrieval": {
+        "hit": 3,
+        "total": 3
+      },
+      "cpt_retrieval": {
+        "hit": 2,
+        "total": 2
+      },
+      "exact_match_icd": false,
+      "exact_match_cpt": true,
+      "latency_ms": 454.30220900743734,
+      "cost_usd": 0.0309,
+      "n_warnings": 12
+    }
+  ],
+  "aggregate": {
+    "retrieval_recall_icd": {
+      "recall_at_k": 0.75,
+      "hit": 9,
+      "total": 12
+    },
+    "retrieval_recall_cpt": {
+      "recall_at_k": 1.0,
+      "hit": 8,
+      "total": 8
+    },
+    "n_notes": 4,
+    "micro_icd": {
+      "p": 0.4090909090909091,
+      "r": 0.6428571428571429,
+      "f1": 0.5000000000000001,
+      "tp": 9,
+      "fp": 13,
+      "fn": 5
+    },
+    "micro_cpt": {
+      "p": 0.8888888888888888,
+      "r": 0.8,
+      "f1": 0.8421052631578948,
+      "tp": 8,
+      "fp": 1,
+      "fn": 2
+    },
+    "micro_icd_hierarchical": {
+      "p": 0.5,
+      "r": 0.7692307692307693,
+      "f1": 0.6060606060606061
+    },
+    "exact_match_icd_ratio": 0.0,
+    "exact_match_cpt_ratio": 0.25,
+    "mean_latency_ms": 452.6767812531034,
+    "total_cost_usd": 0.131172
+  }
+}

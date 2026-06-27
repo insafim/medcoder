@@ -92,3 +92,27 @@ def test_bad_request_is_not_retried(monkeypatch):
     with pytest.raises(llm.LLMError):
         llm.call_structured(**_kwargs())
     assert calls["n"] == 1
+
+
+def test_cost_from_tokens_prices_known_snapshot():
+    """The deterministic fallback prices a known pinned snapshot from its tokens.
+
+    Guards the audit record against a spurious $0.00 when LiteLLM's bundled cost
+    map doesn't recognise a newer model ID. gpt-5.4-mini = $0.75/$4.50 per 1M.
+    """
+    cost = llm._cost_from_tokens(
+        "openai/gpt-5.4-mini", prompt_tokens=1_000_000, completion_tokens=0
+    )
+    assert cost == pytest.approx(0.75)
+    cost2 = llm._cost_from_tokens("gpt-5.4-mini", prompt_tokens=0, completion_tokens=1_000_000)
+    assert cost2 == pytest.approx(4.50)
+    # Mixed call: both rates must compose additively (prompt*inp + completion*outp).
+    cost3 = llm._cost_from_tokens(
+        "gpt-5.4-mini", prompt_tokens=1_000_000, completion_tokens=1_000_000
+    )
+    assert cost3 == pytest.approx(0.75 + 4.50)
+
+
+def test_cost_from_tokens_unknown_model_is_zero():
+    """An unpriced model (e.g. a mock) returns 0.0 rather than guessing."""
+    assert llm._cost_from_tokens("mock/whatever", 1000, 1000) == 0.0

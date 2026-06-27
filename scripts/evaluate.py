@@ -1,6 +1,6 @@
 """Evaluate the pipeline against the authored gold set.
 
-Reports (split for ICD and CPT — see Plan.md §14):
+Reports (split for ICD and CPT):
   - micro P / R / F1
   - exact-match ratio (note-level)
   - hierarchical micro-F1 (ICD-10 truncated to 3-char category)

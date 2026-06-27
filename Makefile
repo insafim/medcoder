@@ -56,6 +56,14 @@ test-fast:
 eval: build-index
 	$(PYTHON) -m scripts.evaluate
 
+# Regenerate the committed example outputs under outputs/ (live LLM run on every
+# authored note + the gold-set metrics). Needs an LLM key. A reviewer running
+# `make run` overwrites their local copy; the committed examples are pre-run so
+# the outputs can be inspected without running anything.
+.PHONY: examples
+examples: build-index
+	$(PYTHON) -m scripts.generate_examples
+
 # Style.
 .PHONY: lint
 lint:
@@ -106,6 +114,7 @@ help:
 	@echo "make test         — full pytest suite"
 	@echo "make test-fast    — quick tests only (skip slow embedding tests)"
 	@echo "make eval         — gold-set evaluation"
+	@echo "make examples     — regenerate committed outputs/ (live run on all notes + metrics)"
 	@echo "make lint         — ruff"
 	@echo "make pdf          — DESIGN.md → docs/DESIGN.pdf (pandoc → headless Chrome; no LaTeX)"
 	@echo "make pdf-latex    — same, via a LaTeX engine (needs pandoc + xelatex)"

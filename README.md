@@ -1,7 +1,5 @@
 # medcoder — auditable medical-coding pipeline
 
-> AppliedAI · Opus AI Engineer take-home (Exercise 2)
->
 > An offline pipeline that reads unstructured clinical notes and produces
 > **reviewer-ready** ICD-10 diagnosis + CPT procedure suggestions, each with a
 > confidence score, supporting evidence, warnings, and a complete audit trail.
@@ -26,6 +24,21 @@ against the cited evidence.
   │                                                                     │
   └── reviewer-ready CodingResult (Pydantic-validated JSON) ────────────┘
 ```
+
+---
+
+## The deliverable — where to read what
+
+| If you want…                                    | Read                                                                 |
+| ----------------------------------------------- | -------------------------------------------------------------------- |
+| **The design** (architecture, retrieval, prompting, trade-offs, limitations) — *the document to grade* | **[`docs/DESIGN.pdf`](docs/DESIGN.pdf)** — the 1–2 page PDF deliverable |
+| **To run it** (local or Docker)                 | This README, §1 below                                                |
+| **Real output, without running anything**       | [`outputs/`](outputs/) — pre-run results + audit traces for all 4 notes (§2) |
+| **A stage-by-stage code tour**                  | [`WALKTHROUGH.md`](WALKTHROUGH.md) — the optional deep-dive          |
+
+> **`docs/DESIGN.pdf` is the primary written deliverable.** It is the concise
+> (1–2 page) design document the exercise asks for. `docs/DESIGN.md` is its
+> source; rebuild with `make pdf`.
 
 ---
 
@@ -89,19 +102,37 @@ make eval                                 # gold-set metrics — needs an LLM ke
 
 ### Container
 
+No local Python needed — Docker is fully self-contained. The image downloads the
+ICD-10 catalog and **pre-builds both retrieval indexes at build time**, so the
+first in-container `run` is immediate.
+
 ```bash
-make docker-run                           # builds image, runs the sample note
-# or, manually:
+# 1. Build the image (one-time; ~2–3 min — embeds 75k ICD-10 codes into the image)
 docker build -t medcoder:dev .
-docker run --rm -e OPENAI_API_KEY -e ANTHROPIC_API_KEY medcoder:dev \
-  run /app/data/notes/note_01_outpatient_diabetes.txt
-# Only have an OpenAI key? Route the auditor to OpenAI too (single-provider):
-#   docker run --rm -e OPENAI_API_KEY -e MEDCODER_VERIFIER_MODEL=openai/gpt-5.4-mini \
-#     medcoder:dev run /app/data/notes/note_01_outpatient_diabetes.txt
+
+# 2. Run the pipeline on a bundled note. Pass keys through with -e:
+docker run --rm \
+  -e OPENAI_API_KEY -e ANTHROPIC_API_KEY \
+  medcoder:dev run /app/data/notes/note_01_outpatient_diabetes.txt
+
+#    (-e VAR with no value forwards it from your shell. Or use --env-file .env.)
 ```
 
-The Dockerfile pre-builds the retrieval indexes inside the image, so the first
-in-container `run` is fast.
+```bash
+# Shortcut: build + run the sample note in one step
+make docker-run
+
+# Single-provider? Route the auditor to your one provider (no second key needed):
+docker run --rm -e OPENAI_API_KEY -e MEDCODER_VERIFIER_MODEL=openai/gpt-5.4-mini \
+  medcoder:dev run /app/data/notes/note_01_outpatient_diabetes.txt
+
+# No key at all? The keyless mocked smoke run works in-container too
+# (--entrypoint overrides the default `medcoder` entrypoint):
+docker run --rm --entrypoint python medcoder:dev -m scripts.smoke_with_mocks
+```
+
+Outputs print to stdout. To get the saved `outputs/<doc_id>/` folder back on your
+host, mount a volume: add `-v "$PWD/outputs:/app/outputs"` to the `run` command.
 
 ---
 
@@ -144,7 +175,7 @@ in-container `run` is fast.
       "stage_latency_ms": { "ingest": 0.6, "extract": 1842, "retrieve": 71,
                             "code": 2103, "audit": 1755, "rules": 1.1,
                             "assemble": 0.4 },
-      "total_latency_ms": 5773, "est_cost_usd": 0.0091, "retries": 0,
+      "total_latency_ms": 5773, "est_cost_usd": 0.0288, "retries": 0,
       "n_candidates": 47, "n_warnings": 2, "n_facts": 5, "n_facts_coded": 4,
       "tokens": { "extraction.total_tokens": 1822, "coder.total_tokens": 2412,
                   "auditor.total_tokens": 1430 }
@@ -166,6 +197,12 @@ trail.** Each run auto-saves a self-contained `outputs/<doc_id>/` folder:
 facts, the retrieval candidate whitelist *per fact*, the coder's choices, and the
 auditor's verdicts), so a reviewer can reconstruct *how* each suggestion was
 reached, not just see the final codes. `--no-save` opts out.
+
+> **Pre-run examples are committed.** [`outputs/`](outputs/) already holds the
+> real-API result for **all four notes** — `result.json`, `result.md`, and
+> `trace.json` each — plus `outputs/eval/metrics.json` (gold-set scores). Inspect
+> them with no keys and no run. `make run` overwrites your local copy; regenerate
+> the whole set with `make examples`.
 
 ---
 
@@ -259,7 +296,8 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 
 ```
 .
-├── README.md                # ← this file
+├── README.md                # ← this file (the runbook)
+├── WALKTHROUGH.md            # optional stage-by-stage code tour
 ├── LICENSING.md             # data / code licensing notes
 ├── pyproject.toml
 ├── Makefile                 # install / data / build-index / run / test / eval / pdf / docker
@@ -272,13 +310,14 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 │   └── index/               # cached FAISS + BM25 indexes (gitignored)
 ├── docs/
 │   ├── DESIGN.md            # full design (the source for the 1–2 page PDF)
-│   ├── DESIGN.pdf           # built by `make pdf`
-│   ├── Problem.md           # the take-home brief
-│   ├── Plan.md              # full working plan (in-code "§9.x" pointers refer here)
-│   └── 2025.naacl-industry.37.pdf  # MedCodER reference paper (NAACL 2025)
+│   └── DESIGN.pdf           # ← the PDF deliverable; built by `make pdf`
+├── outputs/                 # COMMITTED pre-run examples (4 notes + eval metrics)
+│   ├── note_01.../          #   result.json + result.md + trace.json per note
+│   └── eval/metrics.json    #   gold-set scores (P/R/F1, recall@k, latency, cost)
 ├── scripts/
 │   ├── build_index.py
 │   ├── evaluate.py
+│   ├── generate_examples.py # regenerates outputs/ via live run (make examples)
 │   ├── smoke_with_mocks.py  # keyless mocked pipeline run (make smoke)
 │   └── build_pdf.sh         # DESIGN.md → PDF without LaTeX (pandoc → headless Chrome)
 ├── src/medcoder/
@@ -324,19 +363,24 @@ reproduce with `MEDCODER_VERIFIER_MODEL=openai/gpt-5.4-mini make eval`. (Plain
 `make eval` uses the default cross-family config: OpenAI coder + Anthropic
 auditor.)
 
+The figures below are the **exact committed run** in
+[outputs/eval/metrics.json](outputs/eval/metrics.json) (rebuild with `make eval`):
+
 | Metric                       |    P |    R |   F1 |
 | ---------------------------- | ---: | ---: | ---: |
-| **ICD-10 (micro)**           | 0.40 | 0.71 | 0.51 |
-| ICD-10 hierarchical (3-char) | 0.52 | 0.85 | 0.65 |
-| **CPT (micro)**              | 1.00 | 0.60 | 0.75 |
-| Exact-match (note-level)     |    — |    — |   0% |
+| **ICD-10 (micro)**           | 0.41 | 0.64 | 0.50 |
+| ICD-10 hierarchical (3-char) | 0.50 | 0.77 | 0.61 |
+| **CPT (micro)**              | 0.89 | 0.80 | 0.84 |
+| Exact-match (note-level)     |    — |    — | ICD 0% · CPT 25% |
 
-Four notes is too small to be a benchmark — read these as directional (run-to-run
-variance is real at this scale). ICD-10 micro-F1 (**0.51**) sits near the ~0.54
+Four notes is too small to be a benchmark — read these as directional. **Run-to-run
+variance is real at this scale** (±0.05+ micro-F1 between runs is normal LLM
+sampling noise at n=4), so treat `outputs/eval/metrics.json` as one representative
+run, not a fixed score. ICD-10 micro-F1 (**≈0.5**) sits near the ~0.54
 full-vocabulary SOTA ceiling; recall > precision is by design — retrieval **query
 expansion** (the extraction agent emits lookup synonyms) plus **LLM encounter-type**
 classification over-surface candidates with typed warnings (5–14/note) for a human
-reviewer rather than silently missing codes. Precision (0.40) is bounded by
+reviewer rather than silently missing codes. Precision (~0.41) is bounded by
 **over-coding** (the coder emits more codes than gold), not by retrieval — a more
 selective coder and a larger gold set are the levers for higher precision.
 

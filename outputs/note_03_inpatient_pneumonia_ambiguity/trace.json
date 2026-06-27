@@ -1,0 +1,2607 @@
+{
+  "document_id": "note_03_inpatient_pneumonia_ambiguity",
+  "trace_id": "9bb0de03ba89",
+  "config_hash": "3bee7eea3e0cee68",
+  "encounter_type": "inpatient",
+  "stages": {
+    "extract": {
+      "facts": [
+        {
+          "text": "dense right lower lobe consolidation.",
+          "normalized_term": "right lower lobe consolidation",
+          "query_terms": [
+            "RLL consolidation"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "imaging",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Community-acquired pneumonia, right lower lobe, probably bacterial",
+          "normalized_term": "community-acquired pneumonia",
+          "query_terms": [
+            "CAP"
+          ],
+          "assertion_status": "possible",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Acute exacerbation of COPD",
+          "normalized_term": "acute exacerbation of chronic obstructive pulmonary disease",
+          "query_terms": [
+            "AECOPD"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Acute hypoxic respiratory failure",
+          "normalized_term": "acute hypoxic respiratory failure",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "influenza",
+          "normalized_term": "influenza",
+          "query_terms": [
+            "flu"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "COVID-19",
+          "normalized_term": "COVID-19",
+          "query_terms": [
+            "coronavirus disease 2019"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Chest X-ray two views",
+          "normalized_term": "chest radiograph, 2 views",
+          "query_terms": [
+            "CXR",
+            "chest x-ray"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "imaging",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "combined rapid testing performed in the ED",
+          "normalized_term": "rapid viral testing",
+          "query_terms": [
+            "rapid test"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "assessment",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Admit to medical floor with telemetry.",
+          "normalized_term": "hospital admission with telemetry",
+          "query_terms": [
+            "telemetry monitoring"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "plan",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Nebulizer treatment with albuterol/ipratropium every 4 hours.",
+          "normalized_term": "nebulized bronchodilator treatment",
+          "query_terms": [
+            "nebulizer treatment"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "plan",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Pulse oximetry continuous.",
+          "normalized_term": "continuous pulse oximetry",
+          "query_terms": [
+            "pulse ox monitoring"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "plan",
+          "start_offset": 0,
+          "end_offset": 0
+        },
+        {
+          "text": "Productive cough, fever, dyspnea.",
+          "normalized_term": "productive cough; fever; dyspnea",
+          "query_terms": [
+            "cough",
+            "shortness of breath"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "chief complaint",
+          "start_offset": 182,
+          "end_offset": 215
+        },
+        {
+          "text": "productive cough",
+          "normalized_term": "productive cough",
+          "query_terms": [
+            "cough with sputum"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 348,
+          "end_offset": 364
+        },
+        {
+          "text": "subjective fevers to 38.7 C",
+          "normalized_term": "fever",
+          "query_terms": [
+            "pyrexia"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 366,
+          "end_offset": 393
+        },
+        {
+          "text": "progressive dyspnea",
+          "normalized_term": "dyspnea",
+          "query_terms": [
+            "shortness of breath"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 399,
+          "end_offset": 418
+        },
+        {
+          "text": "He denies hemoptysis, chest pain, or recent",
+          "normalized_term": "hemoptysis",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 513,
+          "end_offset": 556
+        },
+        {
+          "text": "He denies hemoptysis, chest pain, or recent",
+          "normalized_term": "chest pain",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 513,
+          "end_offset": 556
+        },
+        {
+          "text": "He denies hemoptysis, chest pain, or recent",
+          "normalized_term": "recent sick contacts",
+          "query_terms": [
+            "sick contacts"
+          ],
+          "assertion_status": "absent",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 513,
+          "end_offset": 556
+        },
+        {
+          "text": "one fall in the past month.",
+          "normalized_term": "fall",
+          "query_terms": [
+            "falls"
+          ],
+          "assertion_status": "historical",
+          "kind": "symptom",
+          "section": "hpi",
+          "start_offset": 599,
+          "end_offset": 626
+        },
+        {
+          "text": "Chronic obstructive pulmonary disease (Gold stage III), on home oxygen.",
+          "normalized_term": "chronic obstructive pulmonary disease",
+          "query_terms": [
+            "COPD"
+          ],
+          "assertion_status": "historical",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 652,
+          "end_offset": 723
+        },
+        {
+          "text": "Essential hypertension.",
+          "normalized_term": "essential hypertension",
+          "query_terms": [
+            "hypertension"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 726,
+          "end_offset": 749
+        },
+        {
+          "text": "History of smoking, 50 pack-years, quit 4 years ago.",
+          "normalized_term": "history of smoking",
+          "query_terms": [
+            "smoking history"
+          ],
+          "assertion_status": "historical",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 752,
+          "end_offset": 804
+        },
+        {
+          "text": "Right hip osteoarthritis.",
+          "normalized_term": "osteoarthritis of right hip",
+          "query_terms": [
+            "right hip osteoarthritis"
+          ],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "past medical history",
+          "start_offset": 807,
+          "end_offset": 832
+        }
+      ]
+    },
+    "retrieve": {
+      "by_fact": [
+        {
+          "fact": "right lower lobe consolidation",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "Q33.1",
+              "system": "ICD-10-CM",
+              "description": "Accessory lobe of lung",
+              "retrieval_score": 0.024884,
+              "fused_rank": 1
+            },
+            {
+              "code": "M26.54",
+              "system": "ICD-10-CM",
+              "description": "Insufficient anterior guidance",
+              "retrieval_score": 0.016393,
+              "fused_rank": 2
+            },
+            {
+              "code": "C34.31",
+              "system": "ICD-10-CM",
+              "description": "Malignant neoplasm of lower lobe, right bronchus or lung",
+              "retrieval_score": 0.016393,
+              "fused_rank": 3
+            },
+            {
+              "code": "K62.1",
+              "system": "ICD-10-CM",
+              "description": "Rectal polyp",
+              "retrieval_score": 0.016393,
+              "fused_rank": 4
+            },
+            {
+              "code": "S00.512A",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, initial encounter",
+              "retrieval_score": 0.016393,
+              "fused_rank": 5
+            },
+            {
+              "code": "S53.011S",
+              "system": "ICD-10-CM",
+              "description": "Anterior subluxation of right radial head, sequela",
+              "retrieval_score": 0.016129,
+              "fused_rank": 6
+            },
+            {
+              "code": "C34.32",
+              "system": "ICD-10-CM",
+              "description": "Malignant neoplasm of lower lobe, left bronchus or lung",
+              "retrieval_score": 0.016129,
+              "fused_rank": 7
+            },
+            {
+              "code": "Z31.82",
+              "system": "ICD-10-CM",
+              "description": "Encounter for Rh incompatibility status",
+              "retrieval_score": 0.016129,
+              "fused_rank": 8
+            },
+            {
+              "code": "S00.512S",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, sequela",
+              "retrieval_score": 0.016129,
+              "fused_rank": 9
+            },
+            {
+              "code": "S73.031S",
+              "system": "ICD-10-CM",
+              "description": "Other anterior subluxation of right hip, sequela",
+              "retrieval_score": 0.015873,
+              "fused_rank": 10
+            },
+            {
+              "code": "C34.30",
+              "system": "ICD-10-CM",
+              "description": "Malignant neoplasm of lower lobe, unspecified bronchus or lung",
+              "retrieval_score": 0.015873,
+              "fused_rank": 11
+            },
+            {
+              "code": "N64.53",
+              "system": "ICD-10-CM",
+              "description": "Retraction of nipple",
+              "retrieval_score": 0.015873,
+              "fused_rank": 12
+            },
+            {
+              "code": "S00.502D",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, subsequent encounter",
+              "retrieval_score": 0.015873,
+              "fused_rank": 13
+            },
+            {
+              "code": "S53.012S",
+              "system": "ICD-10-CM",
+              "description": "Anterior subluxation of left radial head, sequela",
+              "retrieval_score": 0.015625,
+              "fused_rank": 14
+            },
+            {
+              "code": "N39.45",
+              "system": "ICD-10-CM",
+              "description": "Continuous leakage",
+              "retrieval_score": 0.015625,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "community-acquired pneumonia",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "J18.9",
+              "system": "ICD-10-CM",
+              "description": "Pneumonia, unspecified organism",
+              "retrieval_score": 0.02971,
+              "fused_rank": 1
+            },
+            {
+              "code": "J15.9",
+              "system": "ICD-10-CM",
+              "description": "Unspecified bacterial pneumonia",
+              "retrieval_score": 0.028893,
+              "fused_rank": 2
+            },
+            {
+              "code": "J12.9",
+              "system": "ICD-10-CM",
+              "description": "Viral pneumonia, unspecified",
+              "retrieval_score": 0.028531,
+              "fused_rank": 3
+            },
+            {
+              "code": "J12.89",
+              "system": "ICD-10-CM",
+              "description": "Other viral pneumonia",
+              "retrieval_score": 0.028205,
+              "fused_rank": 4
+            },
+            {
+              "code": "J16.0",
+              "system": "ICD-10-CM",
+              "description": "Chlamydial pneumonia",
+              "retrieval_score": 0.027364,
+              "fused_rank": 5
+            },
+            {
+              "code": "J84.117",
+              "system": "ICD-10-CM",
+              "description": "Desquamative interstitial pneumonia",
+              "retrieval_score": 0.027032,
+              "fused_rank": 6
+            },
+            {
+              "code": "A54.84",
+              "system": "ICD-10-CM",
+              "description": "Gonococcal pneumonia",
+              "retrieval_score": 0.026496,
+              "fused_rank": 7
+            },
+            {
+              "code": "J18.8",
+              "system": "ICD-10-CM",
+              "description": "Other pneumonia, unspecified organism",
+              "retrieval_score": 0.0262,
+              "fused_rank": 8
+            },
+            {
+              "code": "A02.22",
+              "system": "ICD-10-CM",
+              "description": "Salmonella pneumonia",
+              "retrieval_score": 0.026197,
+              "fused_rank": 9
+            },
+            {
+              "code": "J17",
+              "system": "ICD-10-CM",
+              "description": "Pneumonia in diseases classified elsewhere",
+              "retrieval_score": 0.025904,
+              "fused_rank": 10
+            },
+            {
+              "code": "J18.2",
+              "system": "ICD-10-CM",
+              "description": "Hypostatic pneumonia, unspecified organism",
+              "retrieval_score": 0.025712,
+              "fused_rank": 11
+            },
+            {
+              "code": "J15.1",
+              "system": "ICD-10-CM",
+              "description": "Pneumonia due to Pseudomonas",
+              "retrieval_score": 0.025709,
+              "fused_rank": 12
+            },
+            {
+              "code": "J95.851",
+              "system": "ICD-10-CM",
+              "description": "Ventilator associated pneumonia",
+              "retrieval_score": 0.025528,
+              "fused_rank": 13
+            },
+            {
+              "code": "J82.82",
+              "system": "ICD-10-CM",
+              "description": "Acute eosinophilic pneumonia",
+              "retrieval_score": 0.025522,
+              "fused_rank": 14
+            },
+            {
+              "code": "P23.9",
+              "system": "ICD-10-CM",
+              "description": "Congenital pneumonia, unspecified",
+              "retrieval_score": 0.025166,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "acute exacerbation of chronic obstructive pulmonary disease",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "J44.1",
+              "system": "ICD-10-CM",
+              "description": "Chronic obstructive pulmonary disease with (acute) exacerbation",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "J44.9",
+              "system": "ICD-10-CM",
+              "description": "Chronic obstructive pulmonary disease, unspecified",
+              "retrieval_score": 0.032258,
+              "fused_rank": 2
+            },
+            {
+              "code": "J44.89",
+              "system": "ICD-10-CM",
+              "description": "Other specified chronic obstructive pulmonary disease",
+              "retrieval_score": 0.031498,
+              "fused_rank": 3
+            },
+            {
+              "code": "J44.0",
+              "system": "ICD-10-CM",
+              "description": "Chronic obstructive pulmonary disease with (acute) lower respiratory infection",
+              "retrieval_score": 0.031498,
+              "fused_rank": 4
+            },
+            {
+              "code": "J45.51",
+              "system": "ICD-10-CM",
+              "description": "Severe persistent asthma with (acute) exacerbation",
+              "retrieval_score": 0.029236,
+              "fused_rank": 5
+            },
+            {
+              "code": "J45.901",
+              "system": "ICD-10-CM",
+              "description": "Unspecified asthma with (acute) exacerbation",
+              "retrieval_score": 0.028992,
+              "fused_rank": 6
+            },
+            {
+              "code": "J45.41",
+              "system": "ICD-10-CM",
+              "description": "Moderate persistent asthma with (acute) exacerbation",
+              "retrieval_score": 0.028814,
+              "fused_rank": 7
+            },
+            {
+              "code": "J45.31",
+              "system": "ICD-10-CM",
+              "description": "Mild persistent asthma with (acute) exacerbation",
+              "retrieval_score": 0.027984,
+              "fused_rank": 8
+            },
+            {
+              "code": "J81.1",
+              "system": "ICD-10-CM",
+              "description": "Chronic pulmonary edema",
+              "retrieval_score": 0.027885,
+              "fused_rank": 9
+            },
+            {
+              "code": "J47.1",
+              "system": "ICD-10-CM",
+              "description": "Bronchiectasis with (acute) exacerbation",
+              "retrieval_score": 0.027885,
+              "fused_rank": 10
+            },
+            {
+              "code": "J81.0",
+              "system": "ICD-10-CM",
+              "description": "Acute pulmonary edema",
+              "retrieval_score": 0.027242,
+              "fused_rank": 11
+            },
+            {
+              "code": "J45.21",
+              "system": "ICD-10-CM",
+              "description": "Mild intermittent asthma with (acute) exacerbation",
+              "retrieval_score": 0.027027,
+              "fused_rank": 12
+            },
+            {
+              "code": "I27.9",
+              "system": "ICD-10-CM",
+              "description": "Pulmonary heart disease, unspecified",
+              "retrieval_score": 0.025253,
+              "fused_rank": 13
+            },
+            {
+              "code": "J95.3",
+              "system": "ICD-10-CM",
+              "description": "Chronic pulmonary insufficiency following surgery",
+              "retrieval_score": 0.024594,
+              "fused_rank": 14
+            },
+            {
+              "code": "I27.82",
+              "system": "ICD-10-CM",
+              "description": "Chronic pulmonary embolism",
+              "retrieval_score": 0.024096,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "acute hypoxic respiratory failure",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "J96.01",
+              "system": "ICD-10-CM",
+              "description": "Acute respiratory failure with hypoxia",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "J96.21",
+              "system": "ICD-10-CM",
+              "description": "Acute and chronic respiratory failure with hypoxia",
+              "retrieval_score": 0.031514,
+              "fused_rank": 2
+            },
+            {
+              "code": "J95.821",
+              "system": "ICD-10-CM",
+              "description": "Acute postprocedural respiratory failure",
+              "retrieval_score": 0.031319,
+              "fused_rank": 3
+            },
+            {
+              "code": "J96.00",
+              "system": "ICD-10-CM",
+              "description": "Acute respiratory failure, unspecified whether with hypoxia or hypercapnia",
+              "retrieval_score": 0.03031,
+              "fused_rank": 4
+            },
+            {
+              "code": "J95.822",
+              "system": "ICD-10-CM",
+              "description": "Acute and chronic postprocedural respiratory failure",
+              "retrieval_score": 0.030118,
+              "fused_rank": 5
+            },
+            {
+              "code": "J96.02",
+              "system": "ICD-10-CM",
+              "description": "Acute respiratory failure with hypercapnia",
+              "retrieval_score": 0.029958,
+              "fused_rank": 6
+            },
+            {
+              "code": "J96.11",
+              "system": "ICD-10-CM",
+              "description": "Chronic respiratory failure with hypoxia",
+              "retrieval_score": 0.029911,
+              "fused_rank": 7
+            },
+            {
+              "code": "J96.91",
+              "system": "ICD-10-CM",
+              "description": "Respiratory failure, unspecified with hypoxia",
+              "retrieval_score": 0.029762,
+              "fused_rank": 8
+            },
+            {
+              "code": "J96.20",
+              "system": "ICD-10-CM",
+              "description": "Acute and chronic respiratory failure, unspecified whether with hypoxia or hypercapnia",
+              "retrieval_score": 0.029644,
+              "fused_rank": 9
+            },
+            {
+              "code": "J96.22",
+              "system": "ICD-10-CM",
+              "description": "Acute and chronic respiratory failure with hypercapnia",
+              "retrieval_score": 0.028485,
+              "fused_rank": 10
+            },
+            {
+              "code": "P28.5",
+              "system": "ICD-10-CM",
+              "description": "Respiratory failure of newborn",
+              "retrieval_score": 0.027526,
+              "fused_rank": 11
+            },
+            {
+              "code": "R06.03",
+              "system": "ICD-10-CM",
+              "description": "Acute respiratory distress",
+              "retrieval_score": 0.027212,
+              "fused_rank": 12
+            },
+            {
+              "code": "J96.92",
+              "system": "ICD-10-CM",
+              "description": "Respiratory failure, unspecified with hypercapnia",
+              "retrieval_score": 0.027212,
+              "fused_rank": 13
+            },
+            {
+              "code": "J96.12",
+              "system": "ICD-10-CM",
+              "description": "Chronic respiratory failure with hypercapnia",
+              "retrieval_score": 0.027072,
+              "fused_rank": 14
+            },
+            {
+              "code": "J96.90",
+              "system": "ICD-10-CM",
+              "description": "Respiratory failure, unspecified, unspecified whether with hypoxia or hypercapnia",
+              "retrieval_score": 0.025817,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "chest radiograph, 2 views",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9R0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9R0031",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest with contrast material",
+              "retrieval_score": 0.032018,
+              "fused_rank": 2
+            },
+            {
+              "code": "9R0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest single view frontal",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "9R0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest without contrast material",
+              "retrieval_score": 0.032002,
+              "fused_rank": 4
+            },
+            {
+              "code": "9R0091",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination knee three views",
+              "retrieval_score": 0.031281,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.03101,
+              "fused_rank": 6
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.030798,
+              "fused_rank": 7
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.029958,
+              "fused_rank": 8
+            },
+            {
+              "code": "9N0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Lumbar puncture diagnostic",
+              "retrieval_score": 0.029551,
+              "fused_rank": 9
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.028039,
+              "fused_rank": 10
+            },
+            {
+              "code": "9C0060",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Holter monitoring 24-hour continuous recording with interpretation",
+              "retrieval_score": 0.027629,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0080",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Mammography screening bilateral",
+              "retrieval_score": 0.027364,
+              "fused_rank": 12
+            },
+            {
+              "code": "9R0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material",
+              "retrieval_score": 0.02669,
+              "fused_rank": 13
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.026626,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain with contrast material",
+              "retrieval_score": 0.02619,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "rapid viral testing",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9C0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Cardiovascular stress test using maximal or submaximal treadmill or bicycle",
+              "retrieval_score": 0.032266,
+              "fused_rank": 1
+            },
+            {
+              "code": "9I0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Influenza vaccine quadrivalent split virus preservative-free for intramuscular use",
+              "retrieval_score": 0.032258,
+              "fused_rank": 2
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.029469,
+              "fused_rank": 3
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.028814,
+              "fused_rank": 4
+            },
+            {
+              "code": "9N0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Lumbar puncture diagnostic",
+              "retrieval_score": 0.028739,
+              "fused_rank": 5
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.028577,
+              "fused_rank": 6
+            },
+            {
+              "code": "9L0016",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Urinalysis automated with microscopy",
+              "retrieval_score": 0.027433,
+              "fused_rank": 7
+            },
+            {
+              "code": "9E0002",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - moderate complexity",
+              "retrieval_score": 0.026688,
+              "fused_rank": 8
+            },
+            {
+              "code": "9E0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Critical care evaluation and management - first 30-74 minutes",
+              "retrieval_score": 0.026393,
+              "fused_rank": 9
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.025677,
+              "fused_rank": 10
+            },
+            {
+              "code": "9C0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Coronary artery catheterization diagnostic",
+              "retrieval_score": 0.025564,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+              "retrieval_score": 0.025035,
+              "fused_rank": 12
+            },
+            {
+              "code": "9R0080",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Mammography screening bilateral",
+              "retrieval_score": 0.024697,
+              "fused_rank": 13
+            },
+            {
+              "code": "9E0006",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of a new patient - high complexity",
+              "retrieval_score": 0.024585,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.024269,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "hospital admission with telemetry",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9E0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Hospital inpatient or observation care - subsequent - moderate complexity",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9C0060",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Holter monitoring 24-hour continuous recording with interpretation",
+              "retrieval_score": 0.032787,
+              "fused_rank": 2
+            },
+            {
+              "code": "9E0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Hospital inpatient or observation care - initial - high complexity",
+              "retrieval_score": 0.032258,
+              "fused_rank": 3
+            },
+            {
+              "code": "9E0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Hospital inpatient or observation care - initial - moderate complexity",
+              "retrieval_score": 0.031746,
+              "fused_rank": 4
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.029631,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+              "retrieval_score": 0.029116,
+              "fused_rank": 6
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.029031,
+              "fused_rank": 7
+            },
+            {
+              "code": "9E0002",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - moderate complexity",
+              "retrieval_score": 0.02748,
+              "fused_rank": 8
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.027402,
+              "fused_rank": 9
+            },
+            {
+              "code": "9C0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Transthoracic echocardiography complete with Doppler color flow",
+              "retrieval_score": 0.026501,
+              "fused_rank": 10
+            },
+            {
+              "code": "9N0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Lumbar puncture diagnostic",
+              "retrieval_score": 0.026129,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0091",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination knee three views",
+              "retrieval_score": 0.026044,
+              "fused_rank": 12
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.025937,
+              "fused_rank": 13
+            },
+            {
+              "code": "9E0006",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of a new patient - high complexity",
+              "retrieval_score": 0.025526,
+              "fused_rank": 14
+            },
+            {
+              "code": "9E0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Emergency department visit for evaluation and management - high complexity",
+              "retrieval_score": 0.025526,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "nebulized bronchodilator treatment",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9P0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Nebulizer treatment for the administration of an inhalation solution",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.031498,
+              "fused_rank": 2
+            },
+            {
+              "code": "9L0015",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Thyroid stimulating hormone",
+              "retrieval_score": 0.030777,
+              "fused_rank": 3
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.030536,
+              "fused_rank": 4
+            },
+            {
+              "code": "9O0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Closed treatment of distal radial fracture without manipulation",
+              "retrieval_score": 0.028324,
+              "fused_rank": 5
+            },
+            {
+              "code": "9L0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Basic metabolic panel",
+              "retrieval_score": 0.027799,
+              "fused_rank": 6
+            },
+            {
+              "code": "9R0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest without contrast material",
+              "retrieval_score": 0.027433,
+              "fused_rank": 7
+            },
+            {
+              "code": "9R0031",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest with contrast material",
+              "retrieval_score": 0.02712,
+              "fused_rank": 8
+            },
+            {
+              "code": "9L0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Comprehensive metabolic panel",
+              "retrieval_score": 0.026838,
+              "fused_rank": 9
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.026235,
+              "fused_rank": 10
+            },
+            {
+              "code": "9R0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+              "retrieval_score": 0.025327,
+              "fused_rank": 11
+            },
+            {
+              "code": "9I0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Influenza vaccine quadrivalent split virus preservative-free for intramuscular use",
+              "retrieval_score": 0.025132,
+              "fused_rank": 12
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.024925,
+              "fused_rank": 13
+            },
+            {
+              "code": "9R0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest single view frontal",
+              "retrieval_score": 0.024828,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain without contrast material",
+              "retrieval_score": 0.02411,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "continuous pulse oximetry",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9P0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Pulse oximetry single determination",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9C0060",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Holter monitoring 24-hour continuous recording with interpretation",
+              "retrieval_score": 0.032002,
+              "fused_rank": 2
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.029437,
+              "fused_rank": 3
+            },
+            {
+              "code": "9L0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Basic metabolic panel",
+              "retrieval_score": 0.02879,
+              "fused_rank": 4
+            },
+            {
+              "code": "9L0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Comprehensive metabolic panel",
+              "retrieval_score": 0.028778,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.027651,
+              "fused_rank": 6
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.026709,
+              "fused_rank": 7
+            },
+            {
+              "code": "9C0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Cardiovascular stress test using maximal or submaximal treadmill or bicycle",
+              "retrieval_score": 0.026023,
+              "fused_rank": 8
+            },
+            {
+              "code": "9C0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Electrocardiogram rhythm strip with interpretation and report",
+              "retrieval_score": 0.025934,
+              "fused_rank": 9
+            },
+            {
+              "code": "9L0015",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Thyroid stimulating hormone",
+              "retrieval_score": 0.025914,
+              "fused_rank": 10
+            },
+            {
+              "code": "9C0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Coronary artery catheterization diagnostic",
+              "retrieval_score": 0.025904,
+              "fused_rank": 11
+            },
+            {
+              "code": "9C0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Electrocardiogram routine 12-lead with interpretation and report",
+              "retrieval_score": 0.025589,
+              "fused_rank": 12
+            },
+            {
+              "code": "9C0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Cardioversion elective external",
+              "retrieval_score": 0.025522,
+              "fused_rank": 13
+            },
+            {
+              "code": "9R0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+              "retrieval_score": 0.025333,
+              "fused_rank": 14
+            },
+            {
+              "code": "9C0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Transthoracic echocardiography complete with Doppler color flow",
+              "retrieval_score": 0.025123,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "productive cough; fever; dyspnea",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R06.02",
+              "system": "ICD-10-CM",
+              "description": "Shortness of breath",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "R05.2",
+              "system": "ICD-10-CM",
+              "description": "Subacute cough",
+              "retrieval_score": 0.032002,
+              "fused_rank": 2
+            },
+            {
+              "code": "R05.1",
+              "system": "ICD-10-CM",
+              "description": "Acute cough",
+              "retrieval_score": 0.031778,
+              "fused_rank": 3
+            },
+            {
+              "code": "R05.9",
+              "system": "ICD-10-CM",
+              "description": "Cough, unspecified",
+              "retrieval_score": 0.031778,
+              "fused_rank": 4
+            },
+            {
+              "code": "R05.3",
+              "system": "ICD-10-CM",
+              "description": "Chronic cough",
+              "retrieval_score": 0.031545,
+              "fused_rank": 5
+            },
+            {
+              "code": "R06.00",
+              "system": "ICD-10-CM",
+              "description": "Dyspnea, unspecified",
+              "retrieval_score": 0.031545,
+              "fused_rank": 6
+            },
+            {
+              "code": "R05.8",
+              "system": "ICD-10-CM",
+              "description": "Other specified cough",
+              "retrieval_score": 0.031281,
+              "fused_rank": 7
+            },
+            {
+              "code": "R05.4",
+              "system": "ICD-10-CM",
+              "description": "Cough syncope",
+              "retrieval_score": 0.030777,
+              "fused_rank": 8
+            },
+            {
+              "code": "R06.09",
+              "system": "ICD-10-CM",
+              "description": "Other forms of dyspnea",
+              "retrieval_score": 0.029828,
+              "fused_rank": 9
+            },
+            {
+              "code": "J45.991",
+              "system": "ICD-10-CM",
+              "description": "Cough variant asthma",
+              "retrieval_score": 0.029631,
+              "fused_rank": 10
+            },
+            {
+              "code": "G44.83",
+              "system": "ICD-10-CM",
+              "description": "Primary cough headache",
+              "retrieval_score": 0.029631,
+              "fused_rank": 11
+            },
+            {
+              "code": "A37.90",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough, unspecified species without pneumonia",
+              "retrieval_score": 0.028191,
+              "fused_rank": 12
+            },
+            {
+              "code": "A37.91",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough, unspecified species with pneumonia",
+              "retrieval_score": 0.027444,
+              "fused_rank": 13
+            },
+            {
+              "code": "A37.10",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough due to Bordetella parapertussis without pneumonia",
+              "retrieval_score": 0.026519,
+              "fused_rank": 14
+            },
+            {
+              "code": "A37.80",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough due to other Bordetella species without pneumonia",
+              "retrieval_score": 0.02632,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "productive cough",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R05.3",
+              "system": "ICD-10-CM",
+              "description": "Chronic cough",
+              "retrieval_score": 0.032266,
+              "fused_rank": 1
+            },
+            {
+              "code": "R05.1",
+              "system": "ICD-10-CM",
+              "description": "Acute cough",
+              "retrieval_score": 0.032266,
+              "fused_rank": 2
+            },
+            {
+              "code": "R09.3",
+              "system": "ICD-10-CM",
+              "description": "Abnormal sputum",
+              "retrieval_score": 0.031545,
+              "fused_rank": 3
+            },
+            {
+              "code": "R05.2",
+              "system": "ICD-10-CM",
+              "description": "Subacute cough",
+              "retrieval_score": 0.031514,
+              "fused_rank": 4
+            },
+            {
+              "code": "R05.8",
+              "system": "ICD-10-CM",
+              "description": "Other specified cough",
+              "retrieval_score": 0.031281,
+              "fused_rank": 5
+            },
+            {
+              "code": "R05.4",
+              "system": "ICD-10-CM",
+              "description": "Cough syncope",
+              "retrieval_score": 0.031258,
+              "fused_rank": 6
+            },
+            {
+              "code": "R05.9",
+              "system": "ICD-10-CM",
+              "description": "Cough, unspecified",
+              "retrieval_score": 0.030536,
+              "fused_rank": 7
+            },
+            {
+              "code": "G44.83",
+              "system": "ICD-10-CM",
+              "description": "Primary cough headache",
+              "retrieval_score": 0.029851,
+              "fused_rank": 8
+            },
+            {
+              "code": "J45.991",
+              "system": "ICD-10-CM",
+              "description": "Cough variant asthma",
+              "retrieval_score": 0.029631,
+              "fused_rank": 9
+            },
+            {
+              "code": "A37.90",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough, unspecified species without pneumonia",
+              "retrieval_score": 0.028986,
+              "fused_rank": 10
+            },
+            {
+              "code": "A37.91",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough, unspecified species with pneumonia",
+              "retrieval_score": 0.02837,
+              "fused_rank": 11
+            },
+            {
+              "code": "A37.10",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough due to Bordetella parapertussis without pneumonia",
+              "retrieval_score": 0.027444,
+              "fused_rank": 12
+            },
+            {
+              "code": "A37.11",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough due to Bordetella parapertussis with pneumonia",
+              "retrieval_score": 0.027222,
+              "fused_rank": 13
+            },
+            {
+              "code": "A37.80",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough due to other Bordetella species without pneumonia",
+              "retrieval_score": 0.027032,
+              "fused_rank": 14
+            },
+            {
+              "code": "A37.81",
+              "system": "ICD-10-CM",
+              "description": "Whooping cough due to other Bordetella species with pneumonia",
+              "retrieval_score": 0.026501,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "fever",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "O86.4",
+              "system": "ICD-10-CM",
+              "description": "Pyrexia of unknown origin following delivery",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "O75.2",
+              "system": "ICD-10-CM",
+              "description": "Pyrexia during labor, not elsewhere classified",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "R50.9",
+              "system": "ICD-10-CM",
+              "description": "Fever, unspecified",
+              "retrieval_score": 0.031778,
+              "fused_rank": 3
+            },
+            {
+              "code": "A78",
+              "system": "ICD-10-CM",
+              "description": "Q fever",
+              "retrieval_score": 0.031778,
+              "fused_rank": 4
+            },
+            {
+              "code": "R50.82",
+              "system": "ICD-10-CM",
+              "description": "Postprocedural fever",
+              "retrieval_score": 0.031754,
+              "fused_rank": 5
+            },
+            {
+              "code": "A68.9",
+              "system": "ICD-10-CM",
+              "description": "Relapsing fever, unspecified",
+              "retrieval_score": 0.030159,
+              "fused_rank": 6
+            },
+            {
+              "code": "R50.83",
+              "system": "ICD-10-CM",
+              "description": "Postvaccination fever",
+              "retrieval_score": 0.029572,
+              "fused_rank": 7
+            },
+            {
+              "code": "M04.1",
+              "system": "ICD-10-CM",
+              "description": "Periodic fever syndromes",
+              "retrieval_score": 0.028259,
+              "fused_rank": 8
+            },
+            {
+              "code": "A77.9",
+              "system": "ICD-10-CM",
+              "description": "Spotted fever, unspecified",
+              "retrieval_score": 0.027799,
+              "fused_rank": 9
+            },
+            {
+              "code": "A79.0",
+              "system": "ICD-10-CM",
+              "description": "Trench fever",
+              "retrieval_score": 0.027271,
+              "fused_rank": 10
+            },
+            {
+              "code": "A75.9",
+              "system": "ICD-10-CM",
+              "description": "Typhus fever, unspecified",
+              "retrieval_score": 0.027222,
+              "fused_rank": 11
+            },
+            {
+              "code": "R50.2",
+              "system": "ICD-10-CM",
+              "description": "Drug induced fever",
+              "retrieval_score": 0.026754,
+              "fused_rank": 12
+            },
+            {
+              "code": "A01.1",
+              "system": "ICD-10-CM",
+              "description": "Paratyphoid fever A",
+              "retrieval_score": 0.026585,
+              "fused_rank": 13
+            },
+            {
+              "code": "R68.83",
+              "system": "ICD-10-CM",
+              "description": "Chills (without fever)",
+              "retrieval_score": 0.026389,
+              "fused_rank": 14
+            },
+            {
+              "code": "A01.4",
+              "system": "ICD-10-CM",
+              "description": "Paratyphoid fever, unspecified",
+              "retrieval_score": 0.026334,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "dyspnea",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R06.00",
+              "system": "ICD-10-CM",
+              "description": "Dyspnea, unspecified",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "R06.02",
+              "system": "ICD-10-CM",
+              "description": "Shortness of breath",
+              "retrieval_score": 0.032787,
+              "fused_rank": 2
+            },
+            {
+              "code": "R06.09",
+              "system": "ICD-10-CM",
+              "description": "Other forms of dyspnea",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "J95.87",
+              "system": "ICD-10-CM",
+              "description": "Transfusion-associated dyspnea (TAD)",
+              "retrieval_score": 0.032002,
+              "fused_rank": 4
+            },
+            {
+              "code": "R06.9",
+              "system": "ICD-10-CM",
+              "description": "Unspecified abnormalities of breathing",
+              "retrieval_score": 0.016129,
+              "fused_rank": 5
+            },
+            {
+              "code": "C04.8",
+              "system": "ICD-10-CM",
+              "description": "Malignant neoplasm of overlapping sites of floor of mouth",
+              "retrieval_score": 0.016129,
+              "fused_rank": 6
+            },
+            {
+              "code": "R06.5",
+              "system": "ICD-10-CM",
+              "description": "Mouth breathing",
+              "retrieval_score": 0.015873,
+              "fused_rank": 7
+            },
+            {
+              "code": "K83.4",
+              "system": "ICD-10-CM",
+              "description": "Spasm of sphincter of Oddi",
+              "retrieval_score": 0.015873,
+              "fused_rank": 8
+            },
+            {
+              "code": "R06.81",
+              "system": "ICD-10-CM",
+              "description": "Apnea, not elsewhere classified",
+              "retrieval_score": 0.015625,
+              "fused_rank": 9
+            },
+            {
+              "code": "S00.512D",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, subsequent encounter",
+              "retrieval_score": 0.015625,
+              "fused_rank": 10
+            },
+            {
+              "code": "R06.89",
+              "system": "ICD-10-CM",
+              "description": "Other abnormalities of breathing",
+              "retrieval_score": 0.015625,
+              "fused_rank": 11
+            },
+            {
+              "code": "Q03.0",
+              "system": "ICD-10-CM",
+              "description": "Malformations of aqueduct of Sylvius",
+              "retrieval_score": 0.015625,
+              "fused_rank": 12
+            },
+            {
+              "code": "R13.10",
+              "system": "ICD-10-CM",
+              "description": "Dysphagia, unspecified",
+              "retrieval_score": 0.015385,
+              "fused_rank": 13
+            },
+            {
+              "code": "S00.502A",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, initial encounter",
+              "retrieval_score": 0.015385,
+              "fused_rank": 14
+            },
+            {
+              "code": "R07.1",
+              "system": "ICD-10-CM",
+              "description": "Chest pain on breathing",
+              "retrieval_score": 0.015385,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "essential hypertension",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "I10",
+              "system": "ICD-10-CM",
+              "description": "Essential (primary) hypertension",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "I97.3",
+              "system": "ICD-10-CM",
+              "description": "Postprocedural hypertension",
+              "retrieval_score": 0.031778,
+              "fused_rank": 2
+            },
+            {
+              "code": "I1A.0",
+              "system": "ICD-10-CM",
+              "description": "Resistant hypertension",
+              "retrieval_score": 0.031754,
+              "fused_rank": 3
+            },
+            {
+              "code": "I15.0",
+              "system": "ICD-10-CM",
+              "description": "Renovascular hypertension",
+              "retrieval_score": 0.031746,
+              "fused_rank": 4
+            },
+            {
+              "code": "O10.03",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating the puerperium",
+              "retrieval_score": 0.030798,
+              "fused_rank": 5
+            },
+            {
+              "code": "O10.02",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating childbirth",
+              "retrieval_score": 0.030622,
+              "fused_rank": 6
+            },
+            {
+              "code": "I15.8",
+              "system": "ICD-10-CM",
+              "description": "Other secondary hypertension",
+              "retrieval_score": 0.029911,
+              "fused_rank": 7
+            },
+            {
+              "code": "P29.2",
+              "system": "ICD-10-CM",
+              "description": "Neonatal hypertension",
+              "retrieval_score": 0.029828,
+              "fused_rank": 8
+            },
+            {
+              "code": "I15.9",
+              "system": "ICD-10-CM",
+              "description": "Secondary hypertension, unspecified",
+              "retrieval_score": 0.029236,
+              "fused_rank": 9
+            },
+            {
+              "code": "K76.6",
+              "system": "ICD-10-CM",
+              "description": "Portal hypertension",
+              "retrieval_score": 0.029214,
+              "fused_rank": 10
+            },
+            {
+              "code": "O10.019",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, unspecified trimester",
+              "retrieval_score": 0.02904,
+              "fused_rank": 11
+            },
+            {
+              "code": "O10.012",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, second trimester",
+              "retrieval_score": 0.028958,
+              "fused_rank": 12
+            },
+            {
+              "code": "O10.011",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, first trimester",
+              "retrieval_score": 0.028439,
+              "fused_rank": 13
+            },
+            {
+              "code": "O10.013",
+              "system": "ICD-10-CM",
+              "description": "Pre-existing essential hypertension complicating pregnancy, third trimester",
+              "retrieval_score": 0.028372,
+              "fused_rank": 14
+            },
+            {
+              "code": "I27.20",
+              "system": "ICD-10-CM",
+              "description": "Pulmonary hypertension, unspecified",
+              "retrieval_score": 0.027778,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "osteoarthritis of right hip",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "M16.11",
+              "system": "ICD-10-CM",
+              "description": "Unilateral primary osteoarthritis, right hip",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "M16.31",
+              "system": "ICD-10-CM",
+              "description": "Unilateral osteoarthritis resulting from hip dysplasia, right hip",
+              "retrieval_score": 0.032258,
+              "fused_rank": 2
+            },
+            {
+              "code": "M16.9",
+              "system": "ICD-10-CM",
+              "description": "Osteoarthritis of hip, unspecified",
+              "retrieval_score": 0.032018,
+              "fused_rank": 3
+            },
+            {
+              "code": "M16.51",
+              "system": "ICD-10-CM",
+              "description": "Unilateral post-traumatic osteoarthritis, right hip",
+              "retrieval_score": 0.031498,
+              "fused_rank": 4
+            },
+            {
+              "code": "M16.12",
+              "system": "ICD-10-CM",
+              "description": "Unilateral primary osteoarthritis, left hip",
+              "retrieval_score": 0.030798,
+              "fused_rank": 5
+            },
+            {
+              "code": "M16.32",
+              "system": "ICD-10-CM",
+              "description": "Unilateral osteoarthritis resulting from hip dysplasia, left hip",
+              "retrieval_score": 0.029877,
+              "fused_rank": 6
+            },
+            {
+              "code": "M16.0",
+              "system": "ICD-10-CM",
+              "description": "Bilateral primary osteoarthritis of hip",
+              "retrieval_score": 0.029828,
+              "fused_rank": 7
+            },
+            {
+              "code": "M16.7",
+              "system": "ICD-10-CM",
+              "description": "Other unilateral secondary osteoarthritis of hip",
+              "retrieval_score": 0.029274,
+              "fused_rank": 8
+            },
+            {
+              "code": "M16.6",
+              "system": "ICD-10-CM",
+              "description": "Other bilateral secondary osteoarthritis of hip",
+              "retrieval_score": 0.028446,
+              "fused_rank": 9
+            },
+            {
+              "code": "M16.52",
+              "system": "ICD-10-CM",
+              "description": "Unilateral post-traumatic osteoarthritis, left hip",
+              "retrieval_score": 0.027212,
+              "fused_rank": 10
+            },
+            {
+              "code": "M16.10",
+              "system": "ICD-10-CM",
+              "description": "Unilateral primary osteoarthritis, unspecified hip",
+              "retrieval_score": 0.025904,
+              "fused_rank": 11
+            },
+            {
+              "code": "M16.2",
+              "system": "ICD-10-CM",
+              "description": "Bilateral osteoarthritis resulting from hip dysplasia",
+              "retrieval_score": 0.02409,
+              "fused_rank": 12
+            },
+            {
+              "code": "M24.251",
+              "system": "ICD-10-CM",
+              "description": "Disorder of ligament, right hip",
+              "retrieval_score": 0.022791,
+              "fused_rank": 13
+            },
+            {
+              "code": "M17.11",
+              "system": "ICD-10-CM",
+              "description": "Unilateral primary osteoarthritis, right knee",
+              "retrieval_score": 0.021673,
+              "fused_rank": 14
+            },
+            {
+              "code": "M19.031",
+              "system": "ICD-10-CM",
+              "description": "Primary osteoarthritis, right wrist",
+              "retrieval_score": 0.021605,
+              "fused_rank": 15
+            }
+          ]
+        }
+      ]
+    },
+    "code": {
+      "assignments": [
+        {
+          "fact": "Community-acquired pneumonia, right lower lobe, probably bacterial",
+          "code": "J15.9",
+          "system": "ICD-10-CM",
+          "description": "Unspecified bacterial pneumonia",
+          "coder_confidence": 0.9,
+          "rationale": "The assessment states \"Community-acquired pneumonia, right lower lobe, probably bacterial.\" Among the candidates, \"Unspecified bacterial pneumonia\" best matches the documented bacterial etiology."
+        },
+        {
+          "fact": "Acute exacerbation of COPD",
+          "code": "J44.1",
+          "system": "ICD-10-CM",
+          "description": "Chronic obstructive pulmonary disease with (acute) exacerbation",
+          "coder_confidence": 0.99,
+          "rationale": "The note explicitly documents \"Acute exacerbation of COPD,\" which directly maps to \"Chronic obstructive pulmonary disease with (acute) exacerbation.\""
+        },
+        {
+          "fact": "Acute hypoxic respiratory failure",
+          "code": "J96.01",
+          "system": "ICD-10-CM",
+          "description": "Acute respiratory failure with hypoxia",
+          "coder_confidence": 0.99,
+          "rationale": "The assessment states \"Acute hypoxic respiratory failure\" and the vitals show hypoxia (SpO2 89% on 2 L), supporting \"Acute respiratory failure with hypoxia.\""
+        },
+        {
+          "fact": "Chest X-ray two views",
+          "code": "9R0011",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+          "coder_confidence": 0.99,
+          "rationale": "The imaging section documents \"Chest X-ray two views,\" which matches \"Radiologic examination chest two views frontal and lateral.\""
+        },
+        {
+          "fact": "Admit to medical floor with telemetry.",
+          "code": "9E0011",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Hospital inpatient or observation care - initial - high complexity",
+          "coder_confidence": 0.92,
+          "rationale": "The plan says \"Admit to medical floor with telemetry.\" This is an initial hospital inpatient admission, and the documented acute pneumonia/COPD/respiratory failure makes high-complexity inpatient care the best match."
+        },
+        {
+          "fact": "Nebulizer treatment with albuterol/ipratropium every 4 hours.",
+          "code": "9P0020",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Nebulizer treatment for the administration of an inhalation solution",
+          "coder_confidence": 0.99,
+          "rationale": "The plan explicitly orders \"Nebulizer treatment with albuterol/ipratropium every 4 hours,\" which matches nebulizer treatment for inhalation solution administration."
+        },
+        {
+          "fact": "Productive cough, fever, dyspnea.",
+          "code": "R06.02",
+          "system": "ICD-10-CM",
+          "description": "Shortness of breath",
+          "coder_confidence": 0.76,
+          "rationale": "The chief complaint includes \"dyspnea\" along with cough and fever; among the available symptom codes, \"Shortness of breath\" is the best match for the documented breathing complaint."
+        },
+        {
+          "fact": "productive cough",
+          "code": "R09.3",
+          "system": "ICD-10-CM",
+          "description": "Abnormal sputum",
+          "coder_confidence": 0.92,
+          "rationale": "\"Productive cough\" is best captured by \"Abnormal sputum\" since the note documents productive sputum/cough rather than a specific cough chronicity."
+        },
+        {
+          "fact": "subjective fevers to 38.7 C",
+          "code": "R50.9",
+          "system": "ICD-10-CM",
+          "description": "Fever, unspecified",
+          "coder_confidence": 0.99,
+          "rationale": "The HPI documents \"subjective fevers to 38.7 C,\" which maps directly to \"Fever, unspecified.\""
+        },
+        {
+          "fact": "progressive dyspnea",
+          "code": "R06.02",
+          "system": "ICD-10-CM",
+          "description": "Shortness of breath",
+          "coder_confidence": 0.98,
+          "rationale": "The HPI states \"progressive dyspnea,\" which matches \"Shortness of breath.\""
+        },
+        {
+          "fact": "Essential hypertension.",
+          "code": "I10",
+          "system": "ICD-10-CM",
+          "description": "Essential (primary) hypertension",
+          "coder_confidence": 0.99,
+          "rationale": "The past medical history explicitly lists \"Essential hypertension,\" which maps directly to essential (primary) hypertension."
+        },
+        {
+          "fact": "Right hip osteoarthritis.",
+          "code": "M16.11",
+          "system": "ICD-10-CM",
+          "description": "Unilateral primary osteoarthritis, right hip",
+          "coder_confidence": 0.98,
+          "rationale": "The past medical history documents \"Right hip osteoarthritis.\" In the absence of a different subtype, the best match is unilateral primary osteoarthritis, right hip."
+        }
+      ]
+    },
+    "audit": {
+      "verdicts": [
+        {
+          "code": "J15.9",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "J44.1",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "J96.01",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "9R0011",
+          "agree": true,
+          "note": "Evidence clearly documents 'Chest X-ray two views' in imaging section, which directly supports the CPT code for radiologic examination chest two views frontal and lateral."
+        },
+        {
+          "code": "9E0011",
+          "agree": true,
+          "note": "Plan documents initial inpatient admission to medical floor; patient presents with acute pneumonia, COPD exacerbation, and respiratory failure\u2014clinical complexity supports high-complexity inpatient care code."
+        },
+        {
+          "code": "9P0020",
+          "agree": true,
+          "note": "Plan explicitly orders 'Nebulizer treatment with albuterol/ipratropium every 4 hours,' which directly supports the nebulizer treatment code for inhalation solution administration."
+        },
+        {
+          "code": "R06.02",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "R09.3",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "R50.9",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "R06.02",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "I10",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "M16.11",
+          "agree": null,
+          "note": null
+        }
+      ]
+    },
+    "rules": {
+      "warnings": [
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'influenza' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'COVID-19' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'hemoptysis' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'recent sick contacts' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'fall' dropped from coding (assertion=historical); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'chronic obstructive pulmonary disease' dropped from coding (assertion=historical); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'history of smoking' dropped from coding (assertion=historical); retained as context only.",
+          "refs": []
+        }
+      ]
+    }
+  },
+  "result": {
+    "document_id": "note_03_inpatient_pneumonia_ambiguity",
+    "diagnoses": [
+      {
+        "code": "J44.1",
+        "system": "ICD-10-CM",
+        "description": "Chronic obstructive pulmonary disease with (acute) exacerbation",
+        "confidence": 0.9955,
+        "confidence_tier": "high",
+        "rationale": "The note explicitly documents \"Acute exacerbation of COPD,\" which directly maps to \"Chronic obstructive pulmonary disease with (acute) exacerbation.\"",
+        "evidence": [
+          {
+            "text": "Acute exacerbation of COPD",
+            "normalized_term": "acute exacerbation of chronic obstructive pulmonary disease",
+            "query_terms": [
+              "AECOPD"
+            ],
+            "assertion_status": "present",
+            "start_offset": 0,
+            "end_offset": 0,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "J96.01",
+        "system": "ICD-10-CM",
+        "description": "Acute respiratory failure with hypoxia",
+        "confidence": 0.9955,
+        "confidence_tier": "high",
+        "rationale": "The assessment states \"Acute hypoxic respiratory failure\" and the vitals show hypoxia (SpO2 89% on 2 L), supporting \"Acute respiratory failure with hypoxia.\"",
+        "evidence": [
+          {
+            "text": "Acute hypoxic respiratory failure",
+            "normalized_term": "acute hypoxic respiratory failure",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 0,
+            "end_offset": 0,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "I10",
+        "system": "ICD-10-CM",
+        "description": "Essential (primary) hypertension",
+        "confidence": 0.9955,
+        "confidence_tier": "high",
+        "rationale": "The past medical history explicitly lists \"Essential hypertension,\" which maps directly to essential (primary) hypertension.",
+        "evidence": [
+          {
+            "text": "Essential hypertension.",
+            "normalized_term": "essential hypertension",
+            "query_terms": [
+              "hypertension"
+            ],
+            "assertion_status": "present",
+            "start_offset": 726,
+            "end_offset": 749,
+            "section": "past medical history",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "M16.11",
+        "system": "ICD-10-CM",
+        "description": "Unilateral primary osteoarthritis, right hip",
+        "confidence": 0.991,
+        "confidence_tier": "high",
+        "rationale": "The past medical history documents \"Right hip osteoarthritis.\" In the absence of a different subtype, the best match is unilateral primary osteoarthritis, right hip.",
+        "evidence": [
+          {
+            "text": "Right hip osteoarthritis.",
+            "normalized_term": "osteoarthritis of right hip",
+            "query_terms": [
+              "right hip osteoarthritis"
+            ],
+            "assertion_status": "present",
+            "start_offset": 807,
+            "end_offset": 832,
+            "section": "past medical history",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "R06.02",
+        "system": "ICD-10-CM",
+        "description": "Shortness of breath",
+        "confidence": 0.9071,
+        "confidence_tier": "high",
+        "rationale": "The HPI states \"progressive dyspnea,\" which matches \"Shortness of breath.\"",
+        "evidence": [
+          {
+            "text": "progressive dyspnea",
+            "normalized_term": "dyspnea",
+            "query_terms": [
+              "shortness of breath"
+            ],
+            "assertion_status": "present",
+            "start_offset": 399,
+            "end_offset": 418,
+            "section": "hpi",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "R06.02",
+        "system": "ICD-10-CM",
+        "description": "Shortness of breath",
+        "confidence": 0.892,
+        "confidence_tier": "high",
+        "rationale": "The chief complaint includes \"dyspnea\" along with cough and fever; among the available symptom codes, \"Shortness of breath\" is the best match for the documented breathing complaint.",
+        "evidence": [
+          {
+            "text": "Productive cough, fever, dyspnea.",
+            "normalized_term": "productive cough; fever; dyspnea",
+            "query_terms": [
+              "cough",
+              "shortness of breath"
+            ],
+            "assertion_status": "present",
+            "start_offset": 182,
+            "end_offset": 215,
+            "section": "chief complaint",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "J15.9",
+        "system": "ICD-10-CM",
+        "description": "Unspecified bacterial pneumonia",
+        "confidence": 0.8711,
+        "confidence_tier": "high",
+        "rationale": "The assessment states \"Community-acquired pneumonia, right lower lobe, probably bacterial.\" Among the candidates, \"Unspecified bacterial pneumonia\" best matches the documented bacterial etiology.",
+        "evidence": [
+          {
+            "text": "Community-acquired pneumonia, right lower lobe, probably bacterial",
+            "normalized_term": "community-acquired pneumonia",
+            "query_terms": [
+              "CAP"
+            ],
+            "assertion_status": "possible",
+            "start_offset": 0,
+            "end_offset": 0,
+            "section": "assessment",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "R50.9",
+        "system": "ICD-10-CM",
+        "description": "Fever, unspecified",
+        "confidence": 0.8499,
+        "confidence_tier": "high",
+        "rationale": "The HPI documents \"subjective fevers to 38.7 C,\" which maps directly to \"Fever, unspecified.\"",
+        "evidence": [
+          {
+            "text": "subjective fevers to 38.7 C",
+            "normalized_term": "fever",
+            "query_terms": [
+              "pyrexia"
+            ],
+            "assertion_status": "present",
+            "start_offset": 366,
+            "end_offset": 393,
+            "section": "hpi",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "R09.3",
+        "system": "ICD-10-CM",
+        "description": "Abnormal sputum",
+        "confidence": 0.8184,
+        "confidence_tier": "high",
+        "rationale": "\"Productive cough\" is best captured by \"Abnormal sputum\" since the note documents productive sputum/cough rather than a specific cough chronicity.",
+        "evidence": [
+          {
+            "text": "productive cough",
+            "normalized_term": "productive cough",
+            "query_terms": [
+              "cough with sputum"
+            ],
+            "assertion_status": "present",
+            "start_offset": 348,
+            "end_offset": 364,
+            "section": "hpi",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      }
+    ],
+    "procedures": [
+      {
+        "code": "9R0011",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+        "confidence": 1.0,
+        "confidence_tier": "high",
+        "rationale": "The imaging section documents \"Chest X-ray two views,\" which matches \"Radiologic examination chest two views frontal and lateral.\"",
+        "evidence": [
+          {
+            "text": "Chest X-ray two views",
+            "normalized_term": "chest radiograph, 2 views",
+            "query_terms": [
+              "CXR",
+              "chest x-ray"
+            ],
+            "assertion_status": "present",
+            "start_offset": 0,
+            "end_offset": 0,
+            "section": "imaging",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "Evidence clearly documents 'Chest X-ray two views' in imaging section, which directly supports the CPT code for radiologic examination chest two views frontal and lateral."
+      },
+      {
+        "code": "9P0020",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Nebulizer treatment for the administration of an inhalation solution",
+        "confidence": 1.0,
+        "confidence_tier": "high",
+        "rationale": "The plan explicitly orders \"Nebulizer treatment with albuterol/ipratropium every 4 hours,\" which matches nebulizer treatment for inhalation solution administration.",
+        "evidence": [
+          {
+            "text": "Nebulizer treatment with albuterol/ipratropium every 4 hours.",
+            "normalized_term": "nebulized bronchodilator treatment",
+            "query_terms": [
+              "nebulizer treatment"
+            ],
+            "assertion_status": "present",
+            "start_offset": 0,
+            "end_offset": 0,
+            "section": "plan",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "Plan explicitly orders 'Nebulizer treatment with albuterol/ipratropium every 4 hours,' which directly supports the nebulizer treatment code for inhalation solution administration."
+      },
+      {
+        "code": "9E0011",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Hospital inpatient or observation care - initial - high complexity",
+        "confidence": 0.9684,
+        "confidence_tier": "high",
+        "rationale": "The plan says \"Admit to medical floor with telemetry.\" This is an initial hospital inpatient admission, and the documented acute pneumonia/COPD/respiratory failure makes high-complexity inpatient care the best match.",
+        "evidence": [
+          {
+            "text": "Admit to medical floor with telemetry.",
+            "normalized_term": "hospital admission with telemetry",
+            "query_terms": [
+              "telemetry monitoring"
+            ],
+            "assertion_status": "present",
+            "start_offset": 0,
+            "end_offset": 0,
+            "section": "plan",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "Plan documents initial inpatient admission to medical floor; patient presents with acute pneumonia, COPD exacerbation, and respiratory failure\u2014clinical complexity supports high-complexity inpatient care code."
+      }
+    ],
+    "warnings": [
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'influenza' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'COVID-19' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'hemoptysis' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'chest pain' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'recent sick contacts' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'fall' dropped from coding (assertion=historical); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'chronic obstructive pulmonary disease' dropped from coding (assertion=historical); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'history of smoking' dropped from coding (assertion=historical); retained as context only.",
+        "refs": []
+      }
+    ],
+    "metadata": {
+      "trace_id": "9bb0de03ba89",
+      "model_ids": {
+        "extraction": "openai/gpt-5.4-mini",
+        "coder": "openai/gpt-5.4-mini",
+        "auditor": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "pipeline_version": "0.1.1",
+      "temperature": 0.0,
+      "config_hash": "3bee7eea3e0cee68",
+      "timestamp": "2026-06-27T15:45:44.873505Z",
+      "encounter_type": "inpatient",
+      "metrics": {
+        "stage_latency_ms": {
+          "ingest": 0.3057089925277978,
+          "extract": 35734.20649999753,
+          "retrieve": 1171.6922499908833,
+          "code": 6964.2284589936025,
+          "audit": 2210.0028330023633,
+          "rules": 0.13041700003668666,
+          "assemble": 0.2431659959256649
+        },
+        "total_latency_ms": 46081.89920800214,
+        "tokens": {
+          "extraction.prompt_tokens": 1832,
+          "extraction.completion_tokens": 5347,
+          "extraction.total_tokens": 7179,
+          "extraction.calls": 1,
+          "coder.prompt_tokens": 11591,
+          "coder.completion_tokens": 1124,
+          "coder.total_tokens": 12715,
+          "coder.calls": 1,
+          "auditor.prompt_tokens": 2705,
+          "auditor.completion_tokens": 243,
+          "auditor.total_tokens": 2948,
+          "auditor.calls": 1
+        },
+        "est_cost_usd": 0.043107,
+        "retries": 0,
+        "n_candidates": 225,
+        "n_warnings": 8,
+        "n_facts": 23,
+        "n_facts_coded": 7
+      }
+    }
+  }
+}
