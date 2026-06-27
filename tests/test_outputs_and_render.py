@@ -17,7 +17,7 @@ from medcoder import cli as cli_mod
 from medcoder.audit_trace import build_trace
 from medcoder.code_assign import CodedAssignment
 from medcoder.pipeline import PipelineResult
-from medcoder.render import render_markdown
+from medcoder.render import render_annotated, render_markdown
 from medcoder.schemas import (
     AssertionStatus,
     CandidateCode,
@@ -169,6 +169,84 @@ def test_render_markdown_truncates_long_evidence():
     assert "x" * 200 not in md  # full text not emitted
 
 
+# ---- render_annotated ----------------------------------------------------
+
+
+def _sugg_at(code: str, note: str, span_text: str, *, system=CodeSystem.ICD10) -> CodeSuggestion:
+    """A CodeSuggestion whose single evidence span points at `span_text` within `note`."""
+    start = note.index(span_text)
+    ev = ExtractedFact(
+        text=span_text,
+        normalized_term=span_text,
+        assertion_status=AssertionStatus.PRESENT,
+        start_offset=start,
+        end_offset=start + len(span_text),
+        kind="diagnosis",
+    )
+    return CodeSuggestion(
+        code=code,
+        system=system,
+        description="desc",
+        confidence=0.9,
+        confidence_tier=ConfidenceTier.HIGH,
+        rationale="r",
+        evidence=[ev],
+        audit_agree=True,
+    )
+
+
+def test_render_annotated_places_code_at_its_span():
+    note = "Patient has type 2 diabetes mellitus today."
+    cr = _coding_result()
+    cr.diagnoses = [_sugg_at("E11.9", note, "type 2 diabetes mellitus")]
+    cr.procedures = []
+    out = render_annotated(cr, note)
+    # marker sits immediately after the wrapped evidence span
+    assert "«type 2 diabetes mellitus»「E11.9" in out
+    # surrounding (uncoded) text is preserved verbatim
+    assert "Patient has «type 2 diabetes mellitus»" in out
+    assert "today." in out
+    assert "Unanchored" not in out
+
+
+def test_render_annotated_multiple_codes_one_span_merge():
+    """Two codes citing the same span are merged into a single marker."""
+    note = "type 2 diabetes mellitus noted."  # default _fact() span (0,24) lands here
+    cr = _coding_result()  # diagnosis E11.9 + procedure 9T0012, both cite span (0,24)
+    out = render_annotated(cr, note)
+    assert "E11.9" in out and "9T0012" in out
+    assert " + " in out  # merged, not two separate markers
+    # exactly one marker in the annotated note body (the header legend also uses 「…」)
+    note_block = out.split("```text")[1]
+    assert note_block.count("「") == 1
+
+
+def test_render_annotated_reverse_splice_keeps_both_spans():
+    note = "alpha bravo charlie delta"
+    cr = _coding_result()
+    cr.diagnoses = [_sugg_at("A00", note, "alpha"), _sugg_at("B00", note, "charlie")]
+    cr.procedures = []
+    out = render_annotated(cr, note)
+    assert "«alpha»「A00" in out
+    assert "«charlie»「B00" in out
+    # untouched words between/around the spans survive intact
+    assert "bravo" in out and "delta" in out
+
+
+def test_render_annotated_unanchored_on_offset_mismatch():
+    """A span whose offsets no longer match the note text is reported, not spliced."""
+    note = "completely different text here"
+    cr = _coding_result()
+    cr.diagnoses = [_suggestion()]  # default evidence span (0,24) ≠ this note's first 24 chars
+    cr.procedures = []
+    out = render_annotated(cr, note)
+    assert "Unanchored" in out
+    assert "E11.9" in out  # surfaced in the footer
+    # the note block itself is left intact (no «»/「」 splice) — scope to the fenced body
+    note_block = out.split("```text")[1].split("```")[0]
+    assert note_block.strip() == "completely different text here"
+
+
 # ---- audit trace ---------------------------------------------------------
 
 
@@ -244,6 +322,24 @@ def test_run_format_md_writes_markdown(monkeypatch, tmp_path):
     assert md_path.exists()
     # the saved file is Markdown (not JSON) — confirm content, not just existence
     assert md_path.read_text().startswith("# Coding review")
+
+
+def test_run_format_annotated_writes_file(monkeypatch, tmp_path):
+    _patch_cli(monkeypatch)
+    monkeypatch.chdir(tmp_path)
+    note = tmp_path / "note.txt"
+    # Leading whitespace makes normalize() load-bearing: only AFTER stripping does the
+    # default evidence span (offsets 0–24) line up with "type 2 diabetes mellitus". If the
+    # CLI annotated the RAW text instead of normalize(text), the span would mismatch and
+    # land in the unanchored footer — so this anchoring check guards the normalize() call.
+    note.write_text("   type 2 diabetes mellitus is documented.")
+
+    res = runner.invoke(cli_mod.app, ["run", str(note), "--format", "annotated"])
+    assert res.exit_code == 0
+    assert "# Annotated note" in res.output
+    p = tmp_path / "outputs" / "t_doc" / "result.annotated.md"
+    assert p.exists()
+    assert "«type 2 diabetes mellitus»" in p.read_text()  # anchored ⇒ normalize() ran
 
 
 def test_run_rejects_unknown_format(monkeypatch, tmp_path):
