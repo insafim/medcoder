@@ -1,0 +1,1661 @@
+{
+  "document_id": "note_02_ed_chest_pain",
+  "trace_id": "62a7d0653e53",
+  "config_hash": "3bee7eea3e0cee68",
+  "encounter_type": "outpatient",
+  "stages": {
+    "extract": {
+      "facts": [
+        {
+          "text": "Acute substernal chest pain, 3 hours.",
+          "normalized_term": "chest pain",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "chief complaint",
+          "start_offset": 139,
+          "end_offset": 176
+        },
+        {
+          "text": "essential hypertension",
+          "normalized_term": "essential hypertension",
+          "query_terms": [
+            "hypertension"
+          ],
+          "assertion_status": "historical",
+          "kind": "diagnosis",
+          "section": "history of present illness",
+          "start_offset": 240,
+          "end_offset": 262
+        },
+        {
+          "text": "hyperlipidemia",
+          "normalized_term": "hyperlipidemia",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "diagnosis",
+          "section": "history of present illness",
+          "start_offset": 267,
+          "end_offset": 281
+        },
+        {
+          "text": "substernal chest pressure radiating to the left arm",
+          "normalized_term": "chest pressure",
+          "query_terms": [
+            "chest pain"
+          ],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "history of present illness",
+          "start_offset": 307,
+          "end_offset": 358
+        },
+        {
+          "text": "diaphoresis",
+          "normalized_term": "diaphoresis",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "history of present illness",
+          "start_offset": 376,
+          "end_offset": 387
+        },
+        {
+          "text": "mild nausea",
+          "normalized_term": "nausea",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "symptom",
+          "section": "history of present illness",
+          "start_offset": 392,
+          "end_offset": 403
+        },
+        {
+          "text": "father with MI at 58.",
+          "normalized_term": "myocardial infarction",
+          "query_terms": [
+            "MI",
+            "heart attack"
+          ],
+          "assertion_status": "family",
+          "kind": "diagnosis",
+          "section": "history of present illness",
+          "start_offset": 619,
+          "end_offset": 640
+        },
+        {
+          "text": "ather with MI at 58.\n\nObjective:\nBP 156/92",
+          "normalized_term": "myocardial infarction",
+          "query_terms": [
+            "MI",
+            "heart attack"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "history of present illness",
+          "start_offset": 620,
+          "end_offset": 662
+        },
+        {
+          "text": "Acute ST-elevation myocardial infarction, anterior wall.",
+          "normalized_term": "acute ST-elevation myocardial infarction",
+          "query_terms": [
+            "STEMI"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1048,
+          "end_offset": 1104
+        },
+        {
+          "text": "pulmonary embolism",
+          "normalized_term": "pulmonary embolism",
+          "query_terms": [
+            "PE"
+          ],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1143,
+          "end_offset": 1161
+        },
+        {
+          "text": "aortic dissection",
+          "normalized_term": "aortic dissection",
+          "query_terms": [],
+          "assertion_status": "absent",
+          "kind": "diagnosis",
+          "section": "assessment",
+          "start_offset": 1225,
+          "end_offset": 1242
+        },
+        {
+          "text": "Activate cardiac catheterization lab.",
+          "normalized_term": "cardiac catheterization lab activation",
+          "query_terms": [
+            "cath lab activation"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "plan",
+          "start_offset": 1286,
+          "end_offset": 1323
+        },
+        {
+          "text": "percutaneous coronary intervention.",
+          "normalized_term": "percutaneous coronary intervention",
+          "query_terms": [
+            "PCI"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "plan",
+          "start_offset": 1460,
+          "end_offset": 1495
+        },
+        {
+          "text": "Routine 12-lead electrocardiogram with interpretation.",
+          "normalized_term": "electrocardiogram",
+          "query_terms": [
+            "ECG",
+            "EKG"
+          ],
+          "assertion_status": "historical",
+          "kind": "procedure",
+          "section": "procedures performed in ed prior to transfer",
+          "start_offset": 1591,
+          "end_offset": 1645
+        },
+        {
+          "text": "Two-view chest radiograph.",
+          "normalized_term": "chest radiograph",
+          "query_terms": [
+            "chest x-ray",
+            "CXR"
+          ],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "procedures performed in ed prior to transfer",
+          "start_offset": 1648,
+          "end_offset": 1674
+        },
+        {
+          "text": "Venipuncture for laboratory studies including troponin.",
+          "normalized_term": "venipuncture",
+          "query_terms": [],
+          "assertion_status": "present",
+          "kind": "procedure",
+          "section": "procedures performed in ed prior to transfer",
+          "start_offset": 1677,
+          "end_offset": 1732
+        }
+      ]
+    },
+    "retrieve": {
+      "by_fact": [
+        {
+          "fact": "chest pain",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R07.89",
+              "system": "ICD-10-CM",
+              "description": "Other chest pain",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "R07.9",
+              "system": "ICD-10-CM",
+              "description": "Chest pain, unspecified",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "R07.1",
+              "system": "ICD-10-CM",
+              "description": "Chest pain on breathing",
+              "retrieval_score": 0.031746,
+              "fused_rank": 3
+            },
+            {
+              "code": "S28.0XXD",
+              "system": "ICD-10-CM",
+              "description": "Crushed chest, subsequent encounter",
+              "retrieval_score": 0.029857,
+              "fused_rank": 4
+            },
+            {
+              "code": "L03.313",
+              "system": "ICD-10-CM",
+              "description": "Cellulitis of chest wall",
+              "retrieval_score": 0.02879,
+              "fused_rank": 5
+            },
+            {
+              "code": "S28.0XXA",
+              "system": "ICD-10-CM",
+              "description": "Crushed chest, initial encounter",
+              "retrieval_score": 0.02669,
+              "fused_rank": 6
+            },
+            {
+              "code": "M95.4",
+              "system": "ICD-10-CM",
+              "description": "Acquired deformity of chest and rib",
+              "retrieval_score": 0.025129,
+              "fused_rank": 7
+            },
+            {
+              "code": "R12",
+              "system": "ICD-10-CM",
+              "description": "Heartburn",
+              "retrieval_score": 0.015625,
+              "fused_rank": 8
+            },
+            {
+              "code": "M96.A4",
+              "system": "ICD-10-CM",
+              "description": "Flail chest associated with chest compression and cardiopulmonary resuscitation",
+              "retrieval_score": 0.015625,
+              "fused_rank": 9
+            },
+            {
+              "code": "A18.84",
+              "system": "ICD-10-CM",
+              "description": "Tuberculosis of heart",
+              "retrieval_score": 0.015385,
+              "fused_rank": 10
+            },
+            {
+              "code": "S22.5XXS",
+              "system": "ICD-10-CM",
+              "description": "Flail chest, sequela",
+              "retrieval_score": 0.015385,
+              "fused_rank": 11
+            },
+            {
+              "code": "S28.0XXS",
+              "system": "ICD-10-CM",
+              "description": "Crushed chest, sequela",
+              "retrieval_score": 0.015152,
+              "fused_rank": 12
+            },
+            {
+              "code": "T21.11XS",
+              "system": "ICD-10-CM",
+              "description": "Burn of first degree of chest wall, sequela",
+              "retrieval_score": 0.014493,
+              "fused_rank": 13
+            },
+            {
+              "code": "L02.233",
+              "system": "ICD-10-CM",
+              "description": "Carbuncle of chest wall",
+              "retrieval_score": 0.014493,
+              "fused_rank": 14
+            },
+            {
+              "code": "T21.11XA",
+              "system": "ICD-10-CM",
+              "description": "Burn of first degree of chest wall, initial encounter",
+              "retrieval_score": 0.014286,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "hyperlipidemia",
+          "kind": "diagnosis",
+          "candidates": [
+            {
+              "code": "E78.49",
+              "system": "ICD-10-CM",
+              "description": "Other hyperlipidemia",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "E78.5",
+              "system": "ICD-10-CM",
+              "description": "Hyperlipidemia, unspecified",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "E78.2",
+              "system": "ICD-10-CM",
+              "description": "Mixed hyperlipidemia",
+              "retrieval_score": 0.031746,
+              "fused_rank": 3
+            },
+            {
+              "code": "E78.1",
+              "system": "ICD-10-CM",
+              "description": "Pure hyperglyceridemia",
+              "retrieval_score": 0.015625,
+              "fused_rank": 4
+            },
+            {
+              "code": "S00.502D",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, subsequent encounter",
+              "retrieval_score": 0.015625,
+              "fused_rank": 5
+            },
+            {
+              "code": "E83.52",
+              "system": "ICD-10-CM",
+              "description": "Hypercalcemia",
+              "retrieval_score": 0.015385,
+              "fused_rank": 6
+            },
+            {
+              "code": "S00.511D",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of lip, subsequent encounter",
+              "retrieval_score": 0.015385,
+              "fused_rank": 7
+            },
+            {
+              "code": "R73.9",
+              "system": "ICD-10-CM",
+              "description": "Hyperglycemia, unspecified",
+              "retrieval_score": 0.015152,
+              "fused_rank": 8
+            },
+            {
+              "code": "S00.459A",
+              "system": "ICD-10-CM",
+              "description": "Superficial foreign body of unspecified ear, initial encounter",
+              "retrieval_score": 0.015152,
+              "fused_rank": 9
+            },
+            {
+              "code": "E22.1",
+              "system": "ICD-10-CM",
+              "description": "Hyperprolactinemia",
+              "retrieval_score": 0.014925,
+              "fused_rank": 10
+            },
+            {
+              "code": "S00.502S",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, sequela",
+              "retrieval_score": 0.014925,
+              "fused_rank": 11
+            },
+            {
+              "code": "E83.41",
+              "system": "ICD-10-CM",
+              "description": "Hypermagnesemia",
+              "retrieval_score": 0.014706,
+              "fused_rank": 12
+            },
+            {
+              "code": "S00.479D",
+              "system": "ICD-10-CM",
+              "description": "Other superficial bite of unspecified ear, subsequent encounter",
+              "retrieval_score": 0.014706,
+              "fused_rank": 13
+            },
+            {
+              "code": "E78.00",
+              "system": "ICD-10-CM",
+              "description": "Pure hypercholesterolemia, unspecified",
+              "retrieval_score": 0.014493,
+              "fused_rank": 14
+            },
+            {
+              "code": "S00.502A",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, initial encounter",
+              "retrieval_score": 0.014493,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "chest pressure",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R07.9",
+              "system": "ICD-10-CM",
+              "description": "Chest pain, unspecified",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "R07.89",
+              "system": "ICD-10-CM",
+              "description": "Other chest pain",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "L98.449",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with unspecified severity",
+              "retrieval_score": 0.031778,
+              "fused_rank": 3
+            },
+            {
+              "code": "R07.1",
+              "system": "ICD-10-CM",
+              "description": "Chest pain on breathing",
+              "retrieval_score": 0.031746,
+              "fused_rank": 4
+            },
+            {
+              "code": "L98.443",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with necrosis of muscle",
+              "retrieval_score": 0.031498,
+              "fused_rank": 5
+            },
+            {
+              "code": "L98.444",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with necrosis of bone",
+              "retrieval_score": 0.03055,
+              "fused_rank": 6
+            },
+            {
+              "code": "L98.448",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with other specified severity",
+              "retrieval_score": 0.030536,
+              "fused_rank": 7
+            },
+            {
+              "code": "L98.442",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with fat layer exposed",
+              "retrieval_score": 0.030415,
+              "fused_rank": 8
+            },
+            {
+              "code": "S28.0XXD",
+              "system": "ICD-10-CM",
+              "description": "Crushed chest, subsequent encounter",
+              "retrieval_score": 0.029857,
+              "fused_rank": 9
+            },
+            {
+              "code": "L98.441",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest limited to breakdown of skin",
+              "retrieval_score": 0.029644,
+              "fused_rank": 10
+            },
+            {
+              "code": "L98.445",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with muscle involvement without evidence of necrosis",
+              "retrieval_score": 0.029631,
+              "fused_rank": 11
+            },
+            {
+              "code": "L03.313",
+              "system": "ICD-10-CM",
+              "description": "Cellulitis of chest wall",
+              "retrieval_score": 0.02879,
+              "fused_rank": 12
+            },
+            {
+              "code": "L98.446",
+              "system": "ICD-10-CM",
+              "description": "Non-pressure chronic ulcer of chest with bone involvement without evidence of necrosis",
+              "retrieval_score": 0.028405,
+              "fused_rank": 13
+            },
+            {
+              "code": "M96.A4",
+              "system": "ICD-10-CM",
+              "description": "Flail chest associated with chest compression and cardiopulmonary resuscitation",
+              "retrieval_score": 0.02748,
+              "fused_rank": 14
+            },
+            {
+              "code": "S28.0XXS",
+              "system": "ICD-10-CM",
+              "description": "Crushed chest, sequela",
+              "retrieval_score": 0.027402,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "diaphoresis",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "Q06.2",
+              "system": "ICD-10-CM",
+              "description": "Diastematomyelia",
+              "retrieval_score": 0.016393,
+              "fused_rank": 1
+            },
+            {
+              "code": "S00.512A",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, initial encounter",
+              "retrieval_score": 0.016393,
+              "fused_rank": 2
+            },
+            {
+              "code": "R31.29",
+              "system": "ICD-10-CM",
+              "description": "Other microscopic hematuria",
+              "retrieval_score": 0.016129,
+              "fused_rank": 3
+            },
+            {
+              "code": "S00.512S",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of oral cavity, sequela",
+              "retrieval_score": 0.016129,
+              "fused_rank": 4
+            },
+            {
+              "code": "B66.2",
+              "system": "ICD-10-CM",
+              "description": "Dicroceliasis",
+              "retrieval_score": 0.015873,
+              "fused_rank": 5
+            },
+            {
+              "code": "S00.502D",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, subsequent encounter",
+              "retrieval_score": 0.015873,
+              "fused_rank": 6
+            },
+            {
+              "code": "A24.3",
+              "system": "ICD-10-CM",
+              "description": "Other melioidosis",
+              "retrieval_score": 0.015625,
+              "fused_rank": 7
+            },
+            {
+              "code": "S00.511A",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of lip, initial encounter",
+              "retrieval_score": 0.015625,
+              "fused_rank": 8
+            },
+            {
+              "code": "R82.0",
+              "system": "ICD-10-CM",
+              "description": "Chyluria",
+              "retrieval_score": 0.015385,
+              "fused_rank": 9
+            },
+            {
+              "code": "S00.452A",
+              "system": "ICD-10-CM",
+              "description": "Superficial foreign body of left ear, initial encounter",
+              "retrieval_score": 0.015385,
+              "fused_rank": 10
+            },
+            {
+              "code": "B71.1",
+              "system": "ICD-10-CM",
+              "description": "Dipylidiasis",
+              "retrieval_score": 0.015152,
+              "fused_rank": 11
+            },
+            {
+              "code": "S00.479A",
+              "system": "ICD-10-CM",
+              "description": "Other superficial bite of unspecified ear, initial encounter",
+              "retrieval_score": 0.015152,
+              "fused_rank": 12
+            },
+            {
+              "code": "A24.9",
+              "system": "ICD-10-CM",
+              "description": "Melioidosis, unspecified",
+              "retrieval_score": 0.014925,
+              "fused_rank": 13
+            },
+            {
+              "code": "S00.502A",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, initial encounter",
+              "retrieval_score": 0.014925,
+              "fused_rank": 14
+            },
+            {
+              "code": "N47.1",
+              "system": "ICD-10-CM",
+              "description": "Phimosis",
+              "retrieval_score": 0.014706,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "nausea",
+          "kind": "symptom",
+          "candidates": [
+            {
+              "code": "R11.0",
+              "system": "ICD-10-CM",
+              "description": "Nausea",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "R11.2",
+              "system": "ICD-10-CM",
+              "description": "Nausea with vomiting, unspecified",
+              "retrieval_score": 0.032002,
+              "fused_rank": 2
+            },
+            {
+              "code": "R11.11",
+              "system": "ICD-10-CM",
+              "description": "Vomiting without nausea",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "R11.10",
+              "system": "ICD-10-CM",
+              "description": "Vomiting, unspecified",
+              "retrieval_score": 0.015625,
+              "fused_rank": 4
+            },
+            {
+              "code": "S00.521A",
+              "system": "ICD-10-CM",
+              "description": "Blister (nonthermal) of lip, initial encounter",
+              "retrieval_score": 0.015625,
+              "fused_rank": 5
+            },
+            {
+              "code": "O21.8",
+              "system": "ICD-10-CM",
+              "description": "Other vomiting complicating pregnancy",
+              "retrieval_score": 0.015385,
+              "fused_rank": 6
+            },
+            {
+              "code": "S00.502S",
+              "system": "ICD-10-CM",
+              "description": "Unspecified superficial injury of oral cavity, sequela",
+              "retrieval_score": 0.015385,
+              "fused_rank": 7
+            },
+            {
+              "code": "O21.9",
+              "system": "ICD-10-CM",
+              "description": "Vomiting of pregnancy, unspecified",
+              "retrieval_score": 0.015152,
+              "fused_rank": 8
+            },
+            {
+              "code": "S00.511S",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of lip, sequela",
+              "retrieval_score": 0.015152,
+              "fused_rank": 9
+            },
+            {
+              "code": "R11.13",
+              "system": "ICD-10-CM",
+              "description": "Vomiting of fecal matter",
+              "retrieval_score": 0.014925,
+              "fused_rank": 10
+            },
+            {
+              "code": "S00.459A",
+              "system": "ICD-10-CM",
+              "description": "Superficial foreign body of unspecified ear, initial encounter",
+              "retrieval_score": 0.014925,
+              "fused_rank": 11
+            },
+            {
+              "code": "R11.14",
+              "system": "ICD-10-CM",
+              "description": "Bilious vomiting",
+              "retrieval_score": 0.014706,
+              "fused_rank": 12
+            },
+            {
+              "code": "S00.511A",
+              "system": "ICD-10-CM",
+              "description": "Abrasion of lip, initial encounter",
+              "retrieval_score": 0.014706,
+              "fused_rank": 13
+            },
+            {
+              "code": "R11.12",
+              "system": "ICD-10-CM",
+              "description": "Projectile vomiting",
+              "retrieval_score": 0.014493,
+              "fused_rank": 14
+            },
+            {
+              "code": "S00.479S",
+              "system": "ICD-10-CM",
+              "description": "Other superficial bite of unspecified ear, sequela",
+              "retrieval_score": 0.014493,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "cardiac catheterization lab activation",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9C0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Coronary artery catheterization diagnostic",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9L0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Basic metabolic panel",
+              "retrieval_score": 0.030679,
+              "fused_rank": 2
+            },
+            {
+              "code": "9L0016",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Urinalysis automated with microscopy",
+              "retrieval_score": 0.03031,
+              "fused_rank": 3
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.030118,
+              "fused_rank": 4
+            },
+            {
+              "code": "9L0012",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Comprehensive metabolic panel",
+              "retrieval_score": 0.029877,
+              "fused_rank": 5
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.027783,
+              "fused_rank": 6
+            },
+            {
+              "code": "9C0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Electrocardiogram rhythm strip with interpretation and report",
+              "retrieval_score": 0.026438,
+              "fused_rank": 7
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.026387,
+              "fused_rank": 8
+            },
+            {
+              "code": "9C0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Cardioversion elective external",
+              "retrieval_score": 0.026161,
+              "fused_rank": 9
+            },
+            {
+              "code": "9C0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Electrocardiogram routine 12-lead with interpretation and report",
+              "retrieval_score": 0.025829,
+              "fused_rank": 10
+            },
+            {
+              "code": "9C0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Transthoracic echocardiography limited follow-up study",
+              "retrieval_score": 0.025678,
+              "fused_rank": 11
+            },
+            {
+              "code": "9C0050",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Insertion of permanent pacemaker dual-chamber",
+              "retrieval_score": 0.025482,
+              "fused_rank": 12
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.025353,
+              "fused_rank": 13
+            },
+            {
+              "code": "9E0002",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - moderate complexity",
+              "retrieval_score": 0.025344,
+              "fused_rank": 14
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.025149,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "percutaneous coronary intervention",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9C0041",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Percutaneous coronary intervention single vessel with stent placement",
+              "retrieval_score": 0.032522,
+              "fused_rank": 1
+            },
+            {
+              "code": "9C0042",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Percutaneous coronary intervention multi-vessel with stent placement",
+              "retrieval_score": 0.032522,
+              "fused_rank": 2
+            },
+            {
+              "code": "9C0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Coronary artery catheterization diagnostic",
+              "retrieval_score": 0.031746,
+              "fused_rank": 3
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.030536,
+              "fused_rank": 4
+            },
+            {
+              "code": "9E0001",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - low complexity",
+              "retrieval_score": 0.028485,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain without contrast material",
+              "retrieval_score": 0.027894,
+              "fused_rank": 6
+            },
+            {
+              "code": "9R0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain with contrast material",
+              "retrieval_score": 0.027778,
+              "fused_rank": 7
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.02712,
+              "fused_rank": 8
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.027056,
+              "fused_rank": 9
+            },
+            {
+              "code": "9R0050",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Magnetic resonance imaging brain without contrast material",
+              "retrieval_score": 0.026944,
+              "fused_rank": 10
+            },
+            {
+              "code": "9N0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Lumbar puncture diagnostic",
+              "retrieval_score": 0.02681,
+              "fused_rank": 11
+            },
+            {
+              "code": "9E0002",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Office or other outpatient visit for the evaluation and management of an established patient - moderate complexity",
+              "retrieval_score": 0.026611,
+              "fused_rank": 12
+            },
+            {
+              "code": "9R0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material",
+              "retrieval_score": 0.026199,
+              "fused_rank": 13
+            },
+            {
+              "code": "9R0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest without contrast material",
+              "retrieval_score": 0.026133,
+              "fused_rank": 14
+            },
+            {
+              "code": "9L0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Basic metabolic panel",
+              "retrieval_score": 0.02578,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "chest radiograph",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9R0031",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest with contrast material",
+              "retrieval_score": 0.032266,
+              "fused_rank": 1
+            },
+            {
+              "code": "9R0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest single view frontal",
+              "retrieval_score": 0.032002,
+              "fused_rank": 2
+            },
+            {
+              "code": "9R0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest without contrast material",
+              "retrieval_score": 0.032002,
+              "fused_rank": 3
+            },
+            {
+              "code": "9R0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+              "retrieval_score": 0.031778,
+              "fused_rank": 4
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.03101,
+              "fused_rank": 5
+            },
+            {
+              "code": "9L0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Complete blood count with automated differential white blood cell count",
+              "retrieval_score": 0.029958,
+              "fused_rank": 6
+            },
+            {
+              "code": "9N0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Lumbar puncture diagnostic",
+              "retrieval_score": 0.029551,
+              "fused_rank": 7
+            },
+            {
+              "code": "9R0091",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination knee three views",
+              "retrieval_score": 0.028139,
+              "fused_rank": 8
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.028039,
+              "fused_rank": 9
+            },
+            {
+              "code": "9C0060",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Holter monitoring 24-hour continuous recording with interpretation",
+              "retrieval_score": 0.027629,
+              "fused_rank": 10
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.027526,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0080",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Mammography screening bilateral",
+              "retrieval_score": 0.026743,
+              "fused_rank": 12
+            },
+            {
+              "code": "9R0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material",
+              "retrieval_score": 0.02669,
+              "fused_rank": 13
+            },
+            {
+              "code": "9I0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Subcutaneous or intramuscular injection of medication",
+              "retrieval_score": 0.026626,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain with contrast material",
+              "retrieval_score": 0.02619,
+              "fused_rank": 15
+            }
+          ]
+        },
+        {
+          "fact": "venipuncture",
+          "kind": "procedure",
+          "candidates": [
+            {
+              "code": "9V0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Venipuncture for collection of specimen routine",
+              "retrieval_score": 0.032787,
+              "fused_rank": 1
+            },
+            {
+              "code": "9R0071",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound pelvis transabdominal real-time complete",
+              "retrieval_score": 0.029462,
+              "fused_rank": 2
+            },
+            {
+              "code": "9R0070",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Ultrasound abdomen complete real-time with image documentation",
+              "retrieval_score": 0.028783,
+              "fused_rank": 3
+            },
+            {
+              "code": "9I0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Immunization administration through 18 years of age with counseling - first vaccine",
+              "retrieval_score": 0.027367,
+              "fused_rank": 4
+            },
+            {
+              "code": "9R0021",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain with contrast material",
+              "retrieval_score": 0.027289,
+              "fused_rank": 5
+            },
+            {
+              "code": "9R0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography head or brain without contrast material",
+              "retrieval_score": 0.026916,
+              "fused_rank": 6
+            },
+            {
+              "code": "9R0031",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest with contrast material",
+              "retrieval_score": 0.026901,
+              "fused_rank": 7
+            },
+            {
+              "code": "9R0090",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination ankle three views",
+              "retrieval_score": 0.026686,
+              "fused_rank": 8
+            },
+            {
+              "code": "9R0030",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography chest without contrast material",
+              "retrieval_score": 0.026334,
+              "fused_rank": 9
+            },
+            {
+              "code": "9L0015",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Thyroid stimulating hormone",
+              "retrieval_score": 0.026263,
+              "fused_rank": 10
+            },
+            {
+              "code": "9R0040",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography abdomen and pelvis with contrast material",
+              "retrieval_score": 0.025833,
+              "fused_rank": 11
+            },
+            {
+              "code": "9R0010",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest single view frontal",
+              "retrieval_score": 0.025579,
+              "fused_rank": 12
+            },
+            {
+              "code": "9I0020",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Intravenous infusion for therapy or diagnosis initial up to 1 hour",
+              "retrieval_score": 0.025526,
+              "fused_rank": 13
+            },
+            {
+              "code": "9R0011",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+              "retrieval_score": 0.025517,
+              "fused_rank": 14
+            },
+            {
+              "code": "9R0032",
+              "system": "CPT",
+              "description": "[SYNTHETIC] Computed tomography angiography chest with contrast material",
+              "retrieval_score": 0.025504,
+              "fused_rank": 15
+            }
+          ]
+        }
+      ]
+    },
+    "code": {
+      "assignments": [
+        {
+          "fact": "Acute substernal chest pain, 3 hours.",
+          "code": "R07.89",
+          "system": "ICD-10-CM",
+          "description": "Other chest pain",
+          "coder_confidence": 0.91,
+          "rationale": "The note documents \"Acute substernal chest pain\". Among the candidates, \"Other chest pain\" best matches a specified chest pain presentation; this is more specific than unspecified chest pain."
+        },
+        {
+          "fact": "hyperlipidemia",
+          "code": "E78.5",
+          "system": "ICD-10-CM",
+          "description": "Hyperlipidemia, unspecified",
+          "coder_confidence": 0.88,
+          "rationale": "The history states \"essential hypertension and hyperlipidemia\" without further subtype detail. \"Hyperlipidemia, unspecified\" is the best match because mixed, pure hypercholesterolemia, or hyperglyceridemia are not documented."
+        },
+        {
+          "fact": "substernal chest pressure radiating to the left arm",
+          "code": "R07.89",
+          "system": "ICD-10-CM",
+          "description": "Other chest pain",
+          "coder_confidence": 0.93,
+          "rationale": "The HPI says \"substernal chest pressure radiating to the left arm.\" This is a specified chest pain-type symptom, so \"Other chest pain\" is the best fit over unspecified chest pain."
+        },
+        {
+          "fact": "mild nausea",
+          "code": "R11.0",
+          "system": "ICD-10-CM",
+          "description": "Nausea",
+          "coder_confidence": 0.98,
+          "rationale": "The note states \"associated with diaphoresis and mild nausea.\" The candidate list includes the exact symptom code for nausea, and there is no vomiting documented."
+        },
+        {
+          "fact": "percutaneous coronary intervention.",
+          "code": "9C0041",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Percutaneous coronary intervention single vessel with stent placement",
+          "coder_confidence": 0.66,
+          "rationale": "The plan states \"patient transferred to cath lab for percutaneous coronary intervention.\" Among the candidates, single-vessel PCI with stent placement is the closest match; vessel count is not specified, so confidence is lower."
+        },
+        {
+          "fact": "Two-view chest radiograph.",
+          "code": "9R0011",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+          "coder_confidence": 0.99,
+          "rationale": "The procedure is explicitly documented as \"Two-view chest radiograph.\" This directly matches radiologic examination of the chest, two views frontal and lateral."
+        },
+        {
+          "fact": "Venipuncture for laboratory studies including troponin.",
+          "code": "9V0010",
+          "system": "CPT",
+          "description": "[SYNTHETIC] Venipuncture for collection of specimen routine",
+          "coder_confidence": 0.99,
+          "rationale": "The note documents \"Venipuncture for laboratory studies including troponin.\" This matches routine venipuncture for collection of specimen."
+        }
+      ]
+    },
+    "audit": {
+      "verdicts": [
+        {
+          "code": "R07.89",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "E78.5",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "R07.89",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "R11.0",
+          "agree": null,
+          "note": null
+        },
+        {
+          "code": "9C0041",
+          "agree": false,
+          "note": "The note documents only that the patient was 'transferred to cath lab for percutaneous coronary intervention' but does not specify vessel count or stent placement; the code asserts single-vessel PCI with stent, which exceeds the documented specificity."
+        },
+        {
+          "code": "9R0011",
+          "agree": true,
+          "note": "The evidence explicitly documents 'Two-view chest radiograph,' which directly matches the code description for radiologic examination of the chest, two views frontal and lateral."
+        },
+        {
+          "code": "9V0010",
+          "agree": true,
+          "note": "The evidence explicitly documents 'Venipuncture for laboratory studies including troponin,' which directly matches routine venipuncture for collection of specimen."
+        }
+      ]
+    },
+    "rules": {
+      "warnings": [
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'essential hypertension' dropped from coding (assertion=historical); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'myocardial infarction' dropped from coding (assertion=family); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'acute ST-elevation myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'pulmonary embolism' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'aortic dissection' dropped from coding (assertion=absent); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "ambiguity",
+          "severity": "info",
+          "message": "Fact 'electrocardiogram' dropped from coding (assertion=historical); retained as context only.",
+          "refs": []
+        },
+        {
+          "type": "missing_information",
+          "severity": "info",
+          "message": "Code E78.5 is 'unspecified' \u2014 verify the note does not document a more specific variant (laterality, type, acuity).",
+          "refs": [
+            "E78.5"
+          ]
+        },
+        {
+          "type": "ambiguity",
+          "severity": "warn",
+          "message": "Auditor disagreed with code 9C0041: The note documents only that the patient was 'transferred to cath lab for percutaneous coronary intervention' but does not specify vessel count or stent placement; the code asserts single-vessel PCI with stent, which exceeds the documented specificity.",
+          "refs": [
+            "9C0041"
+          ]
+        }
+      ]
+    }
+  },
+  "result": {
+    "document_id": "note_02_ed_chest_pain",
+    "diagnoses": [
+      {
+        "code": "R11.0",
+        "system": "ICD-10-CM",
+        "description": "Nausea",
+        "confidence": 0.991,
+        "confidence_tier": "high",
+        "rationale": "The note states \"associated with diaphoresis and mild nausea.\" The candidate list includes the exact symptom code for nausea, and there is no vomiting documented.",
+        "evidence": [
+          {
+            "text": "mild nausea",
+            "normalized_term": "nausea",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 392,
+            "end_offset": 403,
+            "section": "history of present illness",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "R07.89",
+        "system": "ICD-10-CM",
+        "description": "Other chest pain",
+        "confidence": 0.9595,
+        "confidence_tier": "high",
+        "rationale": "The note documents \"Acute substernal chest pain\". Among the candidates, \"Other chest pain\" best matches a specified chest pain presentation; this is more specific than unspecified chest pain.",
+        "evidence": [
+          {
+            "text": "Acute substernal chest pain, 3 hours.",
+            "normalized_term": "chest pain",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 139,
+            "end_offset": 176,
+            "section": "chief complaint",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "R07.89",
+        "system": "ICD-10-CM",
+        "description": "Other chest pain",
+        "confidence": 0.8846,
+        "confidence_tier": "high",
+        "rationale": "The HPI says \"substernal chest pressure radiating to the left arm.\" This is a specified chest pain-type symptom, so \"Other chest pain\" is the best fit over unspecified chest pain.",
+        "evidence": [
+          {
+            "text": "substernal chest pressure radiating to the left arm",
+            "normalized_term": "chest pressure",
+            "query_terms": [
+              "chest pain"
+            ],
+            "assertion_status": "present",
+            "start_offset": 307,
+            "end_offset": 358,
+            "section": "history of present illness",
+            "kind": "symptom"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      },
+      {
+        "code": "E78.5",
+        "system": "ICD-10-CM",
+        "description": "Hyperlipidemia, unspecified",
+        "confidence": 0.8621,
+        "confidence_tier": "high",
+        "rationale": "The history states \"essential hypertension and hyperlipidemia\" without further subtype detail. \"Hyperlipidemia, unspecified\" is the best match because mixed, pure hypercholesterolemia, or hyperglyceridemia are not documented.",
+        "evidence": [
+          {
+            "text": "hyperlipidemia",
+            "normalized_term": "hyperlipidemia",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 267,
+            "end_offset": 281,
+            "section": "history of present illness",
+            "kind": "diagnosis"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": null,
+        "audit_note": null
+      }
+    ],
+    "procedures": [
+      {
+        "code": "9V0010",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Venipuncture for collection of specimen routine",
+        "confidence": 1.0,
+        "confidence_tier": "high",
+        "rationale": "The note documents \"Venipuncture for laboratory studies including troponin.\" This matches routine venipuncture for collection of specimen.",
+        "evidence": [
+          {
+            "text": "Venipuncture for laboratory studies including troponin.",
+            "normalized_term": "venipuncture",
+            "query_terms": [],
+            "assertion_status": "present",
+            "start_offset": 1677,
+            "end_offset": 1732,
+            "section": "procedures performed in ed prior to transfer",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "The evidence explicitly documents 'Venipuncture for laboratory studies including troponin,' which directly matches routine venipuncture for collection of specimen."
+      },
+      {
+        "code": "9R0011",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Radiologic examination chest two views frontal and lateral",
+        "confidence": 0.9526,
+        "confidence_tier": "high",
+        "rationale": "The procedure is explicitly documented as \"Two-view chest radiograph.\" This directly matches radiologic examination of the chest, two views frontal and lateral.",
+        "evidence": [
+          {
+            "text": "Two-view chest radiograph.",
+            "normalized_term": "chest radiograph",
+            "query_terms": [
+              "chest x-ray",
+              "CXR"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1648,
+            "end_offset": 1674,
+            "section": "procedures performed in ed prior to transfer",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": true,
+        "audit_note": "The evidence explicitly documents 'Two-view chest radiograph,' which directly matches the code description for radiologic examination of the chest, two views frontal and lateral."
+      },
+      {
+        "code": "9C0041",
+        "system": "CPT",
+        "description": "[SYNTHETIC] Percutaneous coronary intervention single vessel with stent placement",
+        "confidence": 0.547,
+        "confidence_tier": "medium",
+        "rationale": "The plan states \"patient transferred to cath lab for percutaneous coronary intervention.\" Among the candidates, single-vessel PCI with stent placement is the closest match; vessel count is not specified, so confidence is lower.",
+        "evidence": [
+          {
+            "text": "percutaneous coronary intervention.",
+            "normalized_term": "percutaneous coronary intervention",
+            "query_terms": [
+              "PCI"
+            ],
+            "assertion_status": "present",
+            "start_offset": 1460,
+            "end_offset": 1495,
+            "section": "plan",
+            "kind": "procedure"
+          }
+        ],
+        "status": "primary",
+        "reviewer_decision": "suggested",
+        "reviewer_code": null,
+        "reviewer_note": null,
+        "audit_agree": false,
+        "audit_note": "The note documents only that the patient was 'transferred to cath lab for percutaneous coronary intervention' but does not specify vessel count or stent placement; the code asserts single-vessel PCI with stent, which exceeds the documented specificity."
+      }
+    ],
+    "warnings": [
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'essential hypertension' dropped from coding (assertion=historical); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'myocardial infarction' dropped from coding (assertion=family); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'acute ST-elevation myocardial infarction' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'pulmonary embolism' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'aortic dissection' dropped from coding (assertion=absent); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "ambiguity",
+        "severity": "info",
+        "message": "Fact 'electrocardiogram' dropped from coding (assertion=historical); retained as context only.",
+        "refs": []
+      },
+      {
+        "type": "missing_information",
+        "severity": "info",
+        "message": "Code E78.5 is 'unspecified' \u2014 verify the note does not document a more specific variant (laterality, type, acuity).",
+        "refs": [
+          "E78.5"
+        ]
+      },
+      {
+        "type": "ambiguity",
+        "severity": "warn",
+        "message": "Auditor disagreed with code 9C0041: The note documents only that the patient was 'transferred to cath lab for percutaneous coronary intervention' but does not specify vessel count or stent placement; the code asserts single-vessel PCI with stent, which exceeds the documented specificity.",
+        "refs": [
+          "9C0041"
+        ]
+      }
+    ],
+    "metadata": {
+      "trace_id": "62a7d0653e53",
+      "model_ids": {
+        "extraction": "openai/gpt-5.4-mini",
+        "coder": "openai/gpt-5.4-mini",
+        "auditor": "anthropic/claude-haiku-4-5-20251001"
+      },
+      "pipeline_version": "0.1.1",
+      "temperature": 0.0,
+      "config_hash": "3bee7eea3e0cee68",
+      "timestamp": "2026-06-27T15:44:58.785009Z",
+      "encounter_type": "outpatient",
+      "metrics": {
+        "stage_latency_ms": {
+          "ingest": 0.2937079989351332,
+          "extract": 5956.544208005653,
+          "retrieve": 298.0879999959143,
+          "code": 4157.137625006726,
+          "audit": 2463.753749994794,
+          "rules": 0.06108400702942163,
+          "assemble": 0.10754200047813356
+        },
+        "total_latency_ms": 12876.851041990449,
+        "tokens": {
+          "extraction.prompt_tokens": 1747,
+          "extraction.completion_tokens": 990,
+          "extraction.total_tokens": 2737,
+          "extraction.calls": 1,
+          "coder.prompt_tokens": 7509,
+          "coder.completion_tokens": 587,
+          "coder.total_tokens": 8096,
+          "coder.calls": 1,
+          "auditor.prompt_tokens": 2560,
+          "auditor.completion_tokens": 244,
+          "auditor.total_tokens": 2804,
+          "auditor.calls": 1
+        },
+        "est_cost_usd": 0.017819,
+        "retries": 0,
+        "n_candidates": 135,
+        "n_warnings": 9,
+        "n_facts": 16,
+        "n_facts_coded": 7
+      }
+    }
+  }
+}

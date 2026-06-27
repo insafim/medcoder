@@ -4,7 +4,7 @@ One entry point: :func:`call_structured` — given a Pydantic schema, returns a
 validated instance. Backed by LiteLLM so we get OpenAI / Anthropic / Gemini /
 Bedrock / local in one call, plus built-in `mock_response` for tests.
 
-Design notes (Plan.md §13):
+Design notes:
 - *reason-then-format*: prompts instruct the model to think first then emit JSON.
   Strict JSON-only output is enforced via LiteLLM's response_format=PydanticModel.
 - *validate→repair-retry*: on schema failure we re-ask the model with the
@@ -54,6 +54,27 @@ _PRICES_PER_1M: dict[str, tuple[float, float]] = {
     "claude-haiku-4-5-20251001": (1.00, 5.00),
     "claude-sonnet-4-6": (3.00, 15.00),
 }
+
+
+def _cost_from_tokens(model: str, prompt_tokens: int, completion_tokens: int) -> float:
+    """Deterministic cost fallback from our own price table.
+
+    `litellm.completion_cost` returns 0.0 when it doesn't recognise the model ID —
+    which happens for pinned snapshots newer than LiteLLM's bundled cost map, even
+    after `register_model` (the response's reported model can carry a dated suffix
+    that misses the lookup). Since we already capture usage tokens, we derive the
+    cost directly from `_PRICES_PER_1M` so the audit record never shows a spurious
+    $0.00 on a real call. Returns 0.0 for models we don't price (e.g. mocks).
+
+    Provider prefixes are stripped before lookup, so `openai/gpt-5.4-mini` and the
+    bare `gpt-5.4-mini` resolve to the same `_PRICES_PER_1M` entry.
+    """
+    name = model.split("/", 1)[-1]
+    price = _PRICES_PER_1M.get(name)
+    if price is None:
+        return 0.0
+    inp, outp = price
+    return (prompt_tokens * inp + completion_tokens * outp) / 1_000_000
 
 
 def _register_model_prices() -> None:
@@ -285,6 +306,12 @@ def call_structured(
                 stats.prompt_tokens = cached.get("prompt_tokens", 0)
                 stats.completion_tokens = cached.get("completion_tokens", 0)
                 stats.total_tokens = cached.get("total_tokens", 0)
+                # No live response object on a cache hit, so `completion_cost` can't
+                # run — re-derive cost from the stored token counts (same fallback
+                # the live path uses) so cached runs still report a real cost.
+                stats.cost_usd = _cost_from_tokens(
+                    model, stats.prompt_tokens, stats.completion_tokens
+                )
                 if aggregator is not None:
                     aggregator.add(agent, stats)
                 log.info("llm_cache_hit", extra={"agent": agent, "model": model})
@@ -334,6 +361,11 @@ def call_structured(
                 stats.cost_usd = float(completion_cost(completion_response=resp) or 0.0)
             except Exception:  # noqa: BLE001  cost lookup is best-effort
                 stats.cost_usd = 0.0
+            if stats.cost_usd == 0.0:
+                # LiteLLM didn't price this snapshot — derive from captured tokens.
+                stats.cost_usd = _cost_from_tokens(
+                    model, stats.prompt_tokens, stats.completion_tokens
+                )
 
             if mock_response is None and use_cache:
                 _cache_put(
