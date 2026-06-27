@@ -10,10 +10,11 @@ import typer
 
 from .audit_trace import build_trace
 from .config import get_settings
+from .ingest import normalize
 from .llm import have_api_key_for
 from .logging_setup import configure_logging
 from .pipeline import run as run_pipeline
-from .render import render_markdown
+from .render import render_annotated, render_markdown
 from .retrieval.hybrid import get_retriever
 from .schemas import CodeSystem
 
@@ -37,7 +38,9 @@ def run(
         None, "--out", "-o", help="Write the result to this exact path (no auto-save folder)"
     ),
     fmt: str = typer.Option(
-        "json", "--format", help="Output format: json (machine/audit) | md (human review)"
+        "json",
+        "--format",
+        help="Output: json (machine/audit) | md (review sheet) | annotated (note with inline codes)",
     ),
     document_id: str | None = typer.Option(None, "--id", help="Override document_id"),
     no_verify: bool = typer.Option(False, "--no-verify", help="Skip the auditor pass"),
@@ -50,7 +53,8 @@ def run(
     """Run the pipeline on a single note.
 
     By default the result is printed to stdout *and* persisted to
-    `outputs/<doc_id>/` as `result.{json,md}` + `trace.json` (the per-run audit
+    `outputs/<doc_id>/` — the rendered result (`result.json`, or `result.md` /
+    `result.annotated.md` per `--format`) plus `trace.json` (the per-run audit
     trail). Use `--no-save` for stdout only, or `--out PATH` to write one file
     to an exact path.
     """
@@ -60,8 +64,12 @@ def run(
     configure_logging(level=log_level or s.log_level, json_mode=not no_json_logs)
 
     fmt = fmt.lower()
-    if fmt not in ("json", "md"):
-        typer.secho(f"⚠ Unknown --format {fmt!r}; expected 'json' or 'md'.", fg="yellow", err=True)
+    if fmt not in ("json", "md", "annotated"):
+        typer.secho(
+            f"⚠ Unknown --format {fmt!r}; expected 'json', 'md', or 'annotated'.",
+            fg="yellow",
+            err=True,
+        )
         raise typer.Exit(code=2)
 
     # The default config is cross-family (OpenAI coder + Anthropic auditor). The
@@ -98,6 +106,9 @@ def run(
 
     if fmt == "md":
         rendered = render_markdown(result)
+    elif fmt == "annotated":
+        # Offsets index the *normalized* note text, so annotate normalize(raw).
+        rendered = render_annotated(result, normalize(text))
     else:
         rendered = json.dumps(result.model_dump(mode="json"), indent=2, default=str)
 
@@ -116,7 +127,7 @@ def run(
     # Auto-save: one self-contained, inspectable folder per run.
     out_dir = Path("outputs") / result.document_id
     out_dir.mkdir(parents=True, exist_ok=True)
-    ext = "md" if fmt == "md" else "json"
+    ext = {"md": "md", "annotated": "annotated.md"}.get(fmt, "json")
     (out_dir / f"result.{ext}").write_text(rendered + "\n")
     trace = json.dumps(build_trace(pres), indent=2, default=str)
     (out_dir / "trace.json").write_text(trace + "\n")
