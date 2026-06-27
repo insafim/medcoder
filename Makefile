@@ -69,12 +69,17 @@ examples: build-index
 lint:
 	$(PYTHON) -m ruff check src tests scripts
 
-# Generate the 1–2 page design PDF from DESIGN.md.
+# Generate the 1–2 page design PDF from DESIGN.md (the submission deliverable).
 # Default renders via pandoc → headless Chrome — no LaTeX install needed (this is
 # the path that built the committed docs/DESIGN.pdf). Prefer LaTeX? use `make pdf-latex`.
 .PHONY: pdf
 pdf:
 	bash scripts/build_pdf.sh
+
+# Generate the expanded design PDF (docs/DESIGN-full.md → docs/DESIGN-full.pdf).
+.PHONY: pdf-full
+pdf-full:
+	bash scripts/build_pdf.sh docs/DESIGN-full.md
 
 # Alternative: render with a LaTeX engine (requires pandoc + xelatex installed).
 .PHONY: pdf-latex
@@ -117,7 +122,8 @@ help:
 	@echo "make examples     — regenerate committed outputs/ (live run on all notes + metrics)"
 	@echo "make lint         — ruff"
 	@echo "make pdf          — DESIGN.md → docs/DESIGN.pdf (pandoc → headless Chrome; no LaTeX)"
-	@echo "make pdf-latex    — same, via a LaTeX engine (needs pandoc + xelatex)"
+	@echo "make pdf-full     — DESIGN-full.md → docs/DESIGN-full.pdf (expanded version)"
+	@echo "make pdf-latex    — same as pdf, via a LaTeX engine (needs pandoc + xelatex)"
 	@echo "make docker       — build the Docker image"
 	@echo "make docker-run   — run the pipeline inside the container"
 	@echo "make clean        — remove build artefacts (keeps venv + data)"
