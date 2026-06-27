@@ -13,7 +13,8 @@
 >
 > **Want to see real output first?** Pre-run, real-API results for all four notes are
 > committed under [outputs/](outputs/): each note has a `result.json` (machine/audit
-> payload), a `result.md` (human review sheet), and a `trace.json` (the per-stage
+> payload), a `result.md` (human review sheet), a `result.annotated.md` (the note with
+> codes spliced in inline at each evidence span), and a `trace.json` (the per-stage
 > decision trail). `outputs/eval/metrics.json` holds the gold-set scores. You can read
 > them without running anything; `make run` overwrites your local copy.
 
@@ -67,9 +68,9 @@ The `run` command does this before/after invoking the pipeline
    to `--no-verify` with a warning rather than crashing.
 3. Reads the note text and calls `run_pipeline(text, document_id=...)`.
 4. Writes the result to stdout **and**, by default, persists a self-contained
-   `outputs/<doc_id>/` folder: `result.json` (or `result.md` with `--format md`)
-   plus `trace.json`, the per-stage audit trail (§11b). `--no-save` opts out;
-   `--out PATH` writes a single file to an exact path instead.
+   `outputs/<doc_id>/` folder: the rendered result (`result.json`, or `result.md` /
+   `result.annotated.md` per `--format`) plus `trace.json`, the per-stage audit trail
+   (§11b). `--no-save` opts out; `--out PATH` writes a single file to an exact path.
 
 ```mermaid
 flowchart LR
@@ -79,8 +80,8 @@ flowchart LR
     C -- yes --> D[pipeline.run]
     D --> E[CodingResult]
     E --> F{--out?}
-    F -- yes --> G[write JSON file]
-    F -- no --> H[stdout JSON]
+    F -- yes --> G[write rendered file]
+    F -- no --> H[stdout + outputs folder]
 ```
 
 ---
@@ -529,6 +530,7 @@ one was reached. So every `medcoder run` writes a self-contained folder:
 | ------------- | --------------------------------------------------------------------------------------------------- |
 | `result.json` | The full `CodingResult` — the machine/audit payload (what §11 shows).                                |
 | `result.md`   | The same payload as a human review sheet (one row per code, Accept? column) — `--format md`.         |
+| `result.annotated.md` | The clinical note with each suggested code spliced in inline at its evidence span (`«span»「code · system · tier · audit」`) — `--format annotated`. Rendered against the *normalized* note (offsets index it). |
 | `trace.json`  | The **decision trail**: extracted facts → the retrieval whitelist *per fact* → the coder's picks → the auditor's verdicts → the rule warnings, plus the final result. |
 
 `trace.json` introduces no new computation — [`build_trace`](src/medcoder/audit_trace.py#L45)
