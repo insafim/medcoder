@@ -237,8 +237,6 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 .
 ├── README.md                # ← this file
 ├── LICENSING.md             # data / code licensing notes
-├── Problem.md               # the take-home brief
-├── Plan.md                  # full working plan (in-code "§9.x" pointers refer here)
 ├── pyproject.toml
 ├── Makefile                 # install / data / build-index / run / test / eval / pdf / docker
 ├── Dockerfile               # py3.11-slim; pre-builds indexes
@@ -250,7 +248,10 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 │   └── index/               # cached FAISS + BM25 indexes (gitignored)
 ├── docs/
 │   ├── DESIGN.md            # full design (the source for the 1–2 page PDF)
-│   └── DESIGN.pdf           # built by `make pdf`
+│   ├── DESIGN.pdf           # built by `make pdf`
+│   ├── Problem.md           # the take-home brief
+│   ├── Plan.md              # full working plan (in-code "§9.x" pointers refer here)
+│   └── 2025.naacl-industry.37.pdf  # MedCodER reference paper (NAACL 2025)
 ├── scripts/
 │   ├── build_index.py
 │   ├── evaluate.py
@@ -298,16 +299,19 @@ auditor.)
 
 | Metric                       |    P |    R |   F1 |
 | ---------------------------- | ---: | ---: | ---: |
-| **ICD-10 (micro)**           | 0.40 | 0.62 | 0.48 |
-| ICD-10 hierarchical (3-char) | 0.47 | 0.67 | 0.55 |
-| **CPT (micro)**              | 0.86 | 0.60 | 0.71 |
+| **ICD-10 (micro)**           | 0.40 | 0.71 | 0.51 |
+| ICD-10 hierarchical (3-char) | 0.52 | 0.85 | 0.65 |
+| **CPT (micro)**              | 1.00 | 0.60 | 0.75 |
 | Exact-match (note-level)     |    — |    — |   0% |
 
-Four notes is too small to be a benchmark — read these as directional. Even so,
-ICD-10 micro-F1 (**0.48**) lands just under the ~0.54 full-vocabulary SOTA
-ceiling, and recall > precision is by design: the pipeline over-surfaces
-candidates with typed warnings (5–14/note) for a human reviewer rather than
-silently missing codes — exactly the assistive posture the system targets.
+Four notes is too small to be a benchmark — read these as directional (run-to-run
+variance is real at this scale). ICD-10 micro-F1 (**0.51**) sits near the ~0.54
+full-vocabulary SOTA ceiling; recall > precision is by design — retrieval **query
+expansion** (the extraction agent emits lookup synonyms) plus **LLM encounter-type**
+classification over-surface candidates with typed warnings (5–14/note) for a human
+reviewer rather than silently missing codes. Precision (0.40) is bounded by
+**over-coding** (the coder emits more codes than gold), not by retrieval — a more
+selective coder and a larger gold set are the levers for higher precision.
 
 ---
 

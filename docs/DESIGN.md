@@ -21,10 +21,11 @@ note.txt ─► ① ingest ─► ② extract ─► ③ retrieve ─► ④ cod
               (det.)       (LLM-A)        (det.)       (LLM-A)    (LLM-B)      (det.)        (det.)
 ```
 
-1. **Ingest** — normalize, detect encounter type (inpatient vs outpatient
-   matters: it governs whether "probable / suspected" diagnoses are codable per
-   ICD-10-CM Guideline IV.H), segment SOAP sections, window long multi-page
-   notes with overlap, preserve **global character offsets**.
+1. **Ingest** — normalize, segment SOAP sections, window long multi-page notes
+   with overlap, preserve **global character offsets**. Encounter type
+   (inpatient vs outpatient — it governs whether "probable / suspected"
+   diagnoses are codable per ICD-10-CM Guideline IV.H) is classified by the
+   extraction LLM (§3), with a deterministic keyword heuristic as fallback.
 2. **Extract (LLM-A).** Returns `ExtractedFact[]` — verbatim span, normalized
    clinical term, **assertion status** (present / absent / possible /
    hypothetical / family / historical), kind (dx / px / symptom). A
@@ -53,7 +54,10 @@ The single biggest failure mode for full-vocabulary ICD-10 coding is the LLM
 35% of generated ICD-10 codes are non-billable or invalid (NEJM AI, 2024). We
 eliminate this structurally: the LLM never free-generates a code.
 
-For each extracted fact (using its `normalized_term` as the query):
+For each extracted fact, retrieval queries its `normalized_term` **plus a few
+LLM-emitted synonyms** (`query_terms`, e.g. "MI" → "myocardial infarction") and
+**merges** the results — a lightweight *query expansion* that widens recall
+against vocabulary mismatch without touching the whitelist. Each query runs:
 
 - **Dense search** with `sentence-transformers/all-MiniLM-L6-v2` over a FAISS
   inner-product index (catches paraphrases — "DM type 2" finds "type 2
@@ -62,8 +66,10 @@ For each extracted fact (using its `normalized_term` as the query):
   — "essential hypertension" matters word-for-word). Returns top-N=50.
 - **Reciprocal Rank Fusion** (Cormack et al. 2009): each retriever contributes
   ``1 / (k + rank)``; fused scores are summed. RRF needs **no score calibration**
-  between heterogeneous scorers — the empirically dominant hybrid fusion
-  choice. Top-K=15 candidates become the **whitelist**.
+  between heterogeneous scorers — the empirically dominant hybrid fusion choice.
+  Candidates from all query terms are merged (best score per code); the **top-K=15
+  become the whitelist**, each carrying its post-merge *fused rank* (which feeds
+  the confidence blend, §3).
 
 That whitelist is a **hard constraint**, not soft context. The coder agent's
 response is re-validated against the candidate set; any out-of-list code is
@@ -96,7 +102,10 @@ shows heterogeneous verifiers cut correlated errors and self-preference bias
 (arXiv 2410.21819; A-HMAD 2025). Same-model fallback is supported but flagged
 as weaker. **Selective verification** (only procedures + low-confidence
 diagnoses) and **batched calls** (one extract / one code / one audit per note)
-keep the cost discipline reasonable.
+keep the cost discipline reasonable. The extraction call does triple duty in one
+shot (no added cost): facts, a note-level **`encounter_type`** (replacing brittle
+keyword counting; §1), and per-fact **`query_terms`** synonyms that feed retrieval
+query expansion (§2).
 
 **Prompting choices:**
 
@@ -105,7 +114,7 @@ keep the cost discipline reasonable.
   then emit a single JSON object validated against a Pydantic schema. On
   validation failure we **repair-retry** once with the error appended to the
   conversation — almost always sufficient.
-- *Versioned prompt files* (`prompts/extraction_p1.txt`, etc.). Prompt versions
+- *Versioned prompt files* (`prompts/extraction_p2.txt`, etc.). Prompt versions
   are part of the `config_hash` so a prompt change is visible in the audit log.
 - *Pinned model IDs + bounded sampling* (e.g. `openai/gpt-5.4-mini`): `temp=0`
   where honoured (Claude); GPT-5 reasoning models reject it, so determinism rests
@@ -113,7 +122,7 @@ keep the cost discipline reasonable.
 
 **Confidence we surface ≠ raw LLM confidence.** Verbalised LLM confidence is
 systematically overconfident (Xiong et al. 2023). We blend three signals —
-retrieval rank (rank-aware, not raw RRF score), coder confidence (discounted),
+fused retrieval rank (post-merge rank, not raw RRF score), coder confidence (discounted),
 and an auditor adjustment (+0.15 for agree, −0.30 for disagree) — and bin into
 🟢 / 🟡 / 🔴 tiers using gold-tuned thresholds. (Formal isotonic/Platt
 calibration is wired as an extension — needs a larger labelled set than the
@@ -150,25 +159,22 @@ gold-tuned thresholds, not formal Platt / isotonic — needs a larger labelled
 set. *Reproducibility* is engineered (temp=0, pinned dated snapshots, versioned
 prompts, full audit log) but not bit-for-bit guaranteed across provider model
 updates — exactly why we pin and log everything. *Evaluation* is directional
-on a small (n=4) authored gold set — ICD-10 micro-F1 ≈ 0.48 (≈ the ~0.54 SOTA
-ceiling), CPT micro-F1 ≈ 0.71; the metric methodology (`scripts/evaluate.py`:
+on a small (n=4) authored gold set — ICD-10 micro-F1 ≈ 0.51 (≈ the ~0.54 SOTA
+ceiling), CPT micro-F1 ≈ 0.75; the metric methodology (`scripts/evaluate.py`:
 micro P/R/F1 for ICD and CPT, exact-match ratio, ICD-10-hierarchical micro-F1)
-is sound — only the sample size is small.
+is sound — only the sample size is small. *Precision (≈ 0.40) is over-coding-bound*
+— the coder emits more codes than gold — so a more selective coder and a larger
+gold set are the precision lever, not retrieval; the v2 changes (query expansion +
+LLM encounter type) lifted recall at held precision (ICD recall 0.62 → 0.71,
+encounter-type 3/4 → 4/4).
 
-**Extensions (designed for, not built).** Postgres hybrid retrieval
-(`pgvector` + `tsvector` + `pg_trgm`); biomedical embeddings + SNOMED→ICD
-crosswalk; full tabular-rule + NCCI engine; FastAPI + reviewer UI;
-self-consistency confidence; AHIMA/ACDIS-compliant provider-query drafting;
-licensed real CPT (one config line); LLM-observability tooling (Langfuse /
-OpenTelemetry export via LiteLLM callbacks — opt-in env flag; Grafana +
-Prometheus dashboards in production). Pipeline stages are idempotent and map
-cleanly to **Airflow tasks** or **Celery jobs** for production orchestration.
+**Extensions (designed for, not built).** Postgres hybrid retrieval (`pgvector` +
+`tsvector` + `pg_trgm`); biomedical embeddings + SNOMED→ICD crosswalk; full
+tabular-rule + NCCI engine; FastAPI + reviewer UI; self-consistency confidence;
+provider-query drafting; licensed real CPT (one config line); LLM-observability
+(Langfuse/OpenTelemetry via LiteLLM callbacks). Stages are idempotent → map to
+Airflow/Celery for orchestration.
 
-**References (load-bearing).** Soroush et al. *LLMs Are Poor Medical Coders*
-(NEJM AI 2024); *Code Like Humans* (EMNLP 2025, 2509.05378); MDPI Informatics
-2026 (coder+auditor); 2407.12849 (retrieve-then-rerank); MAST (NeurIPS 2025);
-Huang et al. *Can't Self-Correct Reasoning Yet* (ICLR 2024, 2310.01798);
-Chain-of-Verification (2309.11495); Cormack et al. 2009 (RRF); 2408.02442
-(JSON ≠ free-form); Xiong et al. 2306.13063 + Tian et al. 2305.14975
-(confidence); ICD-10-CM Official Guidelines FY2026 (CMS/CDC); AMA CPT
-licensing FAQ.
+**References (load-bearing).** NEJM AI 2024 (LLMs are poor coders); arXiv 2407.12849
+(retrieve-then-rerank); MDPI Informatics 2026 (coder+auditor); MAST/NeurIPS 2025;
+Cormack 2009 (RRF); ICD-10-CM Official Guidelines FY2026 — full list in `docs/Plan.md` §20.

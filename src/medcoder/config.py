@@ -15,7 +15,10 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PIPELINE_VERSION = "0.1.1"
-PROMPT_VERSION = "p1"
+# Bumped p1 -> p2: extraction prompt now also emits query_terms (retrieval
+# expansion) and a note-level encounter_type. Versioned so the config_hash
+# reflects the prompt change for reproducibility.
+PROMPT_VERSION = "p2"
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 

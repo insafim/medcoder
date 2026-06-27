@@ -11,10 +11,10 @@ HTML="/tmp/medcoder_design.html"
 PDF="docs/DESIGN.pdf"
 
 cat > /tmp/medcoder_pdf.css <<'CSS'
-@page { size: Letter; margin: 0.38in; }
+@page { size: Letter; margin: 0.32in; }
 html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 8.5pt; line-height: 1.25; color: #111; margin: 0; padding: 0;
+  font-size: 8pt; line-height: 1.16; color: #111; margin: 0; padding: 0;
 }
 h1 { font-size: 12pt; margin: 5pt 0 3pt; border-bottom: 1px solid #888; padding-bottom: 1pt; }
 h2 { font-size: 10pt; margin: 4pt 0 1pt; }
