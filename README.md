@@ -79,9 +79,10 @@ export ANTHROPIC_API_KEY=sk-ant-...       # independent auditor (claude-haiku-4-
 make run                                  # uses note_01_outpatient_diabetes.txt
 #   → JSON CodingResult to stdout, AND saved to outputs/<doc_id>/
 #     (result.json + trace.json — the per-run audit trail). Flags:
-#       --no-save     stdout only (no outputs/ folder)
-#       --format md   human-readable review sheet instead of JSON
-#       --out PATH    write one file to an exact path
+#       --no-save          stdout only (no outputs/ folder)
+#       --format md        human-readable review sheet instead of JSON
+#       --format annotated the note with codes spliced in inline at each span
+#       --out PATH         write one file to an exact path
 
 # 4b. No LLM key? Use the mocked smoke run against the real ICD-10 index:
 make smoke                                # same JSON shape, canned LLM responses
@@ -189,20 +190,23 @@ the original note), a **blended-then-tiered confidence**, an **auditor verdict**
 and **reviewer-override fields** (`reviewer_decision`, `reviewer_code`,
 `reviewer_note`) so the reviewer can accept / modify / reject in place.
 
-**Two views, one payload.** JSON is the machine/audit format; `--format md`
+**Three views, one payload.** JSON is the machine/audit format. `--format md`
 renders the same `CodingResult` as a human review sheet (one row per code with an
-Accept? column, confidence tier, evidence quote, and auditor verdict). **Audit
-trail.** Each run auto-saves a self-contained `outputs/<doc_id>/` folder:
-`result.json` (or `.md`) plus `trace.json` — the full decision trail (extracted
-facts, the retrieval candidate whitelist *per fact*, the coder's choices, and the
-auditor's verdicts), so a reviewer can reconstruct *how* each suggestion was
-reached, not just see the final codes. `--no-save` opts out.
+Accept? column, confidence tier, evidence quote, and auditor verdict).
+`--format annotated` renders the **clinical note itself with each suggested code
+spliced in inline at the evidence span** that justifies it — the way a coder reads
+the chart. **Audit trail.** Each run auto-saves a self-contained
+`outputs/<doc_id>/` folder: the rendered result (`result.json`, or `result.md` /
+`result.annotated.md` per `--format`) plus `trace.json` — the full
+decision trail (extracted facts, the retrieval candidate whitelist *per fact*, the
+coder's choices, and the auditor's verdicts), so a reviewer can reconstruct *how*
+each suggestion was reached, not just see the final codes. `--no-save` opts out.
 
 > **Pre-run examples are committed.** [`outputs/`](outputs/) already holds the
-> real-API result for **all four notes** — `result.json`, `result.md`, and
-> `trace.json` each — plus `outputs/eval/metrics.json` (gold-set scores). Inspect
-> them with no keys and no run. `make run` overwrites your local copy; regenerate
-> the whole set with `make examples`.
+> real-API result for **all four notes** — `result.json`, `result.md`,
+> `result.annotated.md`, and `trace.json` each — plus `outputs/eval/metrics.json`
+> (gold-set scores). Inspect them with no keys and no run. `make run` overwrites
+> your local copy; regenerate the whole set with `make examples`.
 
 ---
 
@@ -312,7 +316,7 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 │   ├── DESIGN.md            # full design (the source for the 1–2 page PDF)
 │   └── DESIGN.pdf           # ← the PDF deliverable; built by `make pdf`
 ├── outputs/                 # COMMITTED pre-run examples (4 notes + eval metrics)
-│   ├── note_01.../          #   result.json + result.md + trace.json per note
+│   ├── note_01.../          #   result.json + result.md + result.annotated.md + trace.json
 │   └── eval/metrics.json    #   gold-set scores (P/R/F1, recall@k, latency, cost)
 ├── scripts/
 │   ├── build_index.py
