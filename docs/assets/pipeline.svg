@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#7a8aa0"/>
+    </marker>
+  </defs>
+
+  <!-- input pill -->
+  <rect x="8" y="64" width="96" height="52" rx="11" fill="#ffffff" stroke="#b6c2d2" stroke-width="1.5"/>
+  <text x="56" y="87" text-anchor="middle" font-size="13" font-weight="600" fill="#33445c">note.txt</text>
+  <text x="56" y="103" text-anchor="middle" font-size="10" fill="#7a8aa0">clinical note</text>
+
+  <!-- deterministic stages: light blue-grey ; agent stages: teal -->
+  <!-- 1 Ingest (det) -->
+  <rect x="124" y="58" width="128" height="64" rx="9" fill="#eef2f7" stroke="#9fb2c9" stroke-width="1.5"/>
+  <text x="188" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#22405f">1  Ingest</text>
+  <text x="188" y="103" text-anchor="middle" font-size="10.5" fill="#6b7c93">deterministic</text>
+
+  <!-- 2 Extract (agent) -->
+  <rect x="266" y="58" width="128" height="64" rx="9" fill="#e4f3ef" stroke="#3fa392" stroke-width="1.5"/>
+  <text x="330" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1c5a50">2  Extract</text>
+  <text x="330" y="103" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2c8c7c">Extraction agent</text>
+
+  <!-- 3 Retrieve (det) -->
+  <rect x="408" y="58" width="128" height="64" rx="9" fill="#eef2f7" stroke="#9fb2c9" stroke-width="1.5"/>
+  <text x="472" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#22405f">3  Retrieve</text>
+  <text x="472" y="103" text-anchor="middle" font-size="10.5" fill="#6b7c93">hybrid search</text>
+
+  <!-- 4 Code (agent) -->
+  <rect x="550" y="58" width="128" height="64" rx="9" fill="#e4f3ef" stroke="#3fa392" stroke-width="1.5"/>
+  <text x="614" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1c5a50">4  Code</text>
+  <text x="614" y="103" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2c8c7c">Coder agent</text>
+
+  <!-- 5 Audit (agent) -->
+  <rect x="692" y="58" width="128" height="64" rx="9" fill="#e4f3ef" stroke="#3fa392" stroke-width="1.5"/>
+  <text x="756" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1c5a50">5  Audit</text>
+  <text x="756" y="103" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2c8c7c">Auditor agent</text>
+
+  <!-- 6 Rules (det) -->
+  <rect x="834" y="58" width="128" height="64" rx="9" fill="#eef2f7" stroke="#9fb2c9" stroke-width="1.5"/>
+  <text x="898" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#22405f">6  Rules</text>
+  <text x="898" y="103" text-anchor="middle" font-size="10.5" fill="#6b7c93">rule engine</text>
+
+  <!-- 7 Assemble (det) -->
+  <rect x="976" y="58" width="128" height="64" rx="9" fill="#eef2f7" stroke="#9fb2c9" stroke-width="1.5"/>
+  <text x="1040" y="86" text-anchor="middle" font-size="13.5" font-weight="600" fill="#22405f">7  Assemble</text>
+  <text x="1040" y="103" text-anchor="middle" font-size="10.5" fill="#6b7c93">deterministic</text>
+
+  <!-- output pill -->
+  <rect x="1126" y="64" width="106" height="52" rx="11" fill="#ffffff" stroke="#b6c2d2" stroke-width="1.5"/>
+  <text x="1179" y="87" text-anchor="middle" font-size="13" font-weight="600" fill="#33445c">result.json</text>
+  <text x="1179" y="103" text-anchor="middle" font-size="10" fill="#7a8aa0">codes + trace</text>
+
+  <!-- arrows -->
+  <g stroke="#7a8aa0" stroke-width="1.6">
+    <line x1="104" y1="90" x2="121" y2="90" marker-end="url(#arrow)"/>
+    <line x1="252" y1="90" x2="263" y2="90" marker-end="url(#arrow)"/>
+    <line x1="394" y1="90" x2="405" y2="90" marker-end="url(#arrow)"/>
+    <line x1="536" y1="90" x2="547" y2="90" marker-end="url(#arrow)"/>
+    <line x1="678" y1="90" x2="689" y2="90" marker-end="url(#arrow)"/>
+    <line x1="820" y1="90" x2="831" y2="90" marker-end="url(#arrow)"/>
+    <line x1="962" y1="90" x2="973" y2="90" marker-end="url(#arrow)"/>
+    <line x1="1104" y1="90" x2="1123" y2="90" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- legend -->
+  <rect x="470" y="148" width="15" height="11" rx="2" fill="#eef2f7" stroke="#9fb2c9" stroke-width="1.3"/>
+  <text x="492" y="157" font-size="10.5" fill="#5a6b80">deterministic stage</text>
+  <rect x="630" y="148" width="15" height="11" rx="2" fill="#e4f3ef" stroke="#3fa392" stroke-width="1.3"/>
+  <text x="652" y="157" font-size="10.5" fill="#5a6b80">LLM agent</text>
+</svg>

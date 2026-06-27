@@ -5,7 +5,8 @@ get back a Pydantic-validated :class:`medcoder.schemas.CodingResult` with
 ICD-10 + (synthetic) CPT suggestions, evidence spans, confidence tiers, and
 warnings.
 
-See ``docs/DESIGN.md`` for the full architecture and ``README.md`` for quickstart.
+See ``docs/DESIGN.md`` (concise) or ``docs/DESIGN-full.md`` (expanded) for the
+architecture, and ``README.md`` for quickstart.
 """
 
 from .config import load_env_file
