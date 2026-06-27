@@ -105,8 +105,11 @@ Grafana/Langfuse, batch mode.
    it is empirically calibrated on our gold set and shown as tiers, not raw %.
 6. The default embedder (`all-MiniLM-L6-v2`) is a **demo compromise**; a
    biomedical embedder (SapBERT/PubMedBERT) is the production choice.
-7. **Encounter type (inpatient vs outpatient)** is a first-class input — it
-   changes the "uncertain diagnosis" coding rule entirely (§9.6).
+7. **Encounter type (inpatient vs outpatient)** is a first-class signal — it
+   changes the "uncertain diagnosis" coding rule entirely (§9.6). It is
+   **classified by the extraction LLM** (which reads the whole note), with a
+   deterministic keyword heuristic retained as a fallback for when the LLM is
+   unsure (§9.1).
 8. This is **supervised automation**: the system suggests; a human decides.
 9. Eval numbers are **illustrative on a small authored gold set**, not a benchmark.
 
@@ -188,12 +191,12 @@ flowchart TB
     A["Clinical note (.txt)"] --> ING
 
     subgraph ING["1 · Ingestion — deterministic"]
-        ING1["Normalize · detect encounter type"] --> ING2["Segment SOAP · window long notes"] --> ING3["Global char-offset map"]
+        ING1["Normalize · encounter-type heuristic (fallback)"] --> ING2["Segment SOAP · window long notes"] --> ING3["Global char-offset map"]
     end
     ING --> EXT
 
     subgraph EXT["2 · Extraction Agent — LLM"]
-        EXT1["Extract dx / px / symptoms"] --> EXT2["Assertion status · normalized_term · evidence span"]
+        EXT1["Extract dx / px / symptoms · encounter type"] --> EXT2["Assertion status · normalized_term · synonyms · evidence span"]
     end
     EXT --> RET
 
@@ -338,7 +341,7 @@ flowchart TB
 ```mermaid
 flowchart LR
     A["raw note"] --> B["Normalize: whitespace · encoding"]
-    B --> C{"Encounter type?"}
+    B --> C{"Encounter type?<br/>(LLM · heuristic fallback)"}
     C -->|outpatient| D["flag: do NOT code probable/suspected dx"]
     C -->|inpatient| E["flag: code uncertain dx as if present"]
     D --> F["Segment into SOAP sections"]
@@ -355,6 +358,13 @@ Notes may span multiple pages; long notes are **windowed with overlap** and fact
 are merged/deduped afterward, with **global character offsets preserved** so
 evidence spans always point back to the original note.
 
+**Encounter type** is classified by the **extraction LLM** (§9.2), which reads the
+whole note rather than counting keywords; ingestion computes a deterministic
+keyword heuristic only as a **fallback** for when the LLM returns `unknown`. (The
+earlier pure-keyword approach was brittle — e.g. the substring `icu` matches
+"part**icu**larly" — so the semantic judgment moves to the model while the cheap,
+deterministic heuristic stays as a safety net.)
+
 ### 9.2 Extraction + assertion
 
 ```mermaid
@@ -370,15 +380,19 @@ flowchart TB
 ```
 
 `normalized_term` (a canonical clinical phrase, emitted by the LLM alongside the
-verbatim span) is what feeds retrieval — more robust than raw note text. The
-assertion step is our single biggest **false-positive defense**: a *ruled-out* or
-*family-history* finding must never be coded as an active diagnosis.
+verbatim span) is what feeds retrieval — more robust than raw note text. In the
+**same call** (no extra cost) the extraction agent also emits a short list of
+**`query_terms`** per fact (synonyms / abbreviation↔expansion, e.g. "MI" ↔
+"myocardial infarction") to widen retrieval recall (§9.3), and a note-level
+**`encounter_type`** consumed by §9.1. The assertion step is our single biggest
+**false-positive defense**: a *ruled-out* or *family-history* finding must never be
+coded as an active diagnosis.
 
 ### 9.3 Retrieve-then-constrain (code retrieval / filtering strategy)
 
 ```mermaid
 flowchart TB
-    A["fact + normalized_term"] --> R{"diagnosis or procedure?"}
+    A["fact + normalized_term + synonyms"] --> R{"diagnosis or procedure?"}
     R -->|diagnosis| ICD[("ICD-10 index · ~75k")]
     R -->|procedure| CPT[("CPT synthetic index")]
     ICD --> H
@@ -393,6 +407,13 @@ flowchart TB
     K --> M["metric: retriever recall@k = END-TO-END RECALL CEILING"]
 ```
 
+- **Query expansion (lightweight synonym enrichment):** the retriever runs not
+  only on `normalized_term` but on the LLM-supplied `query_terms` (synonyms /
+  abbreviations) and **merges** the candidate lists per fact. This attacks the
+  recall@k ceiling at the *query* side — a cheap stand-in for MedCodER's
+  UMLS-Metathesaurus synonym enrichment (arXiv:2409.15368), which is the heavier
+  production upgrade. It does **not** relax the whitelist: the coder still selects
+  only from retrieved, real codes.
 - **Hybrid (not pure-vector):** BM25 nails exact clinical terms ("type 2
   diabetes"), embeddings catch paraphrases; **RRF** fuses them without tuning
   score scales. This is the empirically dominant pattern for code retrieval.
@@ -469,10 +490,13 @@ flowchart LR
 
 We **never surface raw LLM confidence** (it is systematically overconfident).
 We blend independent signals and present a **3-tier label (🟢🟡🔴) + evidence
-span**, with thresholds tuned on the gold set. *Formal* calibration (isotonic /
-Platt + ECE) is the rigorous method but needs a larger labeled set than a small
-authored gold set supports — so it is a **documented extension, not shipped**
-(keeping the core minimal).
+span**, with thresholds tuned on the gold set. The retrieval sub-score is keyed off
+the candidate's **fused RRF rank** (its true position in the merged top-K), not a
+single ranker's rank — so a code that only one retriever surfaced is scored on its
+real post-fusion standing. *Formal* calibration (isotonic / Platt + ECE) is the
+rigorous method but needs a larger labeled set than a small authored gold set
+supports — so it is a **documented extension, not shipped** (keeping the core
+minimal).
 
 ### 9.8 Assembly / output
 
@@ -508,6 +532,7 @@ classDiagram
     class ExtractedFact {
         +str text
         +str normalized_term
+        +str[] query_terms
         +str assertion_status
         +int start_offset
         +int end_offset
@@ -518,6 +543,9 @@ classDiagram
         +str system
         +str description
         +float retrieval_score
+        +int dense_rank
+        +int lexical_rank
+        +int fused_rank
     }
     class Warning {
         +str type
@@ -532,6 +560,7 @@ classDiagram
         +float temperature
         +str config_hash
         +datetime timestamp
+        +EncounterType encounter_type
         +RunMetrics metrics
     }
     class RunMetrics {
@@ -552,6 +581,8 @@ classDiagram
 
 `Warning.type ∈ {missing_information, ambiguity, conflict}`.
 `assertion_status ∈ {present, absent, possible, hypothetical, family, historical}`.
+The LLM I/O schema `ExtractionResponse` additionally carries a note-level
+`encounter_type ∈ {inpatient, outpatient, unknown}` (§9.1).
 
 ---
 
@@ -701,6 +732,8 @@ retryable**, so it maps cleanly to an **Airflow task / Celery job** in productio
 | **Real ICD-10 + synthetic CPT**                              | Real large-space retrieval; legal                    | CPT demo on synthetic codes                                    |
 | **LiteLLM**                                                  | Multi-provider in one call; built-in mocking         | Thin dependency                                                |
 | **CLEAN scope: CLI-only core**                               | Matches the offline brief; no over-build             | FastAPI/UI are extensions                                      |
+| **LLM query expansion** (synonyms) → hybrid retrieval        | Lifts recall@k (the ceiling) without relaxing the whitelist | Extra (cheap, deterministic) retrieval calls per fact   |
+| **Encounter type via extraction LLM** (+ keyword fallback)   | Whole-note semantic judgment beats keyword counting  | Depends on the LLM; mitigated by the deterministic fallback    |
 
 ---
 
