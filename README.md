@@ -4,7 +4,7 @@
 > **reviewer-ready** ICD-10 diagnosis + CPT procedure suggestions, each with a
 > confidence score, supporting evidence, warnings, and a complete audit trail.
 
-The design thesis (full details in `docs/DESIGN.md` and the 1–2 page PDF):
+The design thesis (concise in the 1–2 page `docs/DESIGN.pdf`, expanded in `docs/DESIGN-full.md`):
 **the LLM is a constrained reasoning component inside a deterministic,
 observable pipeline — not the pipeline itself.** Retrieval pre-constrains the
 LLM to real codes; a deterministic rule engine post-constrains it against
@@ -38,7 +38,9 @@ against the cited evidence.
 
 > **`docs/DESIGN.pdf` is the primary written deliverable.** It is the concise
 > (1–2 page) design document the exercise asks for. `docs/DESIGN.md` is its
-> source; rebuild with `make pdf`.
+> source; rebuild with `make pdf`. An expanded version covering the same five
+> sections in more depth lives in `docs/DESIGN-full.md` / `docs/DESIGN-full.pdf`
+> (rebuild with `make pdf-full`).
 
 ---
 
@@ -227,7 +229,7 @@ schema, same retrieval / coder / rule paths.
 
 ## 4 · Architecture at a glance
 
-Full design in `docs/DESIGN.md`; this section is the elevator pitch.
+Full design in `docs/DESIGN-full.md`; this section is the elevator pitch.
 
 - **Retrieve-then-constrain.** The LLM never free-generates a code. For each
   extracted fact, hybrid retrieval (FAISS + BM25, fused via Reciprocal Rank
@@ -312,8 +314,10 @@ per-agent model IDs, `reasoning_effort`, temperature) is captured in the
 │   ├── gold/labels.json     # gold ICD-10 + CPT labels for `make eval`
 │   └── index/               # cached FAISS + BM25 indexes (gitignored)
 ├── docs/
-│   ├── DESIGN.md            # full design (the source for the 1–2 page PDF)
+│   ├── DESIGN.md            # concise 1–2 page design (the source for the PDF deliverable)
 │   ├── DESIGN.pdf           # ← the PDF deliverable; built by `make pdf`
+│   ├── DESIGN-full.md       # expanded design, same five sections in more depth
+│   ├── DESIGN-full.pdf      # rendered full version; built by `make pdf-full`
 │   └── WALKTHROUGH.md       # optional stage-by-stage code tour
 ├── outputs/                 # COMMITTED pre-run examples (4 notes + eval metrics)
 │   ├── note_01.../          #   result.json + result.md + result.annotated.md + trace.json
@@ -398,7 +402,7 @@ caused it rather than blamed on the pipeline as a whole.
 
 ## 7 · Limitations & extensions
 
-The design doc (`docs/DESIGN.md` §5) is the authoritative list. The key
+The design doc (`docs/DESIGN-full.md` §5) is the authoritative list. The key
 limitations to set reviewer expectations:
 
 - **Assistive, not autonomous.** SOTA full-vocabulary ICD-10 coding tops out
