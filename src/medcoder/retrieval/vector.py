@@ -1,11 +1,19 @@
-"""Dense semantic index — sentence-transformers embeddings stored in FAISS.
+"""Dense semantic index — embeddings stored in FAISS.
 
-Default embedder is the small general-purpose MiniLM — Plan.md §3 marks this as a
-demo compromise; production swap is SapBERT/PubMedBERT.
+The embedder is pluggable (see embedders.py). Default is the small general-purpose
+local MiniLM — Plan.md §3 marks this as a demo compromise; the production swap for
+clinical text is a domain embedder such as SapBERT/PubMedBERT, and a hosted OpenAI
+backend is available opt-in. All backends emit L2-normalized vectors so the
+`IndexFlatIP` below is cosine similarity.
+
+Switching embedders changes the vector dimension, so each saved index carries a
+`<prefix>.meta.json` sidecar recording the embedder name + dim; `load()` refuses a
+stale index built with a different embedder, preventing silent dim-mismatch garbage.
 """
 
 from __future__ import annotations
 
+import json
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,6 +23,7 @@ import numpy as np
 
 from ..logging_setup import get_logger
 from .catalog import CatalogEntry
+from .embedders import make_embedder
 
 log = get_logger(__name__)
 
@@ -34,41 +43,19 @@ class VectorIndex:
 
     def __init__(self, embedder_name: str):
         self.embedder_name = embedder_name
-        self._embedder = None  # lazy-loaded
+        # Backend is chosen by name (MiniLM / SapBERT / OpenAI …); model weights or
+        # client are lazy-loaded inside the backend, keeping `medcoder --help` instant.
+        self._embedder = make_embedder(embedder_name)
         self._index: faiss.Index | None = None
         self._dim: int | None = None
 
     # ---- model ---------------------------------------------------------
 
-    def _load_embedder(self):
-        if self._embedder is None:
-            # Lazy import keeps `medcoder --help` instantaneous
-            from sentence_transformers import SentenceTransformer
-
-            log.info("loading_embedder", extra={"model": self.embedder_name})
-            self._embedder = SentenceTransformer(self.embedder_name)
-            # Newer sentence-transformers renamed this — keep both for compatibility.
-            dim_fn = getattr(
-                self._embedder,
-                "get_embedding_dimension",
-                self._embedder.get_sentence_embedding_dimension,
-            )
-            self._dim = int(dim_fn())
-        return self._embedder
-
-    def _encode(self, texts: Sequence[str], batch_size: int = 256) -> np.ndarray:
-        model = self._load_embedder()
-        # `normalize_embeddings=True` makes inner-product equivalent to cosine,
-        # which is what `IndexFlatIP` expects. Load-bearing for retrieval
-        # correctness. Source: https://sbert.net/docs/package_reference/SentenceTransformer.html#sentence_transformers.SentenceTransformer.encode
-        vecs = model.encode(
-            list(texts),
-            batch_size=batch_size,
-            show_progress_bar=False,
-            convert_to_numpy=True,
-            normalize_embeddings=True,
-        )
-        return vecs.astype("float32")
+    def _encode(self, texts: Sequence[str]) -> np.ndarray:
+        # Every backend returns L2-normalized float32 (see embedders.py), so
+        # inner-product on `IndexFlatIP` is cosine similarity — load-bearing for
+        # retrieval correctness.
+        return self._embedder.encode(texts)
 
     # ---- build / persist -----------------------------------------------
 
@@ -77,6 +64,9 @@ class VectorIndex:
             raise ValueError("Cannot build vector index over an empty catalog.")
         embeddings = self._encode([e.description for e in entries])
         self._dim = embeddings.shape[1]
+        # IndexFlatIP = inner product; on the L2-normalized vectors our embedders emit
+        # this equals cosine similarity.
+        # Source: https://github.com/facebookresearch/faiss/wiki/MetricType-and-distances — Verified 2026-06-27
         self._index = faiss.IndexFlatIP(self._dim)
         self._index.add(embeddings)
 
@@ -85,9 +75,27 @@ class VectorIndex:
         if self._index is None:
             raise RuntimeError("Build the index before saving.")
         faiss.write_index(self._index, str(prefix.with_suffix(".faiss")))
+        # Sidecar records which embedder built this index so load() can refuse a
+        # stale index after an embedder swap (different dim → garbage retrieval).
+        prefix.with_suffix(".meta.json").write_text(
+            json.dumps({"embedder": self.embedder_name, "dim": self._dim})
+        )
         log.info("vector_index_saved", extra={"prefix": str(prefix), "n": self._index.ntotal})
 
     def load(self, prefix: Path) -> None:
+        meta_path = prefix.with_suffix(".meta.json")
+        if meta_path.exists():
+            meta = json.loads(meta_path.read_text())
+            if meta.get("embedder") != self.embedder_name:
+                raise RuntimeError(
+                    f"Index at {prefix} was built with embedder {meta.get('embedder')!r} "
+                    f"but the current config uses {self.embedder_name!r}. Rebuild it: "
+                    "`make build-index ARGS='--force'`."
+                )
+        else:
+            # Legacy index without a sidecar — can't verify the embedder. Warn and
+            # trust the config rather than hard-failing an otherwise-working index.
+            log.warning("vector_index_no_meta", extra={"prefix": str(prefix)})
         self._index = faiss.read_index(str(prefix.with_suffix(".faiss")))
         self._dim = self._index.d
 
