@@ -1,4 +1,4 @@
-# medcoder — auditable medical-coding pipeline
+# medcoder : auditable medical-coding pipeline
 
 > An offline pipeline that reads unstructured clinical notes and produces
 > **reviewer-ready** ICD-10 diagnosis + CPT procedure suggestions, each with a
