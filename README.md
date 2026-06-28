@@ -4,12 +4,16 @@
 > **reviewer-ready** ICD-10 diagnosis + CPT procedure suggestions, each with a
 > confidence score, supporting evidence, warnings, and a complete audit trail.
 
-The design thesis (concise in the 1–2 page `docs/DESIGN.pdf`, expanded in `docs/DESIGN-full.md`):
-**the LLM is a constrained reasoning component inside a deterministic,
-observable pipeline — not the pipeline itself.** Retrieval pre-constrains the
-LLM to real codes; a deterministic rule engine post-constrains it against
-ICD-10 coding guidelines; an independent auditor agent reviews each assignment
-against the cited evidence.
+The design thesis (`docs/DESIGN.pdf`):
+**medcoder converts a free-text clinical note into billable codes through a
+seven-stage pipeline in which the LLM is a constrained reasoning component, not
+the pipeline itself.** Three stages are LLM agents; the other four are plain
+deterministic code. The coder can never free-generate a code: hybrid retrieval
+pre-constrains it to a shortlist of real catalog codes, a deterministic rule
+engine post-constrains it against ICD-10-CM coding guidelines, and a second,
+independent auditor model re-checks each (evidence, code) pair. Every stage is
+idempotent and records its output to a trace, so a reviewer can reconstruct
+exactly how each code was reached.
 
 ```
   ┌── clinical note ────────────────────────────────────────────────────┐
