@@ -19,10 +19,10 @@ exactly how each code was reached.
   ┌── clinical note ────────────────────────────────────────────────────┐
   │                                                                     │
   │  1. ingest (deterministic)         normalise / encounter / window   │
-  │  2. extract  [LLM-A]               facts + evidence + assertion     │
+  │  2. extract  [primary LLM]         facts + evidence + assertion     │
   │  3. retrieve (deterministic)       FAISS + BM25 → RRF → whitelist   │
-  │  4. code     [LLM-A]               pick code(s) from whitelist      │
-  │  5. audit    [LLM-B independent]   evidence really supports code?   │
+  │  4. code     [primary LLM]         pick code(s) from whitelist      │
+  │  5. audit    [independent LLM]     evidence really supports code?   │
   │  6. rules    (deterministic)       Excludes1 / specificity / linkage│
   │  7. assemble (deterministic)       blend + tier confidence; emit    │
   │                                                                     │
